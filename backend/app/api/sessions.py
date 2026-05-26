@@ -678,6 +678,7 @@ def report_html(
     session_id: str,
     current_user: CurrentUserDep,
     session: DbSessionDep,
+    public_only: bool = Query(default=False),
 ):
     session_rec = session.exec(select(SessionRecord).where(SessionRecord.session_id == session_id)).first()
     if not session_rec:
@@ -685,6 +686,18 @@ def report_html(
 
     summary_rec = session.exec(select(Summary).where(Summary.session_id == session_id)).first()
     summary_text = (summary_rec.edited_summary or summary_rec.original_summary or "") if summary_rec else ""
+
+    if public_only and summary_text:
+        counter = 0
+        renumbered = []
+        for ln in summary_text.split("\n"):
+            if not ln.strip():
+                continue
+            if "— PÚBLICA —" in ln:
+                counter += 1
+                ln = re.sub(r'^\d+\.', f'{counter}.', ln, count=1)
+                renumbered.append(ln)
+        summary_text = "\n".join(renumbered)
 
     raw_content = _redis.get(f"raw_content:{session_id}")
     ficha = session_rec.ficha or session_id

@@ -202,11 +202,6 @@
   width: 180px;
 }
 
-.rle-input.section {
-  flex: 1;
-  min-width: 140px;
-}
-
 /* Type toggle badge */
 .rle-type-badge {
   display: inline-flex;

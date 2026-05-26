@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import {
   CheckCircle, Circle, Play, Send,
-  Square, FileText, RefreshCw, Download, Loader, Bug, Save, Printer, ArrowLeft,
+  Square, FileText, RefreshCw, Loader, Bug, Save, Printer, ArrowLeft,
 } from 'lucide-react';
 import { ReportLineEditor } from '../components/ReportLineEditor';
 
@@ -166,23 +166,6 @@ export const Dashboard = () => {
     }
   };
 
-  const handleExport = async () => {
-    try {
-      const res = await api.get(`/sessions/${sessionId}/export`, { responseType: 'blob' });
-      const blob = new Blob([res.data], { type: 'text/plain' });
-      const blobUrl = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = blobUrl;
-      link.setAttribute('download', `relatorio_${ficha || sessionId}.txt`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(blobUrl);
-    } catch (e: any) {
-      alert(e.response?.data?.detail || 'Erro ao exportar relatório');
-    }
-  };
-
   const handleSaveDraft = async () => {
     try {
       await api.put(`/sessions/${sessionId}/summary`, { summaryText: summary });
@@ -195,6 +178,11 @@ export const Dashboard = () => {
   const handleViewPdf = () => {
     const base = api.defaults.baseURL ?? 'http://localhost:3000';
     window.open(`${base}/sessions/${sessionId}/report-html`, '_blank');
+  };
+
+  const handleViewPdfPublico = () => {
+    const base = api.defaults.baseURL ?? 'http://localhost:3000';
+    window.open(`${base}/sessions/${sessionId}/report-html?public_only=true`, '_blank');
   };
 
   const handleInsertMGM = async () => {
@@ -336,10 +324,15 @@ export const Dashboard = () => {
                       <FileText size={18} /> Limpar Resumo
                     </button>
                   )}
-                  {hasRawContent && (
-                    <button className="btn btn-accent" onClick={handleExport}>
-                      <Download size={18} /> Exportar Relatório
-                    </button>
+                  {summary && (
+                    <>
+                      <button className="btn" style={{ background: 'rgba(79,110,247,0.15)', border: '1px solid rgba(79,110,247,0.4)', color: '#7fa4ff' }} onClick={handleViewPdf}>
+                        <Printer size={18} /> Visualizar PDF
+                      </button>
+                      <button className="btn" style={{ background: 'rgba(52,211,153,0.12)', border: '1px solid rgba(52,211,153,0.35)', color: '#34d399' }} onClick={handleViewPdfPublico}>
+                        <Printer size={18} /> PDF Público
+                      </button>
+                    </>
                   )}
                   <button className="btn" style={{ background: 'rgba(255,255,255,0.1)' }} onClick={handleSyncImages}>
                     <RefreshCw size={18} /> Enviar Novas Imagens
@@ -359,9 +352,6 @@ export const Dashboard = () => {
                 <div className="actions-row" style={{ marginTop: '16px', flexWrap: 'wrap' }}>
                   <button className="btn btn-accent" onClick={handleSaveDraft}>
                     <Save size={18} /> Salvar Rascunho
-                  </button>
-                  <button className="btn" style={{ background: 'rgba(79,110,247,0.15)', border: '1px solid rgba(79,110,247,0.4)', color: '#7fa4ff' }} onClick={handleViewPdf}>
-                    <Printer size={18} /> Visualizar PDF
                   </button>
                   <button className="btn btn-accent" onClick={handleInsertMGM}>
                     <Send size={18} /> Inserir MGM (Center)

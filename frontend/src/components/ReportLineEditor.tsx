@@ -15,7 +15,6 @@ interface ReportLine {
   time: string;
   operator: string;
   type: 'PÚBLICA' | 'INTERNA';
-  section: string;
   description: string;
   raw?: string;           // fallback para linhas não-parseadas
 }
@@ -31,7 +30,7 @@ let _idSeq = 0;
 const uid = () => `rle-${Date.now()}-${++_idSeq}`;
 
 const LINE_RE =
-  /^(\d+)\.\s+(\d{2}\/\d{2}\/\d{4}),?\s+(\d{2}:\d{2}:\d{2})\s*—\s*(.+?)\s*—\s*(PÚBLICA|INTERNA)\s*—\s*(.+?):\s*(.+)$/;
+  /^(\d+)\.\s+(\d{2}\/\d{2}\/\d{4}),?\s+(\d{2}:\d{2}:\d{2})\s*—\s*(.+?)\s*—\s*(PÚBLICA|INTERNA)\s*—\s*(.+)$/;
 
 function parseLine(raw: string): ReportLine {
   const m = raw.match(LINE_RE);
@@ -42,8 +41,7 @@ function parseLine(raw: string): ReportLine {
       time: m[3],
       operator: m[4].trim(),
       type: m[5] as 'PÚBLICA' | 'INTERNA',
-      section: m[6].trim(),
-      description: m[7].trim(),
+      description: m[6].trim(),
     };
   }
   return {
@@ -52,7 +50,6 @@ function parseLine(raw: string): ReportLine {
     time: '',
     operator: '',
     type: 'PÚBLICA',
-    section: '',
     description: '',
     raw: raw.trim(),
   };
@@ -87,7 +84,7 @@ function parseText(text: string): ReportLine[] {
 function serializeLine(line: ReportLine, idx: number): string {
   if (line.raw !== undefined) return line.raw;
   const num = idx + 1;
-  return `${num}. ${line.date}, ${line.time} — ${line.operator} — ${line.type} — ${line.section}: ${line.description}`;
+  return `${num}. ${line.date}, ${line.time} — ${line.operator} — ${line.type} — ${line.description}`;
 }
 
 function serializeAll(lines: ReportLine[]): string {
@@ -199,7 +196,6 @@ export const ReportLineEditor = ({ value, onChange }: Props) => {
       time: `${hh}:${mi}:${ss}`,
       operator: 'OPERADOR',
       type: 'PÚBLICA',
-      section: '',
       description: '',
     };
     propagate([...lines, newLine]);
@@ -382,20 +378,7 @@ export const ReportLineEditor = ({ value, onChange }: Props) => {
                         </button>
                       </div>
 
-                      {/* Linha 2: seção */}
-                      <div className="rle-field-row">
-                        <span className="rle-field-label">Seção</span>
-                        <input
-                          className="rle-input section"
-                          value={line.section}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            updateField(line.id, 'section', e.target.value)
-                          }
-                          placeholder="Ex: ABERTURA DO ATENDIMENTO"
-                        />
-                      </div>
-
-                      {/* Linha 3: descrição */}
+                      {/* Linha 2: descrição */}
                       <AutoTextarea
                         className="rle-description"
                         value={line.description}
