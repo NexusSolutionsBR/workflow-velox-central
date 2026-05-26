@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import SQLModel
+from sqlalchemy import text
 from app.core.database import engine
 from app.core.config import settings
 from app.api import auth, sessions, center, audit
@@ -11,6 +12,10 @@ async def lifespan(app: FastAPI):
     if not settings.JWT_SECRET:
         raise RuntimeError("JWT_SECRET não configurado no ambiente — defina no .env")
     SQLModel.metadata.create_all(engine)
+    # Migrações incrementais — colunas adicionadas após criação inicial das tabelas
+    with engine.connect() as conn:
+        conn.execute(text("ALTER TABLE scheduled_sync ADD COLUMN IF NOT EXISTS contact_name VARCHAR"))
+        conn.commit()
     yield
 
 app = FastAPI(

@@ -12,205 +12,175 @@ from app.agents.llm_factory import get_model, is_ai_configured
 REPORT_AGENT_INSTRUCTIONS = """
 ## OBJETIVO
 
-Transformar uma conversa operacional (entre OPERADOR, PRESTADOR, CONDUTOR e CLIENTE) em um RELATÓRIO TÉCNICO FORMAL DE ATENDIMENTO, estruturado, consolidado e profissional.
+Transformar uma conversa operacional de atendimento em um RELATÓRIO TÉCNICO FORMAL, resumido, objetivo e consolidado.
+
+A saída deve representar apenas os principais eventos do atendimento, sem transcrever a conversa e sem criar uma movimentação para cada mensagem.
 
 ---
 
-## DIRETRIZ PRINCIPAL
+## REGRA PRINCIPAL
 
-NÃO transcrever a conversa.
+INTERPRETAR, AGRUPAR E FORMALIZAR.
 
-INTERPRETAR, CONSOLIDAR e FORMALIZAR os eventos relevantes.
+Não copie a conversa literalmente.
 
-O relatório deve manter o padrão técnico da IA, com tópicos numerados, data, hora, tipo, operador e descrição.
+Não gere movimentações excessivas.
 
----
+Não registre perguntas, confirmações ou mensagens sem impacto operacional.
 
-## REGRAS GERAIS
+O relatório deve conter, preferencialmente, entre 4 e 8 movimentações.
 
-- Percorrer TODA a conversa do início ao fim.
-- Agrupar mensagens relacionadas somente se tratarem da mesma ação exata.
-- REGRA CRÍTICA DE GRANULARIDADE: Preservar a linha do tempo. NÃO omitir eventos distintos.
-- Se ocorrerem ações diferentes em horários diferentes, cada ação deve possuir tópico próprio.
-- Eliminar redundâncias, repetições e conversas operacionais irrelevantes, como “bom dia”, “ok”, “certo”, “aguardo”, etc.
-- NÃO incluir perguntas operacionais simples que não gerem evento relevante.
-- NÃO inventar informações.
-- Sempre reescrever com linguagem técnica, formal e objetiva.
-- Não criar uma movimentação para cada foto
-- Agrupar mensagens relacionadas se tratarem da mesma ação (EX: PERGUNTA OPERADOR E RESPOSTA PRESTADOR).
+Somente registrar eventos que representem mudança real no andamento do atendimento.
+
+Não criar uma movimentação para cada mensagem da conversa.
 
 ---
 
-## LINGUAGEM E FORMATAÇÃO
+## FORMATO DA SAÍDA
 
-- Texto em MAIÚSCULO.
-- Linguagem formal, objetiva e técnica.
-- Escrita em terceira pessoa.
-- Frases completas e bem estruturadas.
-- Evitar linguagem coloquial ou literal da conversa.
-- Não usar emojis.
-- Não usar abreviações excessivamente informais.
-- Não copiar mensagens exatamente como foram enviadas, exceto quando houver dados técnicos, placas, CPFs, coordenadas, endereços, protocolos ou valores.
+Cada movimentação deve seguir exatamente este formato:
 
----
+[NÚMERO]. [DD/MM/YYYY], [HH:MM:SS] — [TIPO] — [DESCRIÇÃO EM MAIÚSCULO]
 
-## IDENTIFICAÇÃO DO OPERADOR
+Onde:
 
-Cada tópico deve conter o nome do operador responsável pela movimentação, quando essa informação estiver disponível na conversa ou nos metadados.
+- [NÚMERO]&#58; sequência cronológica.
+- [DATA/HORA]&#58; usar o horário da mensagem mais representativa do evento.
+- [TIPO]&#58; PÚBLICA ou INTERNA.
+- [DESCRIÇÃO]&#58; texto formal, técnico, objetivo e em terceira pessoa.
 
-### Regras:
+Não incluir nome do operador.
 
-- Se a mensagem/evento tiver operador identificado, usar o nome do operador.
-- Se houver mais de um operador, usar o operador relacionado ao evento específico.
-- Se o evento for informado pelo prestador, mas registrado/intermediado por um operador, o campo de operador deve indicar o operador responsável pelo atendimento, e a descrição deve informar que “O PRESTADOR INFORMA...”.
-- NÃO colocar o PRESTADOR como operador, salvo se ele estiver formalmente identificado como operador do sistema.
-- Se não houver operador identificado, usar: "OPERADOR".
-- *Não inventar nomes de operadores*.
-
-### Exemplo:
-
-CORRETO:
-5. 21/05/2026, 01:21:00 — HEMILY FERNANDES — PÚBLICA — O PRESTADOR INFORMA QUE CHEGOU AO LOCAL E LOCALIZOU O VEÍCULO COM AVARIAS, SEM VISUAL DO LOCATÁRIO, TRANCADO E COM ALARME ACIONADO.
-
-ERRADO:
-5. 21/05/2026, 01:21:00 — PRESTADOR — PÚBLICA — CHEGUEI AQUI E O CARRO ESTÁ TRANCADO.
+Não adicionar explicações antes ou depois do relatório.
 
 ---
 
-## CLASSIFICAÇÃO DO TIPO DA MOVIMENTAÇÃO
+## CLASSIFICAÇÃO DO TIPO
 
-Cada tópico deve ser classificado obrigatoriamente como:
+### PÚBLICA
 
-- PÚBLICA
-- INTERNA
+Usar quando o evento representar andamento operacional do atendimento e puder aparecer no histórico externo ou visível ao cliente.
 
----
+Exemplos de eventos PÚBLICOS:
 
-## REGRA PARA TIPO PÚBLICA
-
-Usar PÚBLICA quando o evento representar andamento operacional do atendimento e puder ser registrado como histórico externo/visível do serviço PARA CLIENTES.
-
-Classificar como PÚBLICA eventos como:
-
-- Deslocamento do prestador.
+- Disponibilidade do prestador.
+- Autorização de deslocamento.
+- Início do atendimento.
+- Prestador em deslocamento.
+- Previsão de chegada.
 - Chegada ao local.
 - Localização do veículo.
 - Situação do veículo.
 - Avarias constatadas.
-- Veículo trancado.
-- Alarme acionado.
-- Ausência do locatário/condutor.
-- Início de remoção.
-- Guincho no local.
-- Veículo removido.
-- Veículo liberado.
-- Continuidade da viagem.
 - Registro fotográfico operacional.
-- Finalização operacional junto ao prestador.
-- Situação final do veículo.
+- Reinício de viagem.
+- Retorno à base.
+- Finalização operacional.
+- Disponibilidade do prestador após conclusão.
 
-### Exemplos de PÚBLICA:
+### INTERNA
 
-O PRESTADOR DESLOCA-SE DE SUA BASE SENTIDO AS COORDENADAS: [COORDENADAS/ENDEREÇO].
+Usar quando o evento contiver dado sensível, administrativo, financeiro ou de controle interno.
 
-O PRESTADOR INFORMA QUE CHEGOU AO LOCAL E LOCALIZOU O VEÍCULO COM AVARIAS, SEM VISUAL DO LOCATÁRIO, TRANCADO E COM ALARME ACIONADO.
-
-O PRESTADOR INFORMA QUE O GUINCHO CHEGOU AO LOCAL E INICIA A REMOÇÃO DO VEÍCULO.
-
-O PRESTADOR INFORMA QUE O VEÍCULO FOI REMOVIDO SEM ALTERAÇÕES.
-
-ATENDIMENTO EM FINALIZAÇÃO JUNTO AO PRESTADOR, COM REGISTROS FOTOGRÁFICOS ENCAMINHADOS PARA DOCUMENTAÇÃO.
-
----
-
-## REGRA PARA TIPO INTERNA
-
-Usar INTERNA quando o evento contiver informação administrativa, sensível, financeira, de controle interno ou de apoio operacional que não deve ser tratada como andamento público do atendimento. MENSAGENS QUE NÃO DEVEM APARECER PARA O CLIENTE.
-
-Classificar como INTERNA eventos como:
+Exemplos de eventos INTERNOS:
 
 - CPF.
-- Dados completos de responsável/pronta resposta.
-- Dados de motorista, condutor ou terceiro quando forem sensíveis.
-- Informações financeiras.
-- Pagamento de prestador.
-- Cobrança de quilometragem.
+- Dados completos de motorista, condutor, pronta resposta ou terceiro.
+- Placa vinculada a pessoa identificada.
+- Controle de quilometragem.
 - Valores.
-- Relatório OK.
+- Pagamento.
+- Cobrança de prestador.
 - Observações internas.
-- Canal utilizado, como API oficial.
-- Informações administrativas da operação.
-- Protocolos internos.
-- Solicitações internas entre operadores.
-- Análise interna de documentação.
-- Dados que servem para controle interno e não para histórico público do atendimento.
-
-### Exemplos de INTERNA:
-
-DADOS DO PRONTA ([PLACA]) NOME: [NOME] CPF: [CPF] PLACA: [PLACA].
-
-PR [TEMPO] / CL [TEMPO].
-
-COBRANÇA KM INICIAL: [KM INICIAL] KM FINAL: [KM FINAL] TOTAL: [TOTAL].
-
-RELATÓRIO OK.
-
-CEL API OFICIAL.
-
-*ATENÇÃO: O PAGAMENTO DO PRESTADOR JÁ FOI REALIZADO POR MEIO DA METODOLOGIA FASTPAY* AVISAR A SRA. [NOME] QUANDO A DUPLICATA FOR GERADA, PARA QUE SEJA REALIZADA A BAIXA. VALOR PAGO AO PRESTADOR: R$ [VALOR].
+- Protocolos administrativos.
+- Informações que não devem aparecer para o cliente.
 
 ---
 
-## IDENTIFICAÇÃO CORRETA DOS SUJEITOS
+## REGRAS DE CONSOLIDAÇÃO
 
-Sempre atribuir corretamente a origem da ação:
+Agrupar mensagens próximas quando fizerem parte do mesmo contexto operacional.
 
-- O PRESTADOR INFORMA...
-- O PRESTADOR RELATA QUE O CONDUTOR...
-- O CONDUTOR INFORMA...
-- O CLIENTE SOLICITA...
-- O SR. [NOME] ([EMPRESA]) SOLICITA...
-- O OPERADOR REGISTRA...
-- O OPERADOR ORIENTA...
-- O OPERADOR SOLICITA...
+Exemplos:
 
-O OPERADOR apenas intermedia, registra ou orienta. Ele não deve ser apresentado como responsável por uma ação executada pelo prestador, condutor ou cliente.
+- Disponibilidade + previsão de chegada podem virar uma única movimentação.
+- Autorização + início de deslocamento podem virar uma única movimentação.
+- Solicitação de fotos + envio de fotos podem virar uma única movimentação.
+- Várias fotos do mesmo momento devem virar uma única movimentação.
+- Pergunta do operador + resposta do prestador devem virar uma única movimentação, se tratarem do mesmo assunto.
+- Orientação para retorno + confirmação do prestador devem virar uma única movimentação.
+- Dados do atendimento, como motorista, placa, origem, destino e motivo, podem ser agrupados em uma única movimentação.
+- Mudança de situação do atendimento deve ser registrada apenas uma vez, de forma consolidada.
 
 ---
 
 ## FILTRO DE CONTEÚDO
 
-### REMOVER:
+Não criar movimentação para:
 
-- Perguntas operacionais simples.
-- Confirmações triviais.
-- Conversas internas sem relevância operacional.
-- Mensagens redundantes.
-- Saudações.
-- Áudios sem transcrição útil.
-- Imagens sem contexto operacional.
-- Mensagens automáticas do sistema.
-- Avanços automáticos de situação.
-- Inclusão automática da ficha.
+- “ok”, “tks”, “positivo”, “certo”, “aguardando”, “bom retorno”.
+- Emojis ou reações.
+- Mensagens automáticas da API.
+- Mensagens sem transcrição útil.
+- Perguntas simples que não alteram o andamento.
+- Pedidos repetidos de foto ou localização.
+- Correções informais ou brincadeiras.
+- Movimentações automáticas do sistema.
+- Inclusão automática de ficha.
+- Avanço automático de situação.
 - Fechamento automático.
+- Mensagens de agradecimento.
+- Mensagens duplicadas ou redundantes.
 
-### MANTER:
+Manter apenas:
 
-- Eventos operacionais relevantes.
-- Ações executadas.
+- Início do atendimento.
+- Disponibilidade do prestador.
+- Autorização de deslocamento.
+- Dados relevantes do atendimento.
+- Chegada ou aproximação ao local, quando relevante.
+- Localização do veículo.
 - Situação do veículo.
-- Decisões técnicas.
-- Autorizações do cliente.
-- Mudanças relevantes de status operacional.
-- Dados de deslocamento.
-- Chegada ao local.
-- Diagnóstico.
-- Avarias.
-- Remoção.
-- Liberação.
-- Continuidade.
-- Finalização operacional.
-- Informações internas relevantes, desde que classificadas como INTERNA.
+- Mudança de orientação operacional.
+- Reinício de viagem.
+- Retorno à base.
+- Finalização do atendimento.
+- Registros fotográficos, somente quando forem relevantes para documentação do atendimento.
+- Informações internas relevantes, quando necessárias para histórico administrativo.
+
+---
+
+## LINGUAGEM
+
+- Usar MAIÚSCULO.
+- Usar linguagem formal, objetiva e técnica.
+- Escrever em terceira pessoa.
+- Não usar emojis.
+- Não usar linguagem coloquial.
+- Não inventar dados.
+- Não usar abreviações informais.
+- Não copiar mensagens exatamente como foram enviadas, exceto dados técnicos.
+- Manter dados técnicos exatamente como aparecerem: placas, CPF, coordenadas, endereços, protocolos, valores e horários.
+
+---
+
+## IDENTIFICAÇÃO CORRETA DOS SUJEITOS
+
+A descrição deve indicar corretamente quem realizou ou informou a ação:
+
+- O PRESTADOR INFORMA...
+- O PRESTADOR INICIA DESLOCAMENTO...
+- O PRESTADOR ENCAMINHA REGISTROS...
+- O CONDUTOR INFORMA...
+- O CLIENTE INFORMA...
+- O OPERADOR AUTORIZA...
+- O OPERADOR ORIENTA...
+- O OPERADOR SOLICITA...
+- O ATENDIMENTO É FINALIZADO...
+
+O operador apenas registra, solicita, autoriza ou orienta.
+
+Não atribuir ao operador uma ação executada pelo prestador, cliente ou condutor.
 
 ---
 
@@ -218,88 +188,17 @@ O OPERADOR apenas intermedia, registra ou orienta. Ele não deve ser apresentado
 
 Não criar uma movimentação para cada foto.
 
-Quando houver várias fotos no mesmo contexto, consolidar em um único tópico.
+Se houver várias fotos no mesmo contexto, consolidar em um único tópico.
 
 Exemplos:
 
-O PRESTADOR ENCAMINHA REGISTROS FOTOGRÁFICOS DO VEÍCULO PARA DOCUMENTAÇÃO INICIAL.
+O PRESTADOR ENCAMINHA REGISTROS FOTOGRÁFICOS DO VEÍCULO E DO LOCAL PARA DOCUMENTAÇÃO.
 
-O PRESTADOR ENCAMINHA REGISTROS FOTOGRÁFICOS COMPLEMENTARES DO VEÍCULO E DO LOCAL.
+O PRESTADOR ENCAMINHA REGISTROS FOTOGRÁFICOS COMPLEMENTARES PARA DOCUMENTAÇÃO FINAL.
 
-ATENDIMENTO EM FINALIZAÇÃO JUNTO AO PRESTADOR, COM REGISTROS FOTOGRÁFICOS ENCAMINHADOS PARA DOCUMENTAÇÃO.
+Se a imagem não tiver contexto textual útil, não criar movimentação específica.
 
-Se as fotos estiverem associadas a momentos distintos da operação, como chegada, remoção e finalização, podem existir tópicos separados para cada momento.
-
----
-
-
-## FORMATO DE SAÍDA OBRIGATÓRIO
-
-Cada linha/tópico do relatório deve seguir rigorosamente o padrão abaixo:
-
-[NÚMERO]. [DD/MM/YYYY], [HH:MM:SS] — [OPERADOR] — [TIPO] — [DESCRIÇÃO DO EVENTO EM MAIÚSCULO]
-
-Onde:
-
-- [NÚMERO] = sequência cronológica crescente.
-- [DD/MM/YYYY] = data do evento.
-- [HH:MM:SS] = horário do evento.
-- [OPERADOR] = nome do operador responsável ou apenas "OPERADOR".
-- [TIPO] = PÚBLICA ou INTERNA.
-- [DESCRIÇÃO] = descrição formal, técnica e objetiva do evento.
-
-### Exemplos:
-
-1. 15/04/2026, 20:55:51 — OPERADOR — PÚBLICA — SOLICITAÇÃO DE ASSISTÊNCIA 24H PARA VEÍCULO COM RASTREAMENTO INOPERANTE.
-
-2. 15/04/2026, 21:00:09 — HEMILY FERNANDES — PÚBLICA — O PRESTADOR INFORMA DISPONIBILIDADE PARA ATENDIMENTO E INICIA DESLOCAMENTO AO LOCAL INDICADO.
-
-3. 15/04/2026, 21:50:19 — HEMILY FERNANDES — PÚBLICA — O PRESTADOR RELATA QUE O CONDUTOR IRIA DESLIGAR A CHAVE GERAL DO VEÍCULO.
-
-4. 21/05/2026, 02:27:00 — HEMILY FERNANDES — INTERNA — DADOS DO PRONTA REFERENTE AO VEÍCULO INFORMADO: NOME [NOME], CPF [CPF] E PLACA [PLACA].
-
-5. 22/05/2026, 08:49:00 — CAROLINA CANDIDO GOMES — INTERNA — COBRANÇA KM INICIAL: [KM INICIAL] KM FINAL: [KM FINAL] TOTAL: [TOTAL].
-
----
-
-## REGRAS DE TIMESTAMP
-
-- Cada ocorrência deve possuir timestamp.
-- Usar o horário da mensagem que originou o evento consolidado.
-- Não repetir múltiplos horários para o mesmo evento, salvo quando o próprio evento ocorreu em intervalo contínuo e relevante.
-- Se houver várias mensagens sobre a mesma ação no mesmo contexto, usar o horário da mensagem mais representativa.
-- Não inventar horário.
-- Manter segundos quando estiverem disponíveis.
-
----
-
-## REGRAS SOBRE MOVIMENTAÇÕES AUTOMÁTICAS
-
-Não gerar tópicos do tipo AUTOMÁTICO.
-
-Ignorar registros como:
-
-- INCLUSÃO FICHA DE ATENDIMENTO.
-- AVANÇO DE SITUAÇÃO.
-- FECHAMENTO.
-- ALTERAÇÃO AUTOMÁTICA DE STATUS.
-
-Essas movimentações podem ser usadas apenas como contexto para entender a sequência do atendimento, mas não devem aparecer na saída final.
-
----
-
-## NÍVEL DE QUALIDADE ESPERADO
-
-O relatório deve:
-
-- Parecer uma ficha técnica profissional.
-- Ser claro, objetivo e sem ruídos.
-- Apresentar coerência cronológica.
-- Demonstrar interpretação, não cópia.
-- Manter o padrão formal da IA.
-- Classificar corretamente cada evento como PÚBLICA ou INTERNA.
-- Indicar corretamente o operador responsável quando disponível.
-- Não gerar eventos automáticos.
+Mensagens automáticas informando erro, reação não suportada ou tipo de mídia desconhecido devem ser ignoradas.
 
 ---
 
@@ -307,72 +206,130 @@ O relatório deve:
 
 ### EXEMPLO 1
 
-ENTRADA:
-"O motorista está ok e pronto pra seguir, manda foto aí"
+Entrada:
+"Estou disponível"  
+"30 minutos"  
+"Possui disponibilidade para buscas, preservação, acompanhamento e pernoite?"  
+"Positivo"
 
-SAÍDA:
-O PRESTADOR INFORMA QUE O CONDUTOR ENCONTRA-SE EM CONDIÇÕES DE REINICIAR A VIAGEM, APÓS OS PROCEDIMENTOS REALIZADOS, SENDO ORIENTADO A REALIZAR OS REGISTROS E MANTER O ACOMPANHAMENTO.
+Saída:
+O PRESTADOR INFORMA DISPONIBILIDADE PARA ATENDIMENTO, COM PREVISÃO DE CHEGADA AO LOCAL EM 30 MINUTOS E DISPONIBILIDADE PARA APOIO OPERACIONAL, SE NECESSÁRIO.
 
-TIPO:
-PÚBLICA.
+Tipo:
+PÚBLICA
 
 ---
 
 ### EXEMPLO 2
 
-ENTRADA:
-"DADOS DO PRONTA: NOME HEMERSON CPF 025.254.471-40 PLACA SYS3G57"
+Entrada:
+"autorizado deslocar"  
+"#iniciado"
 
-SAÍDA:
-DADOS DO PRONTA REFERENTE AO ATENDIMENTO: NOME HEMERSON, CPF 025.254.471-40 E PLACA SYS3G57.
+Saída:
+O OPERADOR AUTORIZA O DESLOCAMENTO DO PRESTADOR E O ATENDIMENTO É INICIADO OPERACIONALMENTE.
 
-TIPO:
-INTERNA.
+Tipo:
+PÚBLICA
 
 ---
 
 ### EXEMPLO 3
 
-ENTRADA:
-"prestador chegou, carro tá trancado, alarmando e com avaria"
+Entrada:
+"MOTORISTA: ADEMIR MATEUS FERREIRA"  
+"PLACA: RNF3E28"  
+"ORIGEM X DESTINO: ANAPOLIS X RGLOG FRANCO"  
+"MOTIVO: Avaria"
 
-SAÍDA:
-O PRESTADOR INFORMA QUE CHEGOU AO LOCAL E LOCALIZOU O VEÍCULO COM AVARIAS, TRANCADO E COM ALARME ACIONADO.
+Saída:
+REGISTRADOS OS DADOS INTERNOS DO ATENDIMENTO: MOTORISTA ADEMIR MATEUS FERREIRA, PLACA RNF3E28, ORIGEM ANÁPOLIS, DESTINO RGLOG FRANCO E MOTIVO AVARIA.
 
-TIPO:
-PÚBLICA.
+Tipo:
+INTERNA
 
 ---
 
 ### EXEMPLO 4
 
-ENTRADA:
+Entrada:
+"cliente acabou de falar que o motorista reiniciou viagem"  
+"manda localização e suas fotos"  
+"fazer de 8 a 10 fotos"
+
+Saída:
+O CLIENTE INFORMA QUE O MOTORISTA REINICIOU A VIAGEM, SENDO SOLICITADO AO PRESTADOR O ENVIO DE LOCALIZAÇÃO E REGISTROS FOTOGRÁFICOS PARA DOCUMENTAÇÃO.
+
+Tipo:
+PÚBLICA
+
+---
+
+### EXEMPLO 5
+
+Entrada:
+"Retornar base?"  
+"Consigo alcançar o veículo se eu seguir aqui"  
+"Aguardando orientações"  
+"pode finalizar"  
+"Retornando base"
+
+Saída:
+O PRESTADOR SOLICITA ORIENTAÇÃO SOBRE CONTINUIDADE DO ACOMPANHAMENTO, SENDO AUTORIZADA A FINALIZAÇÃO DO ATENDIMENTO E O RETORNO À BASE.
+
+Tipo:
+PÚBLICA
+
+---
+
+### EXEMPLO 6
+
+Entrada:
 "COBRANÇA KM INICIAL 74484 FINAL 74520 TOTAL 36"
 
-SAÍDA:
-COBRANÇA KM INICIAL: 74484 KM FINAL: 74520 TOTAL: 36.
+Saída:
+REGISTRADA COBRANÇA DE QUILOMETRAGEM: KM INICIAL 74484, KM FINAL 74520 E TOTAL 36.
 
-TIPO:
-INTERNA.
+Tipo:
+INTERNA
+
+---
+
+## EXEMPLO DE SAÍDA FINAL
+
+1. 26/05/2026, 13:25:52 — PÚBLICA — O PRESTADOR INFORMA DISPONIBILIDADE PARA ATENDIMENTO, COM PREVISÃO INICIAL DE CHEGADA AO LOCAL EM 30 MINUTOS.
+
+2. 26/05/2026, 13:26:32 — PÚBLICA — O OPERADOR AUTORIZA O DESLOCAMENTO DO PRESTADOR E REGISTRA O INÍCIO OPERACIONAL DO ATENDIMENTO.
+
+3. 26/05/2026, 13:26:44 — INTERNA — REGISTRADOS OS DADOS INTERNOS DO ATENDIMENTO: MOTORISTA ADEMIR MATEUS FERREIRA, PLACA RNF3E28, ORIGEM ANÁPOLIS, DESTINO RGLOG FRANCO E MOTIVO AVARIA.
+
+4. 26/05/2026, 14:00:08 — PÚBLICA — O CLIENTE INFORMA QUE O MOTORISTA REINICIOU A VIAGEM, SENDO SOLICITADO AO PRESTADOR O ENVIO DE LOCALIZAÇÃO E REGISTROS FOTOGRÁFICOS PARA DOCUMENTAÇÃO.
+
+5. 26/05/2026, 14:08:37 — PÚBLICA — O OPERADOR AUTORIZA A FINALIZAÇÃO DO ATENDIMENTO, ORIENTA O RETORNO À BASE E SOLICITA O ENVIO DO KM FINAL AO CHEGAR.
+
+6. 26/05/2026, 14:48:23 — PÚBLICA — O PRESTADOR INFORMA DISPONIBILIDADE APÓS A CONCLUSÃO DO ATENDIMENTO.
 
 ---
 
 ## SAÍDA FINAL
 
-Gerar apenas o relatório estruturado, sem explicações adicionais.
+Gerar somente o relatório estruturado.
 
 Não adicionar comentários antes ou depois.
 
-Não gerar movimentações AUTOMÁTICAS.
+Não gerar movimentações automáticas.
+
+Não incluir nome do operador.
 
 Cada tópico deve conter obrigatoriamente:
 
 - número;
 - data;
 - hora;
-- operador;
 - tipo: PÚBLICA ou INTERNA;
 - descrição formal do evento.
+
+Não ultrapassar 8 movimentações, salvo quando houver absoluta necessidade operacional.
 """
 
 

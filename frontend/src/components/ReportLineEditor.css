@@ -198,10 +198,6 @@
   letter-spacing: 0.02em;
 }
 
-.rle-input.operator {
-  width: 180px;
-}
-
 /* Type toggle badge */
 .rle-type-badge {
   display: inline-flex;

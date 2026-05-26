@@ -410,6 +410,7 @@ async def _async_process_session(session_id: str, ficha: str, do_transcribe: boo
                 db_session.add(ScheduledSync(
                     session_id=session_id,
                     ficha=ficha,
+                    contact_name=contact_name,
                     task_id=scheduled_task.id,
                     run_at=run_at,
                     status="PENDING",

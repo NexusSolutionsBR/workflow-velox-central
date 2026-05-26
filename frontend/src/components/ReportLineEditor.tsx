@@ -13,7 +13,6 @@ interface ReportLine {
   id: string;
   date: string;
   time: string;
-  operator: string;
   type: 'PÚBLICA' | 'INTERNA';
   description: string;
   raw?: string;           // fallback para linhas não-parseadas
@@ -30,7 +29,7 @@ let _idSeq = 0;
 const uid = () => `rle-${Date.now()}-${++_idSeq}`;
 
 const LINE_RE =
-  /^(\d+)\.\s+(\d{2}\/\d{2}\/\d{4}),?\s+(\d{2}:\d{2}:\d{2})\s*—\s*(.+?)\s*—\s*(PÚBLICA|INTERNA)\s*—\s*(.+)$/;
+  /^(\d+)\.\s+(\d{2}\/\d{2}\/\d{4}),?\s+(\d{2}:\d{2}:\d{2})\s*—\s*(PÚBLICA|INTERNA)\s*—\s*(.+)$/;
 
 function parseLine(raw: string): ReportLine {
   const m = raw.match(LINE_RE);
@@ -39,16 +38,14 @@ function parseLine(raw: string): ReportLine {
       id: uid(),
       date: m[2],
       time: m[3],
-      operator: m[4].trim(),
-      type: m[5] as 'PÚBLICA' | 'INTERNA',
-      description: m[6].trim(),
+      type: m[4] as 'PÚBLICA' | 'INTERNA',
+      description: m[5].trim(),
     };
   }
   return {
     id: uid(),
     date: '',
     time: '',
-    operator: '',
     type: 'PÚBLICA',
     description: '',
     raw: raw.trim(),
@@ -84,7 +81,7 @@ function parseText(text: string): ReportLine[] {
 function serializeLine(line: ReportLine, idx: number): string {
   if (line.raw !== undefined) return line.raw;
   const num = idx + 1;
-  return `${num}. ${line.date}, ${line.time} — ${line.operator} — ${line.type} — ${line.description}`;
+  return `${num}. ${line.date}, ${line.time} — ${line.type} — ${line.description}`;
 }
 
 function serializeAll(lines: ReportLine[]): string {
@@ -194,7 +191,6 @@ export const ReportLineEditor = ({ value, onChange }: Props) => {
       id: uid(),
       date: `${dd}/${mm}/${yyyy}`,
       time: `${hh}:${mi}:${ss}`,
-      operator: 'OPERADOR',
       type: 'PÚBLICA',
       description: '',
     };
@@ -346,7 +342,7 @@ export const ReportLineEditor = ({ value, onChange }: Props) => {
                     />
                   ) : (
                     <>
-                      {/* Linha 1: timestamp | operador | tipo */}
+                      {/* Linha 1: timestamp | tipo */}
                       <div className="rle-field-row">
                         <input
                           className="rle-input timestamp"
@@ -357,15 +353,6 @@ export const ReportLineEditor = ({ value, onChange }: Props) => {
                             if (parts[1] !== undefined) updateField(line.id, 'time', parts[1].trim());
                           }}
                           placeholder="DD/MM/YYYY, HH:MM:SS"
-                        />
-                        <span className="rle-separator" />
-                        <input
-                          className="rle-input operator"
-                          value={line.operator}
-                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            updateField(line.id, 'operator', e.target.value)
-                          }
-                          placeholder="Operador"
                         />
                         <span className="rle-separator" />
                         <button

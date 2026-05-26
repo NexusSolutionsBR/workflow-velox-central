@@ -265,10 +265,6 @@ _REPORT_TEMPLATE = """<!DOCTYPE html>
         <div class="section-title">Localiza&ccedil;&atilde;o e Cronograma</div>
         <div class="data-grid">
             <div class="data-row">
-                <span class="label">Data / Hora Ocorr&ecirc;ncia</span>
-                <span class="value">{{data_ocorrencia}}</span>
-            </div>
-            <div class="data-row">
                 <span class="label">Cidade / UF</span>
                 <span class="value">{{cidade_ocorrencia}} &mdash; {{estado_uf}} ({{pais}})</span>
             </div>
@@ -285,10 +281,6 @@ _REPORT_TEMPLATE = """<!DOCTYPE html>
                 <span class="value">{{data_acionamento}}</span>
             </div>
             <div class="data-row">
-                <span class="label">Previs&atilde;o de Chegada</span>
-                <span class="value">{{data_previsao_chegada}}</span>
-            </div>
-            <div class="data-row">
                 <span class="label">Chegada ao Local</span>
                 <span class="value">{{data_chegada}}</span>
             </div>
@@ -299,10 +291,6 @@ _REPORT_TEMPLATE = """<!DOCTYPE html>
             <div class="data-row">
                 <span class="label">Tempo de Efici&ecirc;ncia</span>
                 <span class="value">{{tempo_eficiencia_minutos}} minutos</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Previs&atilde;o Cumprida</span>
-                <span class="value">{{previsao_cumprida}}</span>
             </div>
         </div>
 
@@ -320,10 +308,6 @@ _REPORT_TEMPLATE = """<!DOCTYPE html>
             <div class="data-row">
                 <span class="label">Valor Total de Recupera&ccedil;&atilde;o</span>
                 <span class="value highlight">R$ {{valor_total_recuperacao}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Deslocamento</span>
-                <span class="value">{{deslocamento}} km</span>
             </div>
         </div>
 

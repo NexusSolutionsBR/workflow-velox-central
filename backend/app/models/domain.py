@@ -52,6 +52,7 @@ class ScheduledSync(SQLModel, table=True):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()), primary_key=True)
     session_id: str = Field(foreign_key="session.session_id", index=True)
     ficha: Optional[str] = None
+    contact_name: Optional[str] = None
     task_id: str = Field(unique=True, index=True)
     run_at: datetime = Field(index=True)
     status: str = Field(default="PENDING")
