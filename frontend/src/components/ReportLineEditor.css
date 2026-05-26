@@ -1,0 +1,412 @@
+/* ================================================
+   ReportLineEditor — Editor de Linhas Estruturado
+   ================================================ */
+
+.rle-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ---------- Toolbar ---------- */
+.rle-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rle-toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.rle-toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rle-count {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.rle-btn-toolbar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+}
+
+.rle-btn-toolbar:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border-color: var(--border);
+}
+
+.rle-btn-toolbar.active {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: var(--primary);
+}
+
+/* ---------- Card List ---------- */
+.rle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------- Single Card ---------- */
+.rle-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  gap: 0;
+  background: rgba(15, 23, 42, 0.55);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.rle-card:hover {
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.rle-card.dragging {
+  opacity: 0.4;
+  transform: scale(0.97);
+}
+
+.rle-card.drag-over {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+/* Color strip (left) */
+.rle-color-strip {
+  grid-row: 1 / -1;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  transition: background 0.2s ease;
+  user-select: none;
+}
+
+.rle-color-strip:active {
+  cursor: grabbing;
+}
+
+.rle-color-strip.publica {
+  background: linear-gradient(180deg, rgba(52, 211, 153, 0.25) 0%, rgba(52, 211, 153, 0.08) 100%);
+}
+
+.rle-color-strip.interna {
+  background: linear-gradient(180deg, rgba(251, 191, 36, 0.25) 0%, rgba(251, 191, 36, 0.08) 100%);
+}
+
+.rle-color-strip.raw {
+  background: linear-gradient(180deg, rgba(148, 163, 184, 0.15) 0%, rgba(148, 163, 184, 0.04) 100%);
+}
+
+.rle-number {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+/* Card body */
+.rle-card-body {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Row of fields */
+.rle-field-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Individual fields */
+.rle-field {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.rle-field-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  opacity: 0.6;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.rle-input {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 5px 8px;
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.rle-input:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.rle-input:focus {
+  border-color: var(--primary);
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.12);
+}
+
+.rle-input.timestamp {
+  width: 165px;
+  font-variant-numeric: tabular-nums;
+  font-family: 'Inter', monospace;
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+}
+
+.rle-input.operator {
+  width: 180px;
+}
+
+.rle-input.section {
+  flex: 1;
+  min-width: 140px;
+}
+
+/* Type toggle badge */
+.rle-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  user-select: none;
+}
+
+.rle-type-badge.publica {
+  background: rgba(52, 211, 153, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.25);
+}
+
+.rle-type-badge.publica:hover {
+  background: rgba(52, 211, 153, 0.25);
+}
+
+.rle-type-badge.interna {
+  background: rgba(251, 191, 36, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+
+.rle-type-badge.interna:hover {
+  background: rgba(251, 191, 36, 0.25);
+}
+
+/* Description textarea */
+.rle-description {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  resize: none;
+  overflow: hidden;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.rle-description:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.rle-description:focus {
+  border-color: var(--primary);
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.12);
+}
+
+/* Raw (unparsed) line text */
+.rle-raw-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--text-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  resize: none;
+  overflow: hidden;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.rle-raw-input:hover {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.rle-raw-input:focus {
+  border-color: var(--primary);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-main);
+}
+
+/* ---------- Card Actions (right column) ---------- */
+.rle-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 8px 6px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.rle-card:hover .rle-actions {
+  opacity: 1;
+}
+
+.rle-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.rle-action-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+}
+
+.rle-action-btn.delete:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+}
+
+.rle-action-btn:disabled {
+  opacity: 0.25;
+  cursor: not-allowed;
+}
+
+/* ---------- Fallback textarea (raw mode) ---------- */
+.rle-raw-textarea {
+  width: 100%;
+  min-height: 300px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.rle-raw-textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* ---------- Separator between fields ---------- */
+.rle-separator {
+  width: 1px;
+  height: 16px;
+  background: var(--glass-border);
+  flex-shrink: 0;
+}
+
+/* ---------- Empty state ---------- */
+.rle-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .rle-card {
+    grid-template-columns: 32px 1fr auto;
+  }
+
+  .rle-field-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .rle-input.timestamp,
+  .rle-input.operator {
+    width: 100%;
+  }
+
+  .rle-separator {
+    display: none;
+  }
+
+  .rle-actions {
+    opacity: 1;
+    flex-direction: row;
+    padding: 4px 6px;
+  }
+
+  .rle-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

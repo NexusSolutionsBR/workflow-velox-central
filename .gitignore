@@ -1,0 +1,80 @@
+# ── Variáveis de ambiente e segredos ─────────────────────────
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+service-account.json
+*service-account*.json
+*credentials*.json
+secrets/
+.secrets/
+
+# ── Banco de dados local ──────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+dev.db
+backend/dev.db
+
+# ── Python ───────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.venv/
+venv/
+env/
+ENV/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# ── Node / Frontend ──────────────────────────────────────────
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ── Docker ───────────────────────────────────────────────────
+docker-compose.override.yml
+
+# ── Arquivos temporários do pipeline ─────────────────────────
+tmp/
+backend/tmp/
+*.tmp
+*.temp
+
+# ── IDEs e editores ──────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── Logs ─────────────────────────────────────────────────────
+logs/
+*.log

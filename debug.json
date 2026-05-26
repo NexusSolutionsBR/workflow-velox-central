@@ -1,0 +1,1884 @@
+{
+    "sessionId": "c24bb889-1e39-4e27-9440-0e381bb17058",
+    "totalMensagens": 377,
+    "totalMensagensTexto": 268,
+    "mensagens": [
+        {
+            "dataHora": "17/04/2026, 13:08:35",
+            "quem": "prestador",
+            "texto": "Retornando a base",
+            "_raw_createdAt": "2026-04-17T17:08:35.241Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 13:07:27",
+            "quem": "prestador",
+            "texto": "Completo os 10 km",
+            "_raw_createdAt": "2026-04-17T17:07:27.285Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:50:06",
+            "quem": "prestador",
+            "texto": "Está seguindo",
+            "_raw_createdAt": "2026-04-17T16:50:06.275Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:17:54",
+            "quem": "prestador",
+            "texto": "Codgo",
+            "_raw_createdAt": "2026-04-17T16:17:54.787Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:17:52",
+            "quem": "prestador",
+            "texto": "Teclado agora está pedindo identificação do motorista",
+            "_raw_createdAt": "2026-04-17T16:17:52.072Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:10:53",
+            "quem": "prestador",
+            "texto": "Ele está terminando de acerta com a central dele pegando uma senha",
+            "_raw_createdAt": "2026-04-17T16:10:53.093Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:57:07",
+            "quem": "prestador",
+            "texto": "Kkk",
+            "_raw_createdAt": "2026-04-17T15:57:07.162Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:57:05",
+            "quem": "prestador",
+            "texto": "O Meu Deus",
+            "_raw_createdAt": "2026-04-17T15:57:05.869Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:57:00",
+            "quem": "prestador",
+            "texto": "Agora vai",
+            "_raw_createdAt": "2026-04-17T15:57:00.386Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:56:55",
+            "quem": "prestador",
+            "texto": "Sicindo o desbloqueio",
+            "_raw_createdAt": "2026-04-17T15:56:55.342Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:39:03",
+            "quem": "prestador",
+            "texto": "Concegue ver",
+            "_raw_createdAt": "2026-04-17T15:39:03.871Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:38:43",
+            "quem": "prestador",
+            "texto": "Precisa da liberação para seguir a viagem agora",
+            "_raw_createdAt": "2026-04-17T15:38:43.905Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:38:16",
+            "quem": "prestador",
+            "texto": "Foi passado que o espelhamento está ok",
+            "_raw_createdAt": "2026-04-17T15:38:16.05Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:13:48",
+            "quem": "prestador",
+            "texto": "Este número de série o qual eles localizam o espelhamento",
+            "_raw_createdAt": "2026-04-17T15:13:48.81Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:13:15",
+            "quem": "prestador",
+            "texto": "Tem que informar que o equipamento foi trocado e mudou o número de série do equipamento",
+            "_raw_createdAt": "2026-04-17T15:13:15.611Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:54:04",
+            "quem": "prestador",
+            "texto": "No teclado aqui consta inativo ainda precisa do aceito da DHL agora",
+            "_raw_createdAt": "2026-04-17T14:54:04.245Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:52:15",
+            "quem": "prestador",
+            "texto": "Pois os teste tándo ok aí vai a outra opção",
+            "_raw_createdAt": "2026-04-17T14:52:15.567Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:51:51",
+            "quem": "prestador",
+            "texto": "Está aguardando",
+            "_raw_createdAt": "2026-04-17T14:51:51.487Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:51:43",
+            "quem": "prestador",
+            "texto": "Fala para fazer o teste de espelhamento",
+            "_raw_createdAt": "2026-04-17T14:51:43.526Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:50:46",
+            "quem": "prestador",
+            "texto": "Mas se o espelhamento tiver ok testa bloqueio a parte do GPS vai precisar andar para atualizar",
+            "_raw_createdAt": "2026-04-17T14:50:46.389Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:40:51",
+            "quem": "prestador",
+            "texto": "Copiou aí",
+            "_raw_createdAt": "2026-04-17T14:40:51.976Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:37:44",
+            "quem": "prestador",
+            "texto": "O espelhamento foi feito aqui está dependendo a DHL efetiva",
+            "_raw_createdAt": "2026-04-17T14:37:44.482Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:22:18",
+            "quem": "prestador",
+            "texto": "Foi feito o espelhamento",
+            "_raw_createdAt": "2026-04-17T14:22:18.753Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:18:02",
+            "quem": "prestador",
+            "texto": "?",
+            "_raw_createdAt": "2026-04-17T14:18:02.832Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:17:54",
+            "quem": "prestador",
+            "texto": "Veículo atualizou agora",
+            "_raw_createdAt": "2026-04-17T14:17:54.413Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:16:37",
+            "quem": "prestador",
+            "texto": "Sim",
+            "_raw_createdAt": "2026-04-17T14:16:37.913Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:01:35",
+            "quem": "prestador",
+            "texto": "Mole não",
+            "_raw_createdAt": "2026-04-17T14:01:35.909Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:01:30",
+            "quem": "prestador",
+            "texto": "3 dias neste sofrimento",
+            "_raw_createdAt": "2026-04-17T14:01:30.636Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:59:48",
+            "quem": "prestador",
+            "texto": "Kkkk",
+            "_raw_createdAt": "2026-04-17T13:59:48.836Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:59:37",
+            "quem": "prestador",
+            "texto": "O Motorista está o siri dentro da lata de brabo estou só de longe agora",
+            "_raw_createdAt": "2026-04-17T13:59:37.819Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:52:54",
+            "quem": "prestador",
+            "texto": "O Motorista aqui não tem acesso o sistema",
+            "_raw_createdAt": "2026-04-17T13:52:54.761Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:51:50",
+            "quem": "prestador",
+            "texto": "Mas o responsável falou que não está conceguindo pedindo para fazer contato com a transportadora",
+            "_raw_createdAt": "2026-04-17T13:51:50.186Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:51:03",
+            "quem": "prestador",
+            "texto": "Passou a senha para o responsável na transportadora",
+            "_raw_createdAt": "2026-04-17T13:51:03.53Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:41:57",
+            "quem": "prestador",
+            "texto": "Ele passou para o encarregado dele para tentar ativar",
+            "_raw_createdAt": "2026-04-17T13:41:57.703Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:32:40",
+            "quem": "prestador",
+            "texto": "?",
+            "_raw_createdAt": "2026-04-17T13:32:40.743Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:32:15",
+            "quem": "prestador",
+            "texto": "Copiou?",
+            "_raw_createdAt": "2026-04-17T13:32:15.715Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:30:30",
+            "quem": "prestador",
+            "texto": "?",
+            "_raw_createdAt": "2026-04-17T13:30:30.618Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:28:40",
+            "quem": "prestador",
+            "texto": "Ele está pedindo a senha do espelhamento",
+            "_raw_createdAt": "2026-04-17T13:28:40.822Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:28:13",
+            "quem": "prestador",
+            "texto": "?",
+            "_raw_createdAt": "2026-04-17T13:28:13.617Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:19:50",
+            "quem": "prestador",
+            "texto": "Precisa a central atender e ele para fazer o espelhamento",
+            "_raw_createdAt": "2026-04-17T13:19:50.862Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:16:30",
+            "quem": "prestador",
+            "texto": "Então o condutor falou que só segue se a central informar a ele kkkkk",
+            "_raw_createdAt": "2026-04-17T13:16:30.21Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:15:02",
+            "quem": "prestador",
+            "texto": "🤦‍♂️🤦‍♂️",
+            "_raw_createdAt": "2026-04-17T13:15:02.553Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:14:54",
+            "quem": "prestador",
+            "texto": "E a central não informou nada a ele",
+            "_raw_createdAt": "2026-04-17T13:14:54.4Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:14:17",
+            "quem": "prestador",
+            "texto": "O condutor alega que o carro está sem espelhamento",
+            "_raw_createdAt": "2026-04-17T13:14:17.202Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:11:38",
+            "quem": "prestador",
+            "texto": "?",
+            "_raw_createdAt": "2026-04-17T13:11:38.624Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:11:26",
+            "quem": "prestador",
+            "texto": "Mandou para o Motorista",
+            "_raw_createdAt": "2026-04-17T13:11:26.961Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:07:53",
+            "quem": "prestador",
+            "texto": "Precisa atender o motorista ele este  nervoso pois ninguém atende ele",
+            "_raw_createdAt": "2026-04-17T13:07:53.766Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:04:58",
+            "quem": "prestador",
+            "texto": "Vai seguir sem espelhar?",
+            "_raw_createdAt": "2026-04-17T13:04:58.09Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 08:59:33",
+            "quem": "prestador",
+            "texto": "Número do motorista",
+            "_raw_createdAt": "2026-04-17T12:59:33.572Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 08:59:22",
+            "quem": "prestador",
+            "texto": "+55 27 99723-7378",
+            "_raw_createdAt": "2026-04-17T12:59:22.062Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 08:58:53",
+            "quem": "prestador",
+            "texto": "?",
+            "_raw_createdAt": "2026-04-17T12:58:53.157Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 08:54:54",
+            "quem": "prestador",
+            "texto": "Manda o áudio que vô mostra a ele que está liberado para ir",
+            "_raw_createdAt": "2026-04-17T12:54:54.612Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 08:54:33",
+            "quem": "prestador",
+            "texto": "Agora a central não atende o motorista",
+            "_raw_createdAt": "2026-04-17T12:54:33.171Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 08:21:15",
+            "quem": "prestador",
+            "texto": "??",
+            "_raw_createdAt": "2026-04-17T12:21:15.96Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 07:58:18",
+            "quem": "prestador",
+            "texto": "O povo difícil",
+            "_raw_createdAt": "2026-04-17T11:58:18.918Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 07:57:57",
+            "quem": "prestador",
+            "texto": "Já está fazendo o cadastro novamente",
+            "_raw_createdAt": "2026-04-17T11:57:57.375Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 06:33:55",
+            "quem": "prestador",
+            "texto": "Agora as 08hs vai começar a fazer a atualização dinovo",
+            "_raw_createdAt": "2026-04-17T10:33:55.739Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 06:22:02",
+            "quem": "prestador",
+            "texto": "Bom dia",
+            "_raw_createdAt": "2026-04-17T10:22:02.497Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 05:22:30",
+            "quem": "prestador",
+            "texto": "Módulo do Rastreador",
+            "_raw_createdAt": "2026-04-17T09:22:30.279Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 05:14:30",
+            "quem": "prestador",
+            "texto": "👍",
+            "_raw_createdAt": "2026-04-17T09:14:30.222Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 02:06:23",
+            "quem": "prestador",
+            "texto": "Sem",
+            "_raw_createdAt": "2026-04-17T06:06:23.499Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 23:31:10",
+            "quem": "prestador",
+            "texto": "👍",
+            "_raw_createdAt": "2026-04-17T03:31:10.944Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 23:14:57",
+            "quem": "prestador",
+            "texto": "Trocou o aparelho mas as atualizações não chega",
+            "_raw_createdAt": "2026-04-17T03:14:57.937Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 23:14:30",
+            "quem": "prestador",
+            "texto": "Vai precisar aguarda a central da empresa abrir amanhã para fazer a atualização",
+            "_raw_createdAt": "2026-04-17T03:14:30.781Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 23:13:59",
+            "quem": "prestador",
+            "texto": "Aqui não funciona",
+            "_raw_createdAt": "2026-04-17T03:13:59.862Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 23:05:12",
+            "quem": "prestador",
+            "texto": "O sistema não atualizou ainda 🤦‍♂️🤦‍♂️🤦‍♂️",
+            "_raw_createdAt": "2026-04-17T03:05:12.15Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 22:05:35",
+            "quem": "prestador",
+            "texto": "Então vai restabelecer",
+            "_raw_createdAt": "2026-04-17T02:05:35.269Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 22:02:52",
+            "quem": "prestador",
+            "texto": "Atualizando",
+            "_raw_createdAt": "2026-04-17T02:02:52.156Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 21:31:56",
+            "quem": "prestador",
+            "texto": "Vai movimentar o veículo para atualizar o sistema",
+            "_raw_createdAt": "2026-04-17T01:31:56.538Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 21:30:27",
+            "quem": "prestador",
+            "texto": "Aqui finalizou",
+            "_raw_createdAt": "2026-04-17T01:30:27.051Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 20:49:22",
+            "quem": "prestador",
+            "texto": "O pessoal chegou para fazer a manutenção",
+            "_raw_createdAt": "2026-04-17T00:49:22.337Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 15:39:33",
+            "quem": "prestador",
+            "texto": "A GR não responde o Proprietário está pedindo a Empresa do rastreamento para solucionar mas não tem assistência técnica aqui na região então vai demorar",
+            "_raw_createdAt": "2026-04-16T19:39:33.563Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 15:00:47",
+            "quem": "prestador",
+            "texto": "O módulo do Rastreador deu defeito mesmo tem 2 opção\nAguarda a manutenção para trocar o modulo\nOu\nLiberar para seguir viagem com o acompanhamento",
+            "_raw_createdAt": "2026-04-16T19:00:47.569Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 14:55:45",
+            "quem": "prestador",
+            "texto": "Para ele seguir precisa ser autorizado a seguir do local que está",
+            "_raw_createdAt": "2026-04-16T18:55:45.735Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 14:54:39",
+            "quem": "prestador",
+            "texto": "GR mandou para o sistema não atualizou",
+            "_raw_createdAt": "2026-04-16T18:54:39.365Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 14:53:16",
+            "quem": "prestador",
+            "texto": "Sim",
+            "_raw_createdAt": "2026-04-16T18:53:16.423Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 14:13:09",
+            "quem": "prestador",
+            "texto": "Ok",
+            "_raw_createdAt": "2026-04-16T18:13:09.692Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 14:01:00",
+            "quem": "prestador",
+            "texto": "Vai não vai kkkkk",
+            "_raw_createdAt": "2026-04-16T18:01:00.242Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 14:00:22",
+            "quem": "prestador",
+            "texto": "A GR nem responde o motorista kkkk",
+            "_raw_createdAt": "2026-04-16T18:00:22.85Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 13:55:46",
+            "quem": "prestador",
+            "texto": "A GR não liberou o motorista ainda para sair",
+            "_raw_createdAt": "2026-04-16T17:55:46.795Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 13:50:51",
+            "quem": "prestador",
+            "texto": "Ele está só dependendo da autorização da GR Para reiniciar",
+            "_raw_createdAt": "2026-04-16T17:50:51.016Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 13:46:27",
+            "quem": "prestador",
+            "texto": "Foi feito a manutenção só que no local não tem sinal precisa anda com o veículo para ver se vai atualizar",
+            "_raw_createdAt": "2026-04-16T17:46:27.362Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:19:00",
+            "quem": "prestador",
+            "texto": "Ok",
+            "_raw_createdAt": "2026-04-16T13:19:00.864Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:18:51",
+            "quem": "prestador",
+            "texto": "Liga para ele",
+            "_raw_createdAt": "2026-04-16T13:18:51.562Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:18:44",
+            "quem": "prestador",
+            "texto": "Pode pedir para eles liberar ele",
+            "_raw_createdAt": "2026-04-16T13:18:44.078Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:18:09",
+            "quem": "prestador",
+            "texto": "O Motorista precisa desta autorização pela parte da GR",
+            "_raw_createdAt": "2026-04-16T13:18:09.502Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:15:27",
+            "quem": "prestador",
+            "texto": "O Motorista quer saber se aguarda ou segue com o meu acompanhamento",
+            "_raw_createdAt": "2026-04-16T13:15:27.56Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:13:30",
+            "quem": "prestador",
+            "texto": "Trocou a antena mas não atualizou o sinal",
+            "_raw_createdAt": "2026-04-16T13:13:30.139Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:13:16",
+            "quem": "prestador",
+            "texto": "Informações passada pelo Motorista",
+            "_raw_createdAt": "2026-04-16T13:13:16.063Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:12:42",
+            "quem": "prestador",
+            "texto": "A GR informou para o condutor aguardar aqui",
+            "_raw_createdAt": "2026-04-16T13:12:42.15Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:08:15",
+            "quem": "prestador",
+            "texto": "Como proceder seguir como está ou aguarda orientação",
+            "_raw_createdAt": "2026-04-16T13:08:15.066Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:07:31",
+            "quem": "prestador",
+            "texto": "Trocou a antena mas não atualizou",
+            "_raw_createdAt": "2026-04-16T13:07:31.396Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 08:44:52",
+            "quem": "prestador",
+            "texto": "Pronto para seguir",
+            "_raw_createdAt": "2026-04-16T12:44:52.715Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 08:44:25",
+            "quem": "prestador",
+            "texto": "Motorista está ok aqui",
+            "_raw_createdAt": "2026-04-16T12:44:25.731Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 08:09:35",
+            "quem": "prestador",
+            "texto": "Solicitando o desbloqueio",
+            "_raw_createdAt": "2026-04-16T12:09:35.618Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 08:03:39",
+            "quem": "prestador",
+            "texto": "Vai gerar violação de painel pois abriu aqui para trocar ok",
+            "_raw_createdAt": "2026-04-16T12:03:39.324Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 07:56:11",
+            "quem": "prestador",
+            "texto": "Solicitando para desligar a sirene",
+            "_raw_createdAt": "2026-04-16T11:56:11.205Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 07:51:37",
+            "quem": "prestador",
+            "texto": "Ele vai trocar a antena do GPS",
+            "_raw_createdAt": "2026-04-16T11:51:37.788Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 07:27:29",
+            "quem": "prestador",
+            "texto": "Para ver se estabelece o sinal",
+            "_raw_createdAt": "2026-04-16T11:27:29.384Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 07:27:15",
+            "quem": "prestador",
+            "texto": "Vai trocar a antena do aparelho",
+            "_raw_createdAt": "2026-04-16T11:27:15.139Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 07:27:02",
+            "quem": "prestador",
+            "texto": "Motorista acordou",
+            "_raw_createdAt": "2026-04-16T11:27:02.674Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 07:04:24",
+            "quem": "prestador",
+            "texto": "🤦‍♂️🤦‍♂️",
+            "_raw_createdAt": "2026-04-16T11:04:24.12Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 07:04:20",
+            "quem": "prestador",
+            "texto": "Não acordou ainda",
+            "_raw_createdAt": "2026-04-16T11:04:20.917Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 05:31:01",
+            "quem": "prestador",
+            "texto": "👍",
+            "_raw_createdAt": "2026-04-16T09:31:01.131Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 05:30:34",
+            "quem": "prestador",
+            "texto": "Ele está liberado para reiniciar se quiser",
+            "_raw_createdAt": "2026-04-16T09:30:34.855Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 05:30:14",
+            "quem": "prestador",
+            "texto": "Ok",
+            "_raw_createdAt": "2026-04-16T09:30:14.038Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 05:29:36",
+            "quem": "prestador",
+            "texto": "Sabe se o sistema atualizou?",
+            "_raw_createdAt": "2026-04-16T09:29:36.756Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 05:29:14",
+            "quem": "prestador",
+            "texto": "👍",
+            "_raw_createdAt": "2026-04-16T09:29:14.156Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 22:59:29",
+            "quem": "prestador",
+            "texto": "Veículo com sirene ligada agora",
+            "_raw_createdAt": "2026-04-16T02:59:29.213Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 22:53:38",
+            "quem": "prestador",
+            "texto": "Pedi para ver se atualizou",
+            "_raw_createdAt": "2026-04-16T02:53:38.367Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 22:52:32",
+            "quem": "prestador",
+            "texto": "Ligou a chave geral",
+            "_raw_createdAt": "2026-04-16T02:52:32.328Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 22:04:47",
+            "quem": "prestador",
+            "texto": "Desligou A chave geral",
+            "_raw_createdAt": "2026-04-16T02:04:47.54Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:54:12",
+            "quem": "prestador",
+            "texto": "Não sabe a hora do reinicio ainda",
+            "_raw_createdAt": "2026-04-16T01:54:12.95Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:53:37",
+            "quem": "prestador",
+            "texto": "Ele vai desligar a chave geral para tentar atualizar o sistema",
+            "_raw_createdAt": "2026-04-16T01:53:37.776Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:52:53",
+            "quem": "prestador",
+            "texto": "Vai desligar a chave geral",
+            "_raw_createdAt": "2026-04-16T01:52:53.77Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:50:19",
+            "quem": "prestador",
+            "texto": "Motorista vai resta o veículo",
+            "_raw_createdAt": "2026-04-16T01:50:19.491Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:38:43",
+            "quem": "prestador",
+            "texto": "?",
+            "_raw_createdAt": "2026-04-16T01:38:43.028Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:35:12",
+            "quem": "prestador",
+            "texto": "Tem os dados",
+            "_raw_createdAt": "2026-04-16T01:35:12.078Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:34:58",
+            "quem": "prestador",
+            "texto": "No local",
+            "_raw_createdAt": "2026-04-16T01:34:58.92Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:13:21",
+            "quem": "prestador",
+            "texto": "Fuiii",
+            "_raw_createdAt": "2026-04-16T01:13:21.317Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:07:52",
+            "quem": "prestador",
+            "texto": "Ok",
+            "_raw_createdAt": "2026-04-16T01:07:52.603Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:04:43",
+            "quem": "prestador",
+            "texto": "?",
+            "_raw_createdAt": "2026-04-16T01:04:43.773Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:00:44",
+            "quem": "prestador",
+            "texto": "Sim",
+            "_raw_createdAt": "2026-04-16T01:00:44.153Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:00:31",
+            "quem": "prestador",
+            "texto": "25 minutos",
+            "_raw_createdAt": "2026-04-16T01:00:31.978Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:00:09",
+            "quem": "prestador",
+            "texto": "Estou disponível",
+            "_raw_createdAt": "2026-04-16T01:00:09.113Z",
+            "_raw_direction": "FROM_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 13:37:18",
+            "quem": "operador",
+            "texto": "*Milleny:*\n#finalizado-103243",
+            "_raw_createdAt": "2026-04-17T17:37:18.006Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 13:18:12",
+            "quem": "operador",
+            "texto": "*Milleny:*\ntks",
+            "_raw_createdAt": "2026-04-17T17:18:12.853Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 13:10:10",
+            "quem": "operador",
+            "texto": "*Milleny:*\nfixa",
+            "_raw_createdAt": "2026-04-17T17:10:10.405Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 13:09:49",
+            "quem": "operador",
+            "texto": "*Milleny:*\nlocalização",
+            "_raw_createdAt": "2026-04-17T17:09:49.478Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:56:11",
+            "quem": "operador",
+            "texto": "*Milleny:*\nmanda a localização e pode finalizar",
+            "_raw_createdAt": "2026-04-17T16:56:11.556Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:56:04",
+            "quem": "operador",
+            "texto": "*Milleny:*\nfaz os ultimos regiustros",
+            "_raw_createdAt": "2026-04-17T16:56:04.658Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:56:00",
+            "quem": "operador",
+            "texto": "*Milleny:*\nassim que atingir",
+            "_raw_createdAt": "2026-04-17T16:56:00.995Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:55:01",
+            "quem": "operador",
+            "texto": "*Milleny:*\nseguir a orientação",
+            "_raw_createdAt": "2026-04-17T16:55:01.54Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:51:36",
+            "quem": "operador",
+            "texto": "*Milleny:*\nacompanha por 10 kms e pode finalizar]",
+            "_raw_createdAt": "2026-04-17T16:51:36.739Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:51:21",
+            "quem": "operador",
+            "texto": "*Milleny:*\ndele saindo a",
+            "_raw_createdAt": "2026-04-17T16:51:21.633Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:51:16",
+            "quem": "operador",
+            "texto": "*Milleny:*\nfaz fotos",
+            "_raw_createdAt": "2026-04-17T16:51:16.771Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:17:16",
+            "quem": "operador",
+            "texto": "*Milleny:*\nok",
+            "_raw_createdAt": "2026-04-17T16:17:16.369Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:10:16",
+            "quem": "operador",
+            "texto": "*Milleny:*\ne ai?",
+            "_raw_createdAt": "2026-04-17T16:10:16.593Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 12:01:51",
+            "quem": "operador",
+            "texto": "*Milleny:*\ncomando enviado",
+            "_raw_createdAt": "2026-04-17T16:01:51.918Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:57:58",
+            "quem": "operador",
+            "texto": "*Milleny:*\nvou solicitar",
+            "_raw_createdAt": "2026-04-17T15:57:58.464Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:57:54",
+            "quem": "operador",
+            "texto": "*Milleny:*\nok",
+            "_raw_createdAt": "2026-04-17T15:57:54.608Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:57:53",
+            "quem": "operador",
+            "texto": "*Milleny:*\nkkkkk",
+            "_raw_createdAt": "2026-04-17T15:57:53.472Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:56:27",
+            "quem": "operador",
+            "texto": "*Milleny:*\nok",
+            "_raw_createdAt": "2026-04-17T15:56:27.998Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:52:49",
+            "quem": "operador",
+            "texto": "*Milleny:*\nfaz os registros e acompanha",
+            "_raw_createdAt": "2026-04-17T15:52:49.599Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:52:44",
+            "quem": "operador",
+            "texto": "*Milleny:*\nPode autorizar ele reiniciar",
+            "_raw_createdAt": "2026-04-17T15:52:44.223Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:52:35",
+            "quem": "operador",
+            "texto": "*Milleny:*\nespelhamento OK",
+            "_raw_createdAt": "2026-04-17T15:52:35.31Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:41:08",
+            "quem": "operador",
+            "texto": "*Milleny:*\nverificando",
+            "_raw_createdAt": "2026-04-17T15:41:08.687Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:20:37",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nUm momento",
+            "_raw_createdAt": "2026-04-17T15:20:37.558Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 11:05:07",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\num x",
+            "_raw_createdAt": "2026-04-17T15:05:07.656Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:51:16",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\neles não autorizaram, é para seguir em preservação",
+            "_raw_createdAt": "2026-04-17T14:51:16.968Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:42:10",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\num x",
+            "_raw_createdAt": "2026-04-17T14:42:10.922Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:35:56",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\n3 dias nessa é foda",
+            "_raw_createdAt": "2026-04-17T14:35:56.539Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:35:40",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nO mds",
+            "_raw_createdAt": "2026-04-17T14:35:40.521Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:33:46",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nVamos aguardar eles autorizarem o condutor iniciar viagem.",
+            "_raw_createdAt": "2026-04-17T14:33:46.105Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:26:06",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nUM X",
+            "_raw_createdAt": "2026-04-17T14:26:06.09Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:19:26",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\ndeu certo? pq eles falram que segue em sinal",
+            "_raw_createdAt": "2026-04-17T14:19:26.971Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:16:54",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nse estiver carregado manter preservação",
+            "_raw_createdAt": "2026-04-17T14:16:54.362Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:16:15",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nVeículo está carregado?",
+            "_raw_createdAt": "2026-04-17T14:16:15.739Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:10:25",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\naté agr não me deram retorno",
+            "_raw_createdAt": "2026-04-17T14:10:25.597Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:10:14",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nsiim",
+            "_raw_createdAt": "2026-04-17T14:10:14.349Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:01:06",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nMas é compreensivel, eles enrolam demais",
+            "_raw_createdAt": "2026-04-17T14:01:06.028Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 10:00:13",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nMeu Deus kkkkkk",
+            "_raw_createdAt": "2026-04-17T14:00:13.403Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:58:32",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\ncliente está verificando",
+            "_raw_createdAt": "2026-04-17T13:58:32.333Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:52:08",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\num x",
+            "_raw_createdAt": "2026-04-17T13:52:08.478Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:44:01",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nPositivo",
+            "_raw_createdAt": "2026-04-17T13:44:01.901Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:39:07",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nDeu certo?",
+            "_raw_createdAt": "2026-04-17T13:39:07.966Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:32:51",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nsenha",
+            "_raw_createdAt": "2026-04-17T13:32:51.854Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:32:46",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nporta 9001",
+            "_raw_createdAt": "2026-04-17T13:32:46.335Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:32:41",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nDHL SUPPLY CHAIN",
+            "_raw_createdAt": "2026-04-17T13:32:41.282Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:32:28",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\n00233065000187",
+            "_raw_createdAt": "2026-04-17T13:32:28.032Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:30:45",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\ndo teclado",
+            "_raw_createdAt": "2026-04-17T13:30:45.12Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:30:06",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nManda foto",
+            "_raw_createdAt": "2026-04-17T13:30:06.816Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:21:36",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\num x",
+            "_raw_createdAt": "2026-04-17T13:21:36.416Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:19:33",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\n🤦‍♀️ 🤦‍♀️",
+            "_raw_createdAt": "2026-04-17T13:19:33.712Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:19:05",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\ncondutor não pode reiniciar viagem",
+            "_raw_createdAt": "2026-04-17T13:19:05.665Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:15:42",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\num x",
+            "_raw_createdAt": "2026-04-17T13:15:42.448Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:15:38",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\num",
+            "_raw_createdAt": "2026-04-17T13:15:38.593Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:15:36",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nai mds",
+            "_raw_createdAt": "2026-04-17T13:15:36.864Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:15:31",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nO veículo não está pontuando o rastreamento, por isso solicitou o acompanhamento",
+            "_raw_createdAt": "2026-04-17T13:15:31.539Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:13:32",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nO condutor está autorizado a seguir viagem, o sr pode seguir em acompanhamento",
+            "_raw_createdAt": "2026-04-17T13:13:32.112Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:12:15",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nacredito que sim",
+            "_raw_createdAt": "2026-04-17T13:12:15.921Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:11:07",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\npode iniciar o deslocamento",
+            "_raw_createdAt": "2026-04-17T13:11:07.618Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:06:52",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\neles falaram para esperar",
+            "_raw_createdAt": "2026-04-17T13:06:52.352Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:01:13",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\ncliente não me dá retorno",
+            "_raw_createdAt": "2026-04-17T13:01:13.798Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 09:01:06",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\num momento",
+            "_raw_createdAt": "2026-04-17T13:01:06.018Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 08:56:41",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\num x",
+            "_raw_createdAt": "2026-04-17T12:56:41.697Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 08:53:30",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\npode voltar me atualizar por aqui",
+            "_raw_createdAt": "2026-04-17T12:53:30.659Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 08:00:38",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nPositivo",
+            "_raw_createdAt": "2026-04-17T12:00:38.758Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 07:55:26",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nMe atualiza",
+            "_raw_createdAt": "2026-04-17T11:55:26.075Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 06:45:39",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\ntks",
+            "_raw_createdAt": "2026-04-17T10:45:39.131Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 06:45:37",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nPositivo",
+            "_raw_createdAt": "2026-04-17T10:45:37.62Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 06:26:09",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\ntks",
+            "_raw_createdAt": "2026-04-17T10:26:09.189Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 06:21:35",
+            "quem": "operador",
+            "texto": "*Thayná Souza:*\nBom dia",
+            "_raw_createdAt": "2026-04-17T10:21:35.741Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 05:23:49",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nTks",
+            "_raw_createdAt": "2026-04-17T09:23:49.186Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 05:19:34",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nQual foi a peça que foi trocada?",
+            "_raw_createdAt": "2026-04-17T09:19:34.467Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 05:13:40",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nAtualiza",
+            "_raw_createdAt": "2026-04-17T09:13:40.918Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 03:33:32",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nTks",
+            "_raw_createdAt": "2026-04-17T07:33:32.113Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 02:05:57",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nSem alterações?",
+            "_raw_createdAt": "2026-04-17T06:05:57.953Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 02:00:00",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\n?",
+            "_raw_createdAt": "2026-04-17T06:00:00.571Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "17/04/2026, 01:55:06",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nAtualiza",
+            "_raw_createdAt": "2026-04-17T05:55:06.758Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 23:30:52",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nManter preservação",
+            "_raw_createdAt": "2026-04-17T03:30:52.019Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 23:30:46",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nPassei para eles",
+            "_raw_createdAt": "2026-04-17T03:30:46.05Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 23:30:32",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nOK",
+            "_raw_createdAt": "2026-04-17T03:30:32.419Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 23:14:29",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nNão esta funcionando?",
+            "_raw_createdAt": "2026-04-17T03:14:29.571Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 23:06:03",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nOk",
+            "_raw_createdAt": "2026-04-17T03:06:03.907Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 23:04:36",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nAlguma alteração?",
+            "_raw_createdAt": "2026-04-17T03:04:36.739Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 22:09:09",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nManda mais fotos",
+            "_raw_createdAt": "2026-04-17T02:09:09.132Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 22:09:05",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nOk",
+            "_raw_createdAt": "2026-04-17T02:09:05.027Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 22:04:53",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nEle ja vai seguir?",
+            "_raw_createdAt": "2026-04-17T02:04:53.498Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 22:02:27",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nDeu certo?",
+            "_raw_createdAt": "2026-04-17T02:02:27.69Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 21:32:49",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nok",
+            "_raw_createdAt": "2026-04-17T01:32:49.099Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 21:31:31",
+            "quem": "operador",
+            "texto": "*Dheniffer:*\nO condutor vai seguir?",
+            "_raw_createdAt": "2026-04-17T01:31:31.403Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 18:15:14",
+            "quem": "operador",
+            "texto": "*Isys Amorim:*\natualiza",
+            "_raw_createdAt": "2026-04-16T22:15:14.011Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 17:10:06",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\natualiza",
+            "_raw_createdAt": "2026-04-16T21:10:06.984Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 14:53:50",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\nqual motivo?",
+            "_raw_createdAt": "2026-04-16T18:53:50.067Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 14:53:07",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\nparou?",
+            "_raw_createdAt": "2026-04-16T18:53:07.474Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 14:30:25",
+            "quem": "operador",
+            "texto": "*Ana Araujo:*\nchegando no local, fazer registro e atualizar a loc",
+            "_raw_createdAt": "2026-04-16T18:30:25.575Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 14:12:36",
+            "quem": "operador",
+            "texto": "*Ana Araujo:*\nO motorista vai seguir para outro posto seguir em acompanhamento",
+            "_raw_createdAt": "2026-04-16T18:12:36.678Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 14:00:01",
+            "quem": "operador",
+            "texto": "*Ana Araujo:*\nentendido",
+            "_raw_createdAt": "2026-04-16T18:00:01.879Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 13:53:19",
+            "quem": "operador",
+            "texto": "*Ana Araujo:*\nregistra e acompanha por gentileza",
+            "_raw_createdAt": "2026-04-16T17:53:19.716Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 13:53:04",
+            "quem": "operador",
+            "texto": "*Ana Araujo:*\nassim que ele iniciar",
+            "_raw_createdAt": "2026-04-16T17:53:04.004Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 13:52:59",
+            "quem": "operador",
+            "texto": "*Ana Araujo:*\ntks",
+            "_raw_createdAt": "2026-04-16T17:52:59.189Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 13:51:06",
+            "quem": "operador",
+            "texto": "*Ana Araujo:*\nfaz fotos por gentileza",
+            "_raw_createdAt": "2026-04-16T17:51:06.517Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 13:50:59",
+            "quem": "operador",
+            "texto": "*Ana Araujo:*\nentendido",
+            "_raw_createdAt": "2026-04-16T17:50:59.94Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 13:49:33",
+            "quem": "operador",
+            "texto": "*Ana Araujo:*\nentendido",
+            "_raw_createdAt": "2026-04-16T17:49:33.573Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 13:00:29",
+            "quem": "operador",
+            "texto": "*Ana Araujo:*\ntks",
+            "_raw_createdAt": "2026-04-16T17:00:29.056Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 12:39:06",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\natualiza",
+            "_raw_createdAt": "2026-04-16T16:39:06.662Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 10:52:23",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\natualização?",
+            "_raw_createdAt": "2026-04-16T14:52:23.788Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:18:50",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\né para vc permanecer em preservação",
+            "_raw_createdAt": "2026-04-16T13:18:50.617Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:18:39",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\npositivo",
+            "_raw_createdAt": "2026-04-16T13:18:39.145Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:17:36",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\nsegue com o acompanhamento",
+            "_raw_createdAt": "2026-04-16T13:17:36.905Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:15:16",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\npositivo",
+            "_raw_createdAt": "2026-04-16T13:15:16.442Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:13:09",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\npositivo",
+            "_raw_createdAt": "2026-04-16T13:13:09.61Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 09:10:10",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\natualiza a foto",
+            "_raw_createdAt": "2026-04-16T13:10:10.602Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 08:50:13",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\nacompanha",
+            "_raw_createdAt": "2026-04-16T12:50:13.324Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 08:50:06",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\nmanda foto quando iniciar viagem.",
+            "_raw_createdAt": "2026-04-16T12:50:06.54Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 08:11:27",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\npositivo",
+            "_raw_createdAt": "2026-04-16T12:11:27.215Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 08:01:29",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\npositivo",
+            "_raw_createdAt": "2026-04-16T12:01:29.424Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 07:56:35",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\npositivo",
+            "_raw_createdAt": "2026-04-16T11:56:35.168Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 07:55:05",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\npositivo",
+            "_raw_createdAt": "2026-04-16T11:55:05.92Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 07:04:52",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\nvixii",
+            "_raw_createdAt": "2026-04-16T11:04:52.261Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 07:04:06",
+            "quem": "operador",
+            "texto": "*Aline Souza:*\nEle informou quando irá reiniciar?",
+            "_raw_createdAt": "2026-04-16T11:04:06.518Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 05:31:07",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nso me informa quando ele acordar pra verificar se vamos acompanhar",
+            "_raw_createdAt": "2026-04-16T09:31:07.944Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 05:30:52",
+            "quem": "operador",
+            "texto": "*Thallyta:*\npositivo",
+            "_raw_createdAt": "2026-04-16T09:30:52.208Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 05:30:00",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nas vezes so atualiza quando reinicia viagem",
+            "_raw_createdAt": "2026-04-16T09:30:00.255Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 05:29:47",
+            "quem": "operador",
+            "texto": "*Thallyta:*\ncliente nao chegou a informar",
+            "_raw_createdAt": "2026-04-16T09:29:47.434Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 05:28:49",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nele acordar me avisa",
+            "_raw_createdAt": "2026-04-16T09:28:49.182Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 05:20:51",
+            "quem": "operador",
+            "texto": "*Thallyta:*\natualizar",
+            "_raw_createdAt": "2026-04-16T09:20:51.798Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 04:04:19",
+            "quem": "operador",
+            "texto": "*Thallyta:*\natualizar",
+            "_raw_createdAt": "2026-04-16T08:04:19.737Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "16/04/2026, 01:08:24",
+            "quem": "operador",
+            "texto": "*Thallyta:*\natualizar",
+            "_raw_createdAt": "2026-04-16T05:08:24.315Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 22:08:32",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nqsl",
+            "_raw_createdAt": "2026-04-16T02:08:32.007Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 22:08:26",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nqs",
+            "_raw_createdAt": "2026-04-16T02:08:26.635Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 22:07:20",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nvai iniciar o pernoite agora ne?",
+            "_raw_createdAt": "2026-04-16T02:07:20.642Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 22:06:51",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nqsl",
+            "_raw_createdAt": "2026-04-16T02:06:51.068Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:55:19",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nmas vai realizar pernoit ne?",
+            "_raw_createdAt": "2026-04-16T01:55:19.597Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:55:10",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nqsl",
+            "_raw_createdAt": "2026-04-16T01:55:10.539Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:53:54",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nele vai dar pernoite ou vai so realizar reset e reiniciar?",
+            "_raw_createdAt": "2026-04-16T01:53:54.626Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:53:03",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nvai reiniciar que horas?",
+            "_raw_createdAt": "2026-04-16T01:53:03.355Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:52:46",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nnao entendi",
+            "_raw_createdAt": "2026-04-16T01:52:46.151Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:50:42",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nvai oq?",
+            "_raw_createdAt": "2026-04-16T01:50:42.951Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:40:34",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nPlaca: FMT4C24",
+            "_raw_createdAt": "2026-04-16T01:40:34.39Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:08:04",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nhttps://maps.app.goo.gl/oBUFghaGM6H1peAT6\n\nPlaca: FMT4C24\nSituação: GPS travado, preservação",
+            "_raw_createdAt": "2026-04-16T01:08:04.594Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:07:43",
+            "quem": "operador",
+            "texto": "*Thallyta:*\n#iniciado",
+            "_raw_createdAt": "2026-04-16T01:07:43.493Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:07:40",
+            "quem": "operador",
+            "texto": "*Thallyta:*\nautorizado",
+            "_raw_createdAt": "2026-04-16T01:07:40.144Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:05:56",
+            "quem": "operador",
+            "texto": "*Thallyta:*\n1x",
+            "_raw_createdAt": "2026-04-16T01:05:56.793Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:00:32",
+            "quem": "operador",
+            "texto": "Possui disponibilidade de horário para buscas, preservação, acompanhamento e pernoite se necessário?",
+            "_raw_createdAt": "2026-04-16T01:00:32.228Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 21:00:15",
+            "quem": "operador",
+            "texto": "Ok! Qual seu tempo estimado para deslocamento? Mande por escrito por gentileza.",
+            "_raw_createdAt": "2026-04-16T01:00:15.284Z",
+            "_raw_direction": "TO_HUB"
+        },
+        {
+            "dataHora": "15/04/2026, 20:55:51",
+            "quem": "operador",
+            "texto": "ID Solicitação: 20260415215549-7841\n\nOlá TAXI, temos uma nova solicitação de atendimento:\n\nCoordenadas: -21.968679636861868, -42.87398081647498\nTipo do serviço: PRONTA RESPOSTA, PRESTADOR, ASSISTÊNCIA 24H\nLink google maps: https://www.google.com/maps/dir/?api=1&destination=-21.968680%2C-42.873981&travelmode=driving\n\nClique abaixo se estiver disponível.",
+            "_raw_createdAt": "2026-04-16T00:55:51.86Z",
+            "_raw_direction": "TO_HUB"
+        }
+    ],
+    "textoParaIA": "[17/04/2026, 13:08:35] [prestador] Retornando a base\n[17/04/2026, 13:07:27] [prestador] Completo os 10 km\n[17/04/2026, 12:50:06] [prestador] Está seguindo\n[17/04/2026, 12:17:54] [prestador] Codgo\n[17/04/2026, 12:17:52] [prestador] Teclado agora está pedindo identificação do motorista\n[17/04/2026, 12:10:53] [prestador] Ele está terminando de acerta com a central dele pegando uma senha\n[17/04/2026, 11:57:07] [prestador] Kkk\n[17/04/2026, 11:57:05] [prestador] O Meu Deus\n[17/04/2026, 11:57:00] [prestador] Agora vai\n[17/04/2026, 11:56:55] [prestador] Sicindo o desbloqueio\n[17/04/2026, 11:39:03] [prestador] Concegue ver\n[17/04/2026, 11:38:43] [prestador] Precisa da liberação para seguir a viagem agora\n[17/04/2026, 11:38:16] [prestador] Foi passado que o espelhamento está ok\n[17/04/2026, 11:13:48] [prestador] Este número de série o qual eles localizam o espelhamento\n[17/04/2026, 11:13:15] [prestador] Tem que informar que o equipamento foi trocado e mudou o número de série do equipamento\n[17/04/2026, 10:54:04] [prestador] No teclado aqui consta inativo ainda precisa do aceito da DHL agora\n[17/04/2026, 10:52:15] [prestador] Pois os teste tándo ok aí vai a outra opção\n[17/04/2026, 10:51:51] [prestador] Está aguardando\n[17/04/2026, 10:51:43] [prestador] Fala para fazer o teste de espelhamento\n[17/04/2026, 10:50:46] [prestador] Mas se o espelhamento tiver ok testa bloqueio a parte do GPS vai precisar andar para atualizar\n[17/04/2026, 10:40:51] [prestador] Copiou aí\n[17/04/2026, 10:37:44] [prestador] O espelhamento foi feito aqui está dependendo a DHL efetiva\n[17/04/2026, 10:22:18] [prestador] Foi feito o espelhamento\n[17/04/2026, 10:18:02] [prestador] ?\n[17/04/2026, 10:17:54] [prestador] Veículo atualizou agora\n[17/04/2026, 10:16:37] [prestador] Sim\n[17/04/2026, 10:01:35] [prestador] Mole não\n[17/04/2026, 10:01:30] [prestador] 3 dias neste sofrimento\n[17/04/2026, 09:59:48] [prestador] Kkkk\n[17/04/2026, 09:59:37] [prestador] O Motorista está o siri dentro da lata de brabo estou só de longe agora\n[17/04/2026, 09:52:54] [prestador] O Motorista aqui não tem acesso o sistema\n[17/04/2026, 09:51:50] [prestador] Mas o responsável falou que não está conceguindo pedindo para fazer contato com a transportadora\n[17/04/2026, 09:51:03] [prestador] Passou a senha para o responsável na transportadora\n[17/04/2026, 09:41:57] [prestador] Ele passou para o encarregado dele para tentar ativar\n[17/04/2026, 09:32:40] [prestador] ?\n[17/04/2026, 09:32:15] [prestador] Copiou?\n[17/04/2026, 09:30:30] [prestador] ?\n[17/04/2026, 09:28:40] [prestador] Ele está pedindo a senha do espelhamento\n[17/04/2026, 09:28:13] [prestador] ?\n[17/04/2026, 09:19:50] [prestador] Precisa a central atender e ele para fazer o espelhamento\n[17/04/2026, 09:16:30] [prestador] Então o condutor falou que só segue se a central informar a ele kkkkk\n[17/04/2026, 09:15:02] [prestador] 🤦‍♂️🤦‍♂️\n[17/04/2026, 09:14:54] [prestador] E a central não informou nada a ele\n[17/04/2026, 09:14:17] [prestador] O condutor alega que o carro está sem espelhamento\n[17/04/2026, 09:11:38] [prestador] ?\n[17/04/2026, 09:11:26] [prestador] Mandou para o Motorista\n[17/04/2026, 09:07:53] [prestador] Precisa atender o motorista ele este  nervoso pois ninguém atende ele\n[17/04/2026, 09:04:58] [prestador] Vai seguir sem espelhar?\n[17/04/2026, 08:59:33] [prestador] Número do motorista\n[17/04/2026, 08:59:22] [prestador] +55 27 99723-7378\n[17/04/2026, 08:58:53] [prestador] ?\n[17/04/2026, 08:54:54] [prestador] Manda o áudio que vô mostra a ele que está liberado para ir\n[17/04/2026, 08:54:33] [prestador] Agora a central não atende o motorista\n[17/04/2026, 08:21:15] [prestador] ??\n[17/04/2026, 07:58:18] [prestador] O povo difícil\n[17/04/2026, 07:57:57] [prestador] Já está fazendo o cadastro novamente\n[17/04/2026, 06:33:55] [prestador] Agora as 08hs vai começar a fazer a atualização dinovo\n[17/04/2026, 06:22:02] [prestador] Bom dia\n[17/04/2026, 05:22:30] [prestador] Módulo do Rastreador\n[17/04/2026, 05:14:30] [prestador] 👍\n[17/04/2026, 02:06:23] [prestador] Sem\n[16/04/2026, 23:31:10] [prestador] 👍\n[16/04/2026, 23:14:57] [prestador] Trocou o aparelho mas as atualizações não chega\n[16/04/2026, 23:14:30] [prestador] Vai precisar aguarda a central da empresa abrir amanhã para fazer a atualização\n[16/04/2026, 23:13:59] [prestador] Aqui não funciona\n[16/04/2026, 23:05:12] [prestador] O sistema não atualizou ainda 🤦‍♂️🤦‍♂️🤦‍♂️\n[16/04/2026, 22:05:35] [prestador] Então vai restabelecer\n[16/04/2026, 22:02:52] [prestador] Atualizando\n[16/04/2026, 21:31:56] [prestador] Vai movimentar o veículo para atualizar o sistema\n[16/04/2026, 21:30:27] [prestador] Aqui finalizou\n[16/04/2026, 20:49:22] [prestador] O pessoal chegou para fazer a manutenção\n[16/04/2026, 15:39:33] [prestador] A GR não responde o Proprietário está pedindo a Empresa do rastreamento para solucionar mas não tem assistência técnica aqui na região então vai demorar\n[16/04/2026, 15:00:47] [prestador] O módulo do Rastreador deu defeito mesmo tem 2 opção\nAguarda a manutenção para trocar o modulo\nOu\nLiberar para seguir viagem com o acompanhamento\n[16/04/2026, 14:55:45] [prestador] Para ele seguir precisa ser autorizado a seguir do local que está\n[16/04/2026, 14:54:39] [prestador] GR mandou para o sistema não atualizou\n[16/04/2026, 14:53:16] [prestador] Sim\n[16/04/2026, 14:13:09] [prestador] Ok\n[16/04/2026, 14:01:00] [prestador] Vai não vai kkkkk\n[16/04/2026, 14:00:22] [prestador] A GR nem responde o motorista kkkk\n[16/04/2026, 13:55:46] [prestador] A GR não liberou o motorista ainda para sair\n[16/04/2026, 13:50:51] [prestador] Ele está só dependendo da autorização da GR Para reiniciar\n[16/04/2026, 13:46:27] [prestador] Foi feito a manutenção só que no local não tem sinal precisa anda com o veículo para ver se vai atualizar\n[16/04/2026, 09:19:00] [prestador] Ok\n[16/04/2026, 09:18:51] [prestador] Liga para ele\n[16/04/2026, 09:18:44] [prestador] Pode pedir para eles liberar ele\n[16/04/2026, 09:18:09] [prestador] O Motorista precisa desta autorização pela parte da GR\n[16/04/2026, 09:15:27] [prestador] O Motorista quer saber se aguarda ou segue com o meu acompanhamento\n[16/04/2026, 09:13:30] [prestador] Trocou a antena mas não atualizou o sinal\n[16/04/2026, 09:13:16] [prestador] Informações passada pelo Motorista\n[16/04/2026, 09:12:42] [prestador] A GR informou para o condutor aguardar aqui\n[16/04/2026, 09:08:15] [prestador] Como proceder seguir como está ou aguarda orientação\n[16/04/2026, 09:07:31] [prestador] Trocou a antena mas não atualizou\n[16/04/2026, 08:44:52] [prestador] Pronto para seguir\n[16/04/2026, 08:44:25] [prestador] Motorista está ok aqui\n[16/04/2026, 08:09:35] [prestador] Solicitando o desbloqueio\n[16/04/2026, 08:03:39] [prestador] Vai gerar violação de painel pois abriu aqui para trocar ok\n[16/04/2026, 07:56:11] [prestador] Solicitando para desligar a sirene\n[16/04/2026, 07:51:37] [prestador] Ele vai trocar a antena do GPS\n[16/04/2026, 07:27:29] [prestador] Para ver se estabelece o sinal\n[16/04/2026, 07:27:15] [prestador] Vai trocar a antena do aparelho\n[16/04/2026, 07:27:02] [prestador] Motorista acordou\n[16/04/2026, 07:04:24] [prestador] 🤦‍♂️🤦‍♂️\n[16/04/2026, 07:04:20] [prestador] Não acordou ainda\n[16/04/2026, 05:31:01] [prestador] 👍\n[16/04/2026, 05:30:34] [prestador] Ele está liberado para reiniciar se quiser\n[16/04/2026, 05:30:14] [prestador] Ok\n[16/04/2026, 05:29:36] [prestador] Sabe se o sistema atualizou?\n[16/04/2026, 05:29:14] [prestador] 👍\n[15/04/2026, 22:59:29] [prestador] Veículo com sirene ligada agora\n[15/04/2026, 22:53:38] [prestador] Pedi para ver se atualizou\n[15/04/2026, 22:52:32] [prestador] Ligou a chave geral\n[15/04/2026, 22:04:47] [prestador] Desligou A chave geral\n[15/04/2026, 21:54:12] [prestador] Não sabe a hora do reinicio ainda\n[15/04/2026, 21:53:37] [prestador] Ele vai desligar a chave geral para tentar atualizar o sistema\n[15/04/2026, 21:52:53] [prestador] Vai desligar a chave geral\n[15/04/2026, 21:50:19] [prestador] Motorista vai resta o veículo\n[15/04/2026, 21:38:43] [prestador] ?\n[15/04/2026, 21:35:12] [prestador] Tem os dados\n[15/04/2026, 21:34:58] [prestador] No local\n[15/04/2026, 21:13:21] [prestador] Fuiii\n[15/04/2026, 21:07:52] [prestador] Ok\n[15/04/2026, 21:04:43] [prestador] ?\n[15/04/2026, 21:00:44] [prestador] Sim\n[15/04/2026, 21:00:31] [prestador] 25 minutos\n[15/04/2026, 21:00:09] [prestador] Estou disponível\n[17/04/2026, 13:37:18] [operador] *Milleny:*\n#finalizado-103243\n[17/04/2026, 13:18:12] [operador] *Milleny:*\ntks\n[17/04/2026, 13:10:10] [operador] *Milleny:*\nfixa\n[17/04/2026, 13:09:49] [operador] *Milleny:*\nlocalização\n[17/04/2026, 12:56:11] [operador] *Milleny:*\nmanda a localização e pode finalizar\n[17/04/2026, 12:56:04] [operador] *Milleny:*\nfaz os ultimos regiustros\n[17/04/2026, 12:56:00] [operador] *Milleny:*\nassim que atingir\n[17/04/2026, 12:55:01] [operador] *Milleny:*\nseguir a orientação\n[17/04/2026, 12:51:36] [operador] *Milleny:*\nacompanha por 10 kms e pode finalizar]\n[17/04/2026, 12:51:21] [operador] *Milleny:*\ndele saindo a\n[17/04/2026, 12:51:16] [operador] *Milleny:*\nfaz fotos\n[17/04/2026, 12:17:16] [operador] *Milleny:*\nok\n[17/04/2026, 12:10:16] [operador] *Milleny:*\ne ai?\n[17/04/2026, 12:01:51] [operador] *Milleny:*\ncomando enviado\n[17/04/2026, 11:57:58] [operador] *Milleny:*\nvou solicitar\n[17/04/2026, 11:57:54] [operador] *Milleny:*\nok\n[17/04/2026, 11:57:53] [operador] *Milleny:*\nkkkkk\n[17/04/2026, 11:56:27] [operador] *Milleny:*\nok\n[17/04/2026, 11:52:49] [operador] *Milleny:*\nfaz os registros e acompanha\n[17/04/2026, 11:52:44] [operador] *Milleny:*\nPode autorizar ele reiniciar\n[17/04/2026, 11:52:35] [operador] *Milleny:*\nespelhamento OK\n[17/04/2026, 11:41:08] [operador] *Milleny:*\nverificando\n[17/04/2026, 11:20:37] [operador] *Thayná Souza:*\nUm momento\n[17/04/2026, 11:05:07] [operador] *Thayná Souza:*\num x\n[17/04/2026, 10:51:16] [operador] *Thayná Souza:*\neles não autorizaram, é para seguir em preservação\n[17/04/2026, 10:42:10] [operador] *Thayná Souza:*\num x\n[17/04/2026, 10:35:56] [operador] *Thayná Souza:*\n3 dias nessa é foda\n[17/04/2026, 10:35:40] [operador] *Thayná Souza:*\nO mds\n[17/04/2026, 10:33:46] [operador] *Thayná Souza:*\nVamos aguardar eles autorizarem o condutor iniciar viagem.\n[17/04/2026, 10:26:06] [operador] *Thayná Souza:*\nUM X\n[17/04/2026, 10:19:26] [operador] *Thayná Souza:*\ndeu certo? pq eles falram que segue em sinal\n[17/04/2026, 10:16:54] [operador] *Thayná Souza:*\nse estiver carregado manter preservação\n[17/04/2026, 10:16:15] [operador] *Thayná Souza:*\nVeículo está carregado?\n[17/04/2026, 10:10:25] [operador] *Thayná Souza:*\naté agr não me deram retorno\n[17/04/2026, 10:10:14] [operador] *Thayná Souza:*\nsiim\n[17/04/2026, 10:01:06] [operador] *Thayná Souza:*\nMas é compreensivel, eles enrolam demais\n[17/04/2026, 10:00:13] [operador] *Thayná Souza:*\nMeu Deus kkkkkk\n[17/04/2026, 09:58:32] [operador] *Thayná Souza:*\ncliente está verificando\n[17/04/2026, 09:52:08] [operador] *Thayná Souza:*\num x\n[17/04/2026, 09:44:01] [operador] *Thayná Souza:*\nPositivo\n[17/04/2026, 09:39:07] [operador] *Thayná Souza:*\nDeu certo?\n[17/04/2026, 09:32:51] [operador] *Thayná Souza:*\nsenha\n[17/04/2026, 09:32:46] [operador] *Thayná Souza:*\nporta 9001\n[17/04/2026, 09:32:41] [operador] *Thayná Souza:*\nDHL SUPPLY CHAIN\n[17/04/2026, 09:32:28] [operador] *Thayná Souza:*\n00233065000187\n[17/04/2026, 09:30:45] [operador] *Thayná Souza:*\ndo teclado\n[17/04/2026, 09:30:06] [operador] *Thayná Souza:*\nManda foto\n[17/04/2026, 09:21:36] [operador] *Thayná Souza:*\num x\n[17/04/2026, 09:19:33] [operador] *Thayná Souza:*\n🤦‍♀️ 🤦‍♀️\n[17/04/2026, 09:19:05] [operador] *Thayná Souza:*\ncondutor não pode reiniciar viagem\n[17/04/2026, 09:15:42] [operador] *Thayná Souza:*\num x\n[17/04/2026, 09:15:38] [operador] *Thayná Souza:*\num\n[17/04/2026, 09:15:36] [operador] *Thayná Souza:*\nai mds\n[17/04/2026, 09:15:31] [operador] *Thayná Souza:*\nO veículo não está pontuando o rastreamento, por isso solicitou o acompanhamento\n[17/04/2026, 09:13:32] [operador] *Thayná Souza:*\nO condutor está autorizado a seguir viagem, o sr pode seguir em acompanhamento\n[17/04/2026, 09:12:15] [operador] *Thayná Souza:*\nacredito que sim\n[17/04/2026, 09:11:07] [operador] *Thayná Souza:*\npode iniciar o deslocamento\n[17/04/2026, 09:06:52] [operador] *Thayná Souza:*\neles falaram para esperar\n[17/04/2026, 09:01:13] [operador] *Thayná Souza:*\ncliente não me dá retorno\n[17/04/2026, 09:01:06] [operador] *Thayná Souza:*\num momento\n[17/04/2026, 08:56:41] [operador] *Thayná Souza:*\num x\n[17/04/2026, 08:53:30] [operador] *Thayná Souza:*\npode voltar me atualizar por aqui\n[17/04/2026, 08:00:38] [operador] *Thayná Souza:*\nPositivo\n[17/04/2026, 07:55:26] [operador] *Thayná Souza:*\nMe atualiza\n[17/04/2026, 06:45:39] [operador] *Thayná Souza:*\ntks\n[17/04/2026, 06:45:37] [operador] *Thayná Souza:*\nPositivo\n[17/04/2026, 06:26:09] [operador] *Thayná Souza:*\ntks\n[17/04/2026, 06:21:35] [operador] *Thayná Souza:*\nBom dia\n[17/04/2026, 05:23:49] [operador] *Dheniffer:*\nTks\n[17/04/2026, 05:19:34] [operador] *Dheniffer:*\nQual foi a peça que foi trocada?\n[17/04/2026, 05:13:40] [operador] *Dheniffer:*\nAtualiza\n[17/04/2026, 03:33:32] [operador] *Dheniffer:*\nTks\n[17/04/2026, 02:05:57] [operador] *Dheniffer:*\nSem alterações?\n[17/04/2026, 02:00:00] [operador] *Dheniffer:*\n?\n[17/04/2026, 01:55:06] [operador] *Dheniffer:*\nAtualiza\n[16/04/2026, 23:30:52] [operador] *Dheniffer:*\nManter preservação\n[16/04/2026, 23:30:46] [operador] *Dheniffer:*\nPassei para eles\n[16/04/2026, 23:30:32] [operador] *Dheniffer:*\nOK\n[16/04/2026, 23:14:29] [operador] *Dheniffer:*\nNão esta funcionando?\n[16/04/2026, 23:06:03] [operador] *Dheniffer:*\nOk\n[16/04/2026, 23:04:36] [operador] *Dheniffer:*\nAlguma alteração?\n[16/04/2026, 22:09:09] [operador] *Dheniffer:*\nManda mais fotos\n[16/04/2026, 22:09:05] [operador] *Dheniffer:*\nOk\n[16/04/2026, 22:04:53] [operador] *Dheniffer:*\nEle ja vai seguir?\n[16/04/2026, 22:02:27] [operador] *Dheniffer:*\nDeu certo?\n[16/04/2026, 21:32:49] [operador] *Dheniffer:*\nok\n[16/04/2026, 21:31:31] [operador] *Dheniffer:*\nO condutor vai seguir?\n[16/04/2026, 18:15:14] [operador] *Isys Amorim:*\natualiza\n[16/04/2026, 17:10:06] [operador] *Aline Souza:*\natualiza\n[16/04/2026, 14:53:50] [operador] *Aline Souza:*\nqual motivo?\n[16/04/2026, 14:53:07] [operador] *Aline Souza:*\nparou?\n[16/04/2026, 14:30:25] [operador] *Ana Araujo:*\nchegando no local, fazer registro e atualizar a loc\n[16/04/2026, 14:12:36] [operador] *Ana Araujo:*\nO motorista vai seguir para outro posto seguir em acompanhamento\n[16/04/2026, 14:00:01] [operador] *Ana Araujo:*\nentendido\n[16/04/2026, 13:53:19] [operador] *Ana Araujo:*\nregistra e acompanha por gentileza\n[16/04/2026, 13:53:04] [operador] *Ana Araujo:*\nassim que ele iniciar\n[16/04/2026, 13:52:59] [operador] *Ana Araujo:*\ntks\n[16/04/2026, 13:51:06] [operador] *Ana Araujo:*\nfaz fotos por gentileza\n[16/04/2026, 13:50:59] [operador] *Ana Araujo:*\nentendido\n[16/04/2026, 13:49:33] [operador] *Ana Araujo:*\nentendido\n[16/04/2026, 13:00:29] [operador] *Ana Araujo:*\ntks\n[16/04/2026, 12:39:06] [operador] *Aline Souza:*\natualiza\n[16/04/2026, 10:52:23] [operador] *Aline Souza:*\natualização?\n[16/04/2026, 09:18:50] [operador] *Aline Souza:*\né para vc permanecer em preservação\n[16/04/2026, 09:18:39] [operador] *Aline Souza:*\npositivo\n[16/04/2026, 09:17:36] [operador] *Aline Souza:*\nsegue com o acompanhamento\n[16/04/2026, 09:15:16] [operador] *Aline Souza:*\npositivo\n[16/04/2026, 09:13:09] [operador] *Aline Souza:*\npositivo\n[16/04/2026, 09:10:10] [operador] *Aline Souza:*\natualiza a foto\n[16/04/2026, 08:50:13] [operador] *Aline Souza:*\nacompanha\n[16/04/2026, 08:50:06] [operador] *Aline Souza:*\nmanda foto quando iniciar viagem.\n[16/04/2026, 08:11:27] [operador] *Aline Souza:*\npositivo\n[16/04/2026, 08:01:29] [operador] *Aline Souza:*\npositivo\n[16/04/2026, 07:56:35] [operador] *Aline Souza:*\npositivo\n[16/04/2026, 07:55:05] [operador] *Aline Souza:*\npositivo\n[16/04/2026, 07:04:52] [operador] *Aline Souza:*\nvixii\n[16/04/2026, 07:04:06] [operador] *Aline Souza:*\nEle informou quando irá reiniciar?\n[16/04/2026, 05:31:07] [operador] *Thallyta:*\nso me informa quando ele acordar pra verificar se vamos acompanhar\n[16/04/2026, 05:30:52] [operador] *Thallyta:*\npositivo\n[16/04/2026, 05:30:00] [operador] *Thallyta:*\nas vezes so atualiza quando reinicia viagem\n[16/04/2026, 05:29:47] [operador] *Thallyta:*\ncliente nao chegou a informar\n[16/04/2026, 05:28:49] [operador] *Thallyta:*\nele acordar me avisa\n[16/04/2026, 05:20:51] [operador] *Thallyta:*\natualizar\n[16/04/2026, 04:04:19] [operador] *Thallyta:*\natualizar\n[16/04/2026, 01:08:24] [operador] *Thallyta:*\natualizar\n[15/04/2026, 22:08:32] [operador] *Thallyta:*\nqsl\n[15/04/2026, 22:08:26] [operador] *Thallyta:*\nqs\n[15/04/2026, 22:07:20] [operador] *Thallyta:*\nvai iniciar o pernoite agora ne?\n[15/04/2026, 22:06:51] [operador] *Thallyta:*\nqsl\n[15/04/2026, 21:55:19] [operador] *Thallyta:*\nmas vai realizar pernoit ne?\n[15/04/2026, 21:55:10] [operador] *Thallyta:*\nqsl\n[15/04/2026, 21:53:54] [operador] *Thallyta:*\nele vai dar pernoite ou vai so realizar reset e reiniciar?\n[15/04/2026, 21:53:03] [operador] *Thallyta:*\nvai reiniciar que horas?\n[15/04/2026, 21:52:46] [operador] *Thallyta:*\nnao entendi\n[15/04/2026, 21:50:42] [operador] *Thallyta:*\nvai oq?\n[15/04/2026, 21:40:34] [operador] *Thallyta:*\nPlaca: FMT4C24\n[15/04/2026, 21:08:04] [operador] *Thallyta:*\nhttps://maps.app.goo.gl/oBUFghaGM6H1peAT6\n\nPlaca: FMT4C24\nSituação: GPS travado, preservação\n[15/04/2026, 21:07:43] [operador] *Thallyta:*\n#iniciado\n[15/04/2026, 21:07:40] [operador] *Thallyta:*\nautorizado\n[15/04/2026, 21:05:56] [operador] *Thallyta:*\n1x\n[15/04/2026, 21:00:32] [operador] Possui disponibilidade de horário para buscas, preservação, acompanhamento e pernoite se necessário?\n[15/04/2026, 21:00:15] [operador] Ok! Qual seu tempo estimado para deslocamento? Mande por escrito por gentileza.\n[15/04/2026, 20:55:51] [operador] ID Solicitação: 20260415215549-7841\n\nOlá TAXI, temos uma nova solicitação de atendimento:\n\nCoordenadas: -21.968679636861868, -42.87398081647498\nTipo do serviço: PRONTA RESPOSTA, PRESTADOR, ASSISTÊNCIA 24H\nLink google maps: https://www.google.com/maps/dir/?api=1&destination=-21.968680%2C-42.873981&travelmode=driving\n\nClique abaixo se estiver disponível."
+}
