@@ -1,0 +1,69 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: velox
+      POSTGRES_USER: velox
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U velox -d velox"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "${PORT_BACKEND:-3000}:3000"
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  celery_worker:
+    build:
+      context: ./backend
+    env_file:
+      - .env
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+      backend:
+        condition: service_started
+    command: celery -A app.core.celery_app worker --loglevel=warning
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+      args:
+        VITE_API_URL: ${VITE_API_URL}
+    ports:
+      - "${PORT_FRONTEND:-5173}:80"
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+  postgres_data:
