@@ -2,7 +2,7 @@ services:
   postgres:
     image: postgres:16-alpine
     ports:
-      - "5432:5432"
+      - "${PORT_POSTGRES:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
@@ -20,7 +20,7 @@ services:
     build:
       context: ./backend
     ports:
-      - "3000:3000"
+      - "${PORT_BACKEND:-3000}:3000"
     volumes:
       - ./backend:/app
     env_file:
@@ -54,7 +54,7 @@ services:
     build:
       context: ./frontend
     ports:
-      - "5173:5173"
+      - "${PORT_FRONTEND:-5173}:5173"
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -66,7 +66,7 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - "${PORT_REDIS:-6379}:6379"
     volumes:
       - redis_data:/data
     healthcheck:

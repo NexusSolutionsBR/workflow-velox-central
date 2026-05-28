@@ -11,7 +11,7 @@ export const Layout: React.FC = () => {
   React.useEffect(() => {
     const fetchCount = async () => {
       try {
-        const res = await fetch('http://localhost:3000/sessions/scheduled-syncs?status=PENDING', {
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/sessions/scheduled-syncs?status=PENDING`, {
           credentials: 'include',
         });
         if (res.status === 401) {
@@ -34,7 +34,7 @@ export const Layout: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch('http://localhost:3000/auth/logout', {
+      await fetch(`${import.meta.env.VITE_API_URL}/auth/logout`, {
         method: 'POST',
         credentials: 'include',
       });

@@ -189,13 +189,11 @@ export const Dashboard = () => {
   };
 
   const handleViewPdf = () => {
-    const base = api.defaults.baseURL ?? 'http://localhost:3000';
-    window.open(`${base}/sessions/${sessionId}/report-html`, '_blank');
+    window.open(`${api.defaults.baseURL}/sessions/${sessionId}/report-html`, '_blank');
   };
 
   const handleViewPdfPublico = () => {
-    const base = api.defaults.baseURL ?? 'http://localhost:3000';
-    window.open(`${base}/sessions/${sessionId}/report-html?public_only=true`, '_blank');
+    window.open(`${api.defaults.baseURL}/sessions/${sessionId}/report-html?public_only=true`, '_blank');
   };
 
   const handleInsertMGM = async () => {
