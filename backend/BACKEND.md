@@ -104,37 +104,37 @@ Banco SQLite em `backend/dev.db`. Criado automaticamente no startup via `SQLMode
 > Criada automaticamente ao reiniciar. Populada após `_async_process_session` quando `do_upload_images=True`.
 
 ### `AuditLog` (`audit_log`)
-Preenchida pelo `AuditLogMiddleware` em cada request para `/sessions`, `/center`, `/auth`.
+Preenchida pelo `AuditLogMiddleware` em cada request para `/api/sessions`, `/api/center`, `/api/auth`.
 
 ---
 
 ## Endpoints da API
 
-Prefixos registrados em `main.py`:
+Todos os endpoints têm o prefixo `/api`, registrado em `main.py` via `APIRouter(prefix="/api")`:
 
 | Prefixo | Arquivo | Tags |
 |---|---|---|
-| `/auth` | `api/auth.py` | auth |
-| `/sessions` | `api/sessions.py` | sessions |
-| `/center` | `api/center.py` | center |
-| `/audit` | `api/audit.py` | audit |
+| `/api/auth` | `api/auth.py` | auth |
+| `/api/sessions` | `api/sessions.py` | sessions |
+| `/api/center` | `api/center.py` | center |
+| `/api/audit` | `api/audit.py` | audit |
 
-### `/sessions` — todos os endpoints
+### `/api/sessions` — todos os endpoints
 
 | Método | Rota | Auth | Descrição |
 |---|---|---|---|
-| POST | `/sessions/start` | JWT | Inicia pipeline completo |
-| POST | `/sessions/{id}/cancel` | JWT | Cancela task Celery ativa |
-| POST | `/sessions/{id}/summarize` | JWT | Dispara geração de resumo com IA |
-| POST | `/sessions/{id}/sync-images` | JWT | Re-sincroniza imagens ao Drive |
-| GET | `/sessions/{id}/status` | JWT | Status + logs + resumo |
-| GET | `/sessions/{id}/export` | JWT | Download `.txt` (resumo + timeline) |
-| DELETE | `/sessions/{id}/summary` | JWT | Apaga resumo do banco |
-| PUT | `/sessions/{id}/summary` | JWT | Salva rascunho editado (`summaryText`) |
-| GET | `/sessions/{id}/report-html` | `?token=` | HTML otimizado para PDF (abre em nova aba) |
-| GET | `/sessions/scheduled-syncs` | JWT | Lista sincronizações agendadas (`PENDING`) |
-| DELETE | `/sessions/scheduled-syncs/{id}` | JWT | Cancela sync agendado (revoke + CANCELLED) |
-| GET | `/sessions/{id}/debug-messages` | JWT | JSON com mensagens texto brutas |
+| POST | `/api/sessions/start` | JWT | Inicia pipeline completo |
+| POST | `/api/sessions/{id}/cancel` | JWT | Cancela task Celery ativa |
+| POST | `/api/sessions/{id}/summarize` | JWT | Dispara geração de resumo com IA |
+| POST | `/api/sessions/{id}/sync-images` | JWT | Re-sincroniza imagens ao Drive |
+| GET | `/api/sessions/{id}/status` | JWT | Status + logs + resumo |
+| GET | `/api/sessions/{id}/export` | JWT | Download `.txt` (resumo + timeline) |
+| DELETE | `/api/sessions/{id}/summary` | JWT | Apaga resumo do banco |
+| PUT | `/api/sessions/{id}/summary` | JWT | Salva rascunho editado (`summaryText`) |
+| GET | `/api/sessions/{id}/report-html` | `?token=` | HTML otimizado para PDF (abre em nova aba) |
+| GET | `/api/sessions/scheduled-syncs` | JWT | Lista sincronizações agendadas (`PENDING`) |
+| DELETE | `/api/sessions/scheduled-syncs/{id}` | JWT | Cancela sync agendado (revoke + CANCELLED) |
+| GET | `/api/sessions/{id}/debug-messages` | JWT | JSON com mensagens texto brutas |
 
 > **Atenção de roteamento:** `/scheduled-syncs` (rota estática) é definido após os parâmetros `/{session_id}/...` no arquivo, mas não há conflito porque todos os outros endpoints têm segmentos literais de sufixo (`/status`, `/cancel`, etc.).
 
@@ -219,8 +219,11 @@ Pasta raiz no Drive: `GOOGLE_DRIVE_ROOT_FOLDER_ID` (padrão `root`). Subpasta cr
 | `REDIS_URL` | `redis://redis:6379/0` | Broker Celery + logs |
 | `HELENA_API_URL` | — | Endpoint mensagens Helena |
 | `HELENA_API_KEY` | — | Bearer token Helena |
-| `CENTER_API_URL` | — | Endpoint Center API |
-| `CENTER_API_KEY` | — | Bearer token Center (mock se vazio) |
+| `CENTER_CONSULTA_URL` | — | URL base da Center API |
+| `CENTER_IDENTIFICADOR_FICHA` | — | Identificador para consulta de ficha |
+| `CENTER_IDENTIFICADOR_OCORRENCIAS` | — | Identificador para consulta de ocorrências |
+| `CENTER_IDENTIFICADOR_INSERCAO` | — | Identificador para inserção (mock se vazio) |
+| `CENTER_USUARIO_PARAMETRO` | — | ID do usuário no Center |
 | `AI_PROVIDER` | `openai` | `openai / google / anthropic` |
 | `AI_CHAT_MODEL` | `gpt-4o` | Modelo de chat |
 | `AI_TRANSCRIPTION_MODEL` | `whisper-1` | Modelo STT |

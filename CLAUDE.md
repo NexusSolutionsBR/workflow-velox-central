@@ -28,7 +28,7 @@ cd frontend && npm run lint
 cd frontend && npm run build
 ```
 
-Endpoints: frontend em `http://localhost:5173`, FastAPI em `http://localhost:3000`, Swagger em `http://localhost:3000/docs`.
+Endpoints: frontend em `http://localhost:5173`, FastAPI em `http://localhost:3000`, Swagger em `http://localhost:3000/docs`. Todas as rotas da API têm prefixo `/api` (ex: `http://localhost:3000/api/sessions/start`).
 
 ---
 
@@ -47,7 +47,7 @@ O Redis serve dois propósitos: broker/backend do Celery **e** armazenamento tem
 
 ### Pipeline de processamento (`process_session`)
 
-Fluxo disparado pelo `POST /sessions/start`:
+Fluxo disparado pelo `POST /api/sessions/start`:
 
 ```
 Helena API → mensagens paginadas → ordenadas por createdAt
@@ -101,9 +101,9 @@ Cada linha segue o padrão:
 
 | Task | Gatilho | Descrição |
 |---|---|---|
-| `process_session` | `POST /sessions/start` | Pipeline completo (busca + mídias + agendamento auto-sync) |
-| `summarize_session` | `POST /sessions/{id}/summarize` | Gera relatório com IA a partir do raw_content |
-| `sync_session_images` | `POST /sessions/{id}/sync-images` ou agendamento automático | Re-busca mensagens, envia imagens novas ao Drive, marca ScheduledSync como COMPLETED |
+| `process_session` | `POST /api/sessions/start` | Pipeline completo (busca + mídias + agendamento auto-sync) |
+| `summarize_session` | `POST /api/sessions/{id}/summarize` | Gera relatório com IA a partir do raw_content |
+| `sync_session_images` | `POST /api/sessions/{id}/sync-images` ou agendamento automático | Re-busca mensagens, envia imagens novas ao Drive, marca ScheduledSync como COMPLETED |
 
 ### Status da sessão
 
@@ -157,7 +157,7 @@ scheduled_task = sync_session_images.apply_async(args=[session_id, ficha], count
 
 Quando `sync_session_images` conclui (incluso via agendamento automático), todos os `ScheduledSync` com `status="PENDING"` para aquela sessão são marcados como `COMPLETED` no bloco `finally`.
 
-Para cancelar antes da execução: `DELETE /sessions/scheduled-syncs/{id}` — chama `celery_app.control.revoke(task_id, terminate=True)` e marca `CANCELLED`.
+Para cancelar antes da execução: `DELETE /api/sessions/scheduled-syncs/{id}` — chama `celery_app.control.revoke(task_id, terminate=True)` e marca `CANCELLED`.
 
 **Teste local:** adicionar `AUTO_SYNC_DELAY_SECONDS=10` no `.env` para simular em 10 segundos.
 
@@ -165,18 +165,18 @@ Para cancelar antes da execução: `DELETE /sessions/scheduled-syncs/{id}` — c
 
 | Método | Endpoint | Descrição |
 |---|---|---|
-| POST | `/sessions/start` | Inicia pipeline |
-| GET | `/sessions/{id}/status` | Status + logs + resumo |
-| POST | `/sessions/{id}/cancel` | Cancela |
-| POST | `/sessions/{id}/summarize` | Gera relatório com IA |
-| DELETE | `/sessions/{id}/summary` | Apaga resumo do banco |
-| PUT | `/sessions/{id}/summary` | Salva rascunho editado (`summaryText`) |
-| GET | `/sessions/{id}/report-html?token=...` | Página HTML otimizada para impressão/PDF |
-| POST | `/sessions/{id}/sync-images` | Sincroniza imagens novas |
-| GET | `/sessions/{id}/export` | Download .txt (resumo + timeline) |
-| GET | `/sessions/{id}/debug-messages` | JSON com mensagens texto brutas para debug |
-| GET | `/sessions/scheduled-syncs` | Lista sincronizações automáticas pendentes |
-| DELETE | `/sessions/scheduled-syncs/{id}` | Cancela sincronização agendada |
+| POST | `/api/sessions/start` | Inicia pipeline |
+| GET | `/api/sessions/{id}/status` | Status + logs + resumo |
+| POST | `/api/sessions/{id}/cancel` | Cancela |
+| POST | `/api/sessions/{id}/summarize` | Gera relatório com IA |
+| DELETE | `/api/sessions/{id}/summary` | Apaga resumo do banco |
+| PUT | `/api/sessions/{id}/summary` | Salva rascunho editado (`summaryText`) |
+| GET | `/api/sessions/{id}/report-html?token=...` | Página HTML otimizada para impressão/PDF |
+| POST | `/api/sessions/{id}/sync-images` | Sincroniza imagens novas |
+| GET | `/api/sessions/{id}/export` | Download .txt (resumo + timeline) |
+| GET | `/api/sessions/{id}/debug-messages` | JSON com mensagens texto brutas para debug |
+| GET | `/api/sessions/scheduled-syncs` | Lista sincronizações automáticas pendentes |
+| DELETE | `/api/sessions/scheduled-syncs/{id}` | Cancela sincronização agendada |
 
 > **Roteamento:** `/scheduled-syncs` (rota estática) é processado corretamente por FastAPI mesmo declarado após `/{session_id}/...`, pois todos os demais endpoints têm sufixos literais (`/status`, `/cancel`, etc.) e não há ambiguidade.
 
@@ -188,8 +188,8 @@ Logs do pipeline são escritos no Redis (`pipeline_logs:{session_id}`, lista, TT
 
 ### Auth e auditoria
 
-- JWT (HS256) emitido por `/auth/login`, validado pela dep `CurrentUserDep` (`app/core/security.py`). Sem refresh token.
-- `AuditLogMiddleware` (`app/core/audit.py`) loga silenciosamente todas as requests em `/sessions`, `/center` e `/auth` na tabela `audit_log`. Não aborta em token inválido — a enforcement é por rota.
+- JWT (HS256) emitido por `/api/auth/login`, validado pela dep `CurrentUserDep` (`app/core/security.py`). Sem refresh token.
+- `AuditLogMiddleware` (`app/core/audit.py`) loga silenciosamente todas as requests em `/api/sessions`, `/api/center` e `/api/auth` na tabela `audit_log`. Não aborta em token inválido — a enforcement é por rota.
 
 ### Frontend (`frontend/src/pages/Dashboard.tsx`)
 
@@ -197,29 +197,29 @@ Fluxo do operador:
 
 1. Preenche URL da sessão + ficha
 2. Seleciona opções: transcrever áudios / enviar imagens / gerar resumo com IA
-3. Clica **Iniciar Processamento** → `POST /sessions/start`
-4. Frontend faz polling `GET /sessions/{id}/status` a cada 2s, exibe logs em tempo real
-5. Botão **Parar** disponível durante processamento → `POST /sessions/{id}/cancel`
+3. Clica **Iniciar Processamento** → `POST /api/sessions/start`
+4. Frontend faz polling `GET /api/sessions/{id}/status` a cada 2s, exibe logs em tempo real
+5. Botão **Parar** disponível durante processamento → `POST /api/sessions/{id}/cancel`
 6. Quando `COMPLETED`, aparecem:
-   - **Resumir Relatório** (se sem resumo) → `POST /sessions/{id}/summarize`
-   - **Limpar Resumo** (se com resumo) → `DELETE /sessions/{id}/summary`
-   - **Exportar Relatório** → `GET /sessions/{id}/export` (download `.txt`)
-   - **Enviar Novas Imagens** → `POST /sessions/{id}/sync-images`
-   - **Debug JSON** → `GET /sessions/{id}/debug-messages` (download `.json`)
+   - **Resumir Relatório** (se sem resumo) → `POST /api/sessions/{id}/summarize`
+   - **Limpar Resumo** (se com resumo) → `DELETE /api/sessions/{id}/summary`
+   - **Exportar Relatório** → `GET /api/sessions/{id}/export` (download `.txt`)
+   - **Enviar Novas Imagens** → `POST /api/sessions/{id}/sync-images`
+   - **Debug JSON** → `GET /api/sessions/{id}/debug-messages` (download `.json`)
 7. Com resumo: **Quadro de Revisão** com editor de texto e três ações:
-   - **Salvar Rascunho** → `PUT /sessions/{id}/summary` — persiste edições no banco antes de qualquer envio
-   - **Visualizar PDF** → abre `GET /sessions/{id}/report-html?token=...` em nova aba; o browser dispara `window.print()` automaticamente
-   - **Inserir MGM (Center)** → `POST /center/mgm`
+   - **Salvar Rascunho** → `PUT /api/sessions/{id}/summary` — persiste edições no banco antes de qualquer envio
+   - **Visualizar PDF** → abre `GET /api/sessions/{id}/report-html?token=...` em nova aba; o browser dispara `window.print()` automaticamente
+   - **Inserir MGM (Center)** → `POST /api/center/mgm`
 
 ### Frontend — Página de Tarefas Pendentes (`frontend/src/pages/PendingTasks.tsx`)
 
 Nova página em `/tarefas-pendentes`:
 - Tabela com todas as `ScheduledSync` de status `PENDING`
 - Colunas: Ficha, ID do Chat (truncado), Contato, Agendado Para, **Contagem Regressiva** (atualiza a cada 1s), Status, Ação
-- Botão **Cancelar** chama `DELETE /sessions/scheduled-syncs/{id}`
+- Botão **Cancelar** chama `DELETE /api/sessions/scheduled-syncs/{id}`
 - Menu lateral exibe badge vermelho com a contagem em tempo real (polling a cada 30s)
 
-A URL base da API está hardcoded como `http://localhost:3000`. Sem proxy Vite; CORS aberto no backend.
+A URL base da API vem de `VITE_API_URL` (inclui o prefixo `/api`). Sem proxy Vite; CORS configurado via `ALLOWED_ORIGINS` no backend.
 
 ---
 
@@ -255,7 +255,7 @@ A URL base da API está hardcoded como `http://localhost:3000`. Sem proxy Vite; 
 - **Estilo de dependências** do FastAPI: `Annotated` (`CurrentUserDep`, `DbSessionDep`).
 - **raw_content no Redis** — TTL de 7 dias (`_CONTENT_TTL`). Reconstruído a cada re-execução do pipeline. O agente consome esse conteúdo para gerar o relatório.
 - **ScheduledSync** — só é criado quando `do_upload_images=True`. Não criar se o usuário desativou upload.
-- **`/report-html`** usa `?token=` (não Bearer header) — manter essa dependência separada (`_get_user_from_token_param`), não misturar com `CurrentUserDep`.
+- **`/api/sessions/{id}/report-html`** usa `?token=` (não Bearer header) — manter essa dependência separada (`_get_user_from_token_param`), não misturar com `CurrentUserDep`.
 
 ---
 

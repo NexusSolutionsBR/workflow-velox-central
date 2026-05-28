@@ -7,6 +7,7 @@ class Settings:
     APP_PORT = os.getenv("APP_PORT", "3000")
     JWT_SECRET = os.getenv("JWT_SECRET", "")
     ALLOWED_ORIGINS = [o.strip() for o in os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")]
+    COOKIE_SECURE = os.getenv("COOKIE_SECURE", "false").lower() == "true"
     DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./dev.db")
     REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379/0")
     
