@@ -27,7 +27,7 @@ class AuditLogMiddleware(BaseHTTPMiddleware):
             response = await call_next(request)
             status_str = "SUCCESS" if response.status_code < 400 else "ERROR"
             
-            if request.url.path.startswith(("/sessions", "/center", "/auth")):
+            if request.url.path.startswith(("/api/sessions", "/api/center", "/api/auth")):
                 with Session(engine) as session:
                     log = AuditLog(
                         user_id=user_id,

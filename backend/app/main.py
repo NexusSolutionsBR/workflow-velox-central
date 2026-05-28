@@ -58,10 +58,13 @@ app.add_middleware(
 
 app.add_middleware(AuditLogMiddleware)
 
-app.include_router(auth.router, prefix="/auth", tags=["auth"])
-app.include_router(sessions.router, prefix="/sessions", tags=["sessions"])
-app.include_router(center.router, prefix="/center", tags=["center"])
-app.include_router(audit.router, prefix="/audit", tags=["audit"])
+from fastapi import APIRouter
+api_router = APIRouter(prefix="/api")
+api_router.include_router(auth.router, prefix="/auth", tags=["auth"])
+api_router.include_router(sessions.router, prefix="/sessions", tags=["sessions"])
+api_router.include_router(center.router, prefix="/center", tags=["center"])
+api_router.include_router(audit.router, prefix="/audit", tags=["audit"])
+app.include_router(api_router)
 
 @app.get("/")
 def read_root():

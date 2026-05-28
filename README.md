@@ -97,7 +97,7 @@ Acesse:
 ### 1. Configure o `.env`
 
 ```env
-VITE_API_URL=https://workflow.nexussolutions.com.br
+VITE_API_URL=https://workflow.nexussolutions.com.br/api
 ALLOWED_ORIGINS=https://workflow.nexussolutions.com.br
 JWT_SECRET=<string aleatória longa>
 POSTGRES_PASSWORD=<senha forte>

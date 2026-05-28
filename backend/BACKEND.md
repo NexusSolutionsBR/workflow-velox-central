@@ -15,9 +15,9 @@ backend/
 │   │   ├── summarizer_agent.py    # ReportAgent — gera relatório técnico formal
 │   │   └── transcriber_agent.py   # TranscriberAgent — transcrição Whisper (OpenAI)
 │   ├── api/
-│   │   ├── auth.py                # POST /auth/login, /auth/register
-│   │   ├── audit.py               # GET /audit — logs de auditoria paginados
-│   │   ├── center.py              # POST /center/mgm — integração Center API
+│   │   ├── auth.py                # POST /api/auth/login, /api/auth/logout
+│   │   ├── audit.py               # GET /api/audit — logs de auditoria paginados
+│   │   ├── center.py              # POST /api/center/mgm — integração Center API
 │   │   └── sessions.py            # Todos os endpoints de sessão (ver tabela abaixo)
 │   ├── core/
 │   │   ├── audit.py               # AuditLogMiddleware — loga todas as requests silenciosamente
