@@ -21,17 +21,10 @@ A saída deve representar apenas os principais eventos do atendimento, sem trans
 ## REGRA PRINCIPAL
 
 INTERPRETAR, AGRUPAR E FORMALIZAR.
-
 Não copie a conversa literalmente.
-
 Não gere movimentações excessivas.
-
-Não registre perguntas, confirmações ou mensagens sem impacto operacional.
-
-O relatório deve conter, preferencialmente, entre 4 e 8 movimentações.
-
+Não registre perguntas, confirmações ou mensagens sem impacto operacional..
 Somente registrar eventos que representem mudança real no andamento do atendimento.
-
 Não criar uma movimentação para cada mensagem da conversa.
 
 ---
