@@ -25,7 +25,10 @@ class SessionRecord(SQLModel, table=True):
     user_id: Optional[str] = Field(default=None, foreign_key="user.id")
     contact_name: Optional[str] = None
     session_url: Optional[str] = None
+    drive_folder_url: Optional[str] = None
     raw_content: Optional[str] = Field(default=None, sa_type=Text)
+    center_inserted: bool = Field(default=False)
+    center_duplicate: bool = Field(default=False)
     created_at: datetime = Field(default_factory=get_utc_now)
 
 class MediaFile(SQLModel, table=True):

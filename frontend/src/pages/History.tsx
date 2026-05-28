@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { History as HistoryIcon, Search, ChevronLeft, ChevronRight, ExternalLink, RefreshCw, CheckCircle, XCircle, Clock, AlertCircle } from 'lucide-react';
 import './History.css';
 
@@ -71,8 +71,6 @@ export const History = () => {
   const [fichaInput, setFichaInput] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   const navigate = useNavigate();
-
-  const api = axios.create({ baseURL: 'http://localhost:3000', withCredentials: true });
 
   useEffect(() => {
     if (!localStorage.getItem('user')) navigate('/login');

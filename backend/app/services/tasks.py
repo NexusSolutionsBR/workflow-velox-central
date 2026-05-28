@@ -21,6 +21,12 @@ from app.core.database import engine
 from app.models.domain import SessionRecord, MediaFile, Summary, ScheduledSync
 from app.services.velox import fetch_session_messages
 from app.services.gdrive import find_or_create_folder, upload_file
+from app.services.center_service import (
+    get_existing_occurrences as center_get_existing,
+    find_description_duplicates,
+    parse_summary_to_occurrences,
+    insert_occurrence as center_insert_occurrence,
+)
 from app.agents import transcribe_audio, generate_summary
 import asyncio
 
@@ -75,6 +81,12 @@ async def _upload_images_from_messages(session_id: str, ficha: str, messages: li
     os.makedirs(tmp_dir, exist_ok=True)
 
     folder_id = find_or_create_folder(ficha)
+    folder_url = f"https://drive.google.com/drive/folders/{folder_id}"
+    with Session(engine) as db_session:
+        rec = db_session.exec(select(SessionRecord).where(SessionRecord.session_id == session_id)).first()
+        if rec:
+            rec.drive_folder_url = folder_url
+            db_session.commit()
     total_images = sum(1 for m in messages if m.get("type") == "IMAGE")
 
     interval_secs = settings.GDRIVE_IMAGE_INTERVAL_MINUTES * 60
@@ -169,13 +181,13 @@ async def _upload_images_from_messages(session_id: str, ficha: str, messages: li
 # ══════════════════════════════════════════════════════════════
 
 @celery_app.task(name="app.services.tasks.process_session")
-def process_session(session_id: str, ficha: str, do_transcribe: bool = True, do_upload_images: bool = True, do_summary: bool = False):
-    asyncio.run(_async_process_session(session_id, ficha, do_transcribe, do_upload_images, do_summary))
+def process_session(session_id: str, ficha: str, do_transcribe: bool = True, do_upload_images: bool = True, do_summary: bool = False, do_insert_center: bool = False):
+    asyncio.run(_async_process_session(session_id, ficha, do_transcribe, do_upload_images, do_summary, do_insert_center))
 
 
-async def _async_process_session(session_id: str, ficha: str, do_transcribe: bool, do_upload_images: bool, do_summary: bool):
+async def _async_process_session(session_id: str, ficha: str, do_transcribe: bool, do_upload_images: bool, do_summary: bool, do_insert_center: bool = False):
     _log(session_id, f"[Pipeline] Iniciando para sessionId={session_id}, ficha={ficha}")
-    _log(session_id, f"[Pipeline] Opções: transcrever={do_transcribe}, imagens={do_upload_images}, resumo={do_summary}")
+    _log(session_id, f"[Pipeline] Opções: transcrever={do_transcribe}, imagens={do_upload_images}, resumo={do_summary}, center={do_insert_center}")
 
     try:
         _log(session_id, "[Pipeline] [1/3] Buscando mensagens do Velox...")
@@ -369,6 +381,64 @@ async def _async_process_session(session_id: str, ficha: str, do_transcribe: boo
             except Exception as e:
                 _log(session_id, f"[Pipeline] Erro ao gerar resumo: {e}")
 
+        # ── Inserção no Center (opcional) ──────────────────────────
+        if do_insert_center and not _is_cancelled(session_id):
+            _set_status(session_id, "INSERTING")
+            _log(session_id, "[Center] Verificando ocorrências existentes na ficha...")
+            try:
+                summary_text_for_center = ""
+                with Session(engine) as db_session:
+                    sum_rec = db_session.exec(
+                        select(Summary).where(Summary.session_id == session_id)
+                    ).first()
+                    if sum_rec:
+                        summary_text_for_center = sum_rec.edited_summary or sum_rec.original_summary or ""
+
+                drive_folder_url = ""
+                with Session(engine) as db_session:
+                    sess_rec = db_session.exec(
+                        select(SessionRecord).where(SessionRecord.session_id == session_id)
+                    ).first()
+                    if sess_rec:
+                        drive_folder_url = sess_rec.drive_folder_url or ""
+
+                to_insert = parse_summary_to_occurrences(summary_text_for_center)
+                if drive_folder_url:
+                    to_insert.append({"descricao": f"LINK GOOGLE DRIVE: {drive_folder_url}"})
+
+                existing = await center_get_existing(ficha)
+                duplicates = find_description_duplicates(existing, to_insert)
+
+                if duplicates:
+                    _log(session_id, f"[Center] {len(duplicates)} descrição(ões) já cadastrada(s) na ficha — serão ignoradas pelo Center.")
+
+                total_ocorrencias = len(to_insert)
+                if drive_folder_url:
+                    _log(session_id, f"[Center] Inserindo {total_ocorrencias} ocorrência(s) + link do Google Drive...")
+                else:
+                    _log(session_id, f"[Center] Inserindo {total_ocorrencias} ocorrência(s)...")
+                result = await center_insert_occurrence(session_id, ficha, summary_text_for_center, drive_folder_url)
+                total_inserido = result.get("total_inserido", 0) if isinstance(result, dict) else 0
+                total_ignorado = result.get("total_ignoradas_por_duplicidade", 0) if isinstance(result, dict) else 0
+
+                with Session(engine) as db_session:
+                    rec = db_session.exec(
+                        select(SessionRecord).where(SessionRecord.session_id == session_id)
+                    ).first()
+                    if rec:
+                        rec.center_inserted = total_inserido > 0
+                        rec.center_duplicate = total_inserido == 0 and total_ignorado > 0
+                        db_session.commit()
+
+                if total_inserido > 0:
+                    _log(session_id, f"[Center] {total_inserido} ocorrência(s) inserida(s) com sucesso!")
+                if total_ignorado > 0:
+                    _log(session_id, f"[Center] {total_ignorado} ocorrência(s) ignorada(s) por duplicidade.")
+                if total_inserido == 0 and total_ignorado == 0:
+                    _log(session_id, "[Center] Nenhuma ocorrência inserida.")
+            except Exception as e:
+                _log(session_id, f"[Center] ERRO ao inserir: {e}")
+
         with Session(engine) as db_session:
             session_rec = db_session.exec(
                 select(SessionRecord).where(SessionRecord.session_id == session_id)
@@ -377,7 +447,10 @@ async def _async_process_session(session_id: str, ficha: str, do_transcribe: boo
                 session_rec.status = "COMPLETED"
             db_session.commit()
 
-        _log(session_id, "[Pipeline] Concluído! Use o botão 'Resumir Relatório' para gerar o resumo com IA." if not do_summary else "[Pipeline] Concluído!")
+        if not do_summary and not do_insert_center:
+            _log(session_id, "[Pipeline] Concluído! Use o botão 'Resumir Relatório' para gerar o resumo com IA.")
+        else:
+            _log(session_id, "[Pipeline] Concluído!")
 
         # Upload de imagens (roda após marcar COMPLETED para não bloquear o status)
         if do_upload_images:

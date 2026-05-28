@@ -13,10 +13,13 @@ class Settings:
     HELENA_API_URL = os.getenv("HELENA_API_URL", "https://api.helena.run/chat/v1/message")
     HELENA_API_KEY = os.getenv("HELENA_API_KEY")
     
-    CENTER_API_URL = os.getenv("CENTER_API_URL", "https://api.center.example/v1/mgm")
-    CENTER_API_KEY = os.getenv("CENTER_API_KEY")
+    # URL base — igual para todas as operações
     CENTER_CONSULTA_URL = os.getenv("CENTER_CONSULTA_URL", "https://gbr.center.emartim.com/Publico/Consulta")
-    CENTER_IDENTIFICADOR = os.getenv("CENTER_IDENTIFICADOR", "")
+    # Identificadores por operação (cada API do Center tem o seu)
+    CENTER_IDENTIFICADOR_FICHA      = os.getenv("CENTER_IDENTIFICADOR_FICHA", "")       # consulta dados da ficha (relatório)
+    CENTER_IDENTIFICADOR_OCORRENCIAS = os.getenv("CENTER_IDENTIFICADOR_OCORRENCIAS", "")  # busca ocorrências existentes
+    CENTER_IDENTIFICADOR_INSERCAO   = os.getenv("CENTER_IDENTIFICADOR_INSERCAO", "")    # inserção de ocorrências
+    CENTER_USUARIO_PARAMETRO = os.getenv("CENTER_USUARIO_PARAMETRO", "")
     
     # AI Provider Configuration
     # Providers suportados: "openai", "google", "anthropic"

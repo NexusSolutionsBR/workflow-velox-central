@@ -15,8 +15,14 @@ async def lifespan(app: FastAPI):
     # Migrações incrementais — colunas adicionadas após criação inicial das tabelas
     with engine.connect() as conn:
         conn.execute(text("ALTER TABLE scheduled_sync ADD COLUMN IF NOT EXISTS contact_name VARCHAR"))
+        conn.execute(text("ALTER TABLE session ADD COLUMN IF NOT EXISTS drive_folder_url VARCHAR"))
+        conn.execute(text("ALTER TABLE session ADD COLUMN IF NOT EXISTS center_inserted BOOLEAN DEFAULT FALSE"))
+        conn.execute(text("ALTER TABLE session ADD COLUMN IF NOT EXISTS center_duplicate BOOLEAN DEFAULT FALSE"))
         conn.commit()
     yield
+
+import os
+from fastapi.staticfiles import StaticFiles
 
 app = FastAPI(
     title="Velox API",
@@ -24,6 +30,20 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
+# Servir arquivos estáticos da pasta backend/app/static
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+os.makedirs(static_dir, exist_ok=True)
+
+# Copiar a logo da pasta templates para a pasta static, se existir
+templates_logo = os.path.join(os.path.dirname(__file__), "templates", "logo-velox.png")
+static_logo = os.path.join(static_dir, "logo-velox.png")
+if os.path.exists(templates_logo):
+    import shutil
+    shutil.copy2(templates_logo, static_logo)
+
+app.mount("/static", StaticFiles(directory=static_dir), name="static")
+
 
 from app.core.audit import AuditLogMiddleware
 

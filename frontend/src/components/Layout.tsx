@@ -14,6 +14,11 @@ export const Layout: React.FC = () => {
         const res = await fetch('http://localhost:3000/sessions/scheduled-syncs?status=PENDING', {
           credentials: 'include',
         });
+        if (res.status === 401) {
+          localStorage.removeItem('user');
+          window.location.href = '/login';
+          return;
+        }
         if (res.ok) {
           const data = await res.json();
           setPendingCount(Array.isArray(data) ? data.length : 0);

@@ -1,5 +1,5 @@
 import { useState, useEffect, Fragment } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { RefreshCw, Search, ChevronDown, ChevronUp, AlertCircle, FileText } from 'lucide-react';
 import './Audit.css';
 
@@ -25,10 +25,7 @@ export const Audit = () => {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   
-  const api = axios.create({
-    baseURL: 'http://localhost:3000',
-    withCredentials: true,
-  });
+
 
   const fetchLogs = async () => {
     setLoading(true);

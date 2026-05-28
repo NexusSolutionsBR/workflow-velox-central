@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { Clock, RefreshCw, Trash2, AlertCircle, Play, CheckCircle, XCircle } from 'lucide-react';
 import './PendingTasks.css';
 
@@ -70,8 +70,6 @@ export const PendingTasks = () => {
   const [acting, setActing] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState('');
   const navigate = useNavigate();
-
-  const api = axios.create({ baseURL: 'http://localhost:3000', withCredentials: true });
 
   useEffect(() => {
     if (!localStorage.getItem('user')) navigate('/login');
@@ -166,7 +164,7 @@ export const PendingTasks = () => {
                 <thead>
                   <tr>
                     <th>Ficha</th>
-                    <th>Contato</th>
+                    <th>ID da Sessão</th>
                     <th>Agendado Para</th>
                     <th>Tempo Restante</th>
                     <th>Status</th>
@@ -177,7 +175,7 @@ export const PendingTasks = () => {
                   {tasks.map(task => (
                     <tr key={task.id} className={acting === task.id ? 'row-removing' : ''}>
                       <td><strong>{task.ficha || <span className="text-muted">—</span>}</strong></td>
-                      <td>{task.contactName || <span className="text-muted">—</span>}</td>
+                      <td><span className="session-id-cell">{task.sessionId || <span className="text-muted">—</span>}</span></td>
                       <td>{formatDate(task.runAt)}</td>
                       <td>
                         {task.status === 'PENDING'

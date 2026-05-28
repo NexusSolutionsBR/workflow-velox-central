@@ -1,3 +1,4 @@
+import os
 from urllib.parse import urlparse, parse_qs
 from datetime import datetime
 from zoneinfo import ZoneInfo
@@ -27,10 +28,10 @@ def _sanitize_filename(name: str) -> str:
 
 def _fetch_center_data(ficha: str) -> tuple[dict, str | None]:
     """Busca dados da ficha na API Center. Retorna (dados, mensagem_erro)."""
-    identificador = getattr(settings, "CENTER_IDENTIFICADOR", "")
+    identificador = getattr(settings, "CENTER_IDENTIFICADOR_FICHA", "")
     consulta_url = getattr(settings, "CENTER_CONSULTA_URL", "")
     if not identificador:
-        return {}, "CENTER_IDENTIFICADOR não configurado — rode: docker compose up -d backend"
+        return {}, "CENTER_IDENTIFICADOR_FICHA não configurado"
     if not consulta_url:
         return {}, "CENTER_CONSULTA_URL não configurado"
     try:
@@ -40,7 +41,7 @@ def _fetch_center_data(ficha: str) -> tuple[dict, str | None]:
                 consulta_url,
                 params={
                     "acao": "resultado",
-                    "Identificador": identificador,
+                    "identificador": identificador,
                     "fichaparametro": ficha,
                 },
             )
@@ -122,206 +123,8 @@ def _format_center_data(data: dict) -> dict:
     return d
 
 
-_REPORT_TEMPLATE = """<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relat&oacute;rio de Atendimento &mdash; Ficha {{numero_ficha}}</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: Arial, Helvetica, sans-serif; background-color: #f3f4f6; color: #374151; line-height: 1.5; padding: 30px 15px; }
-        .no-print { max-width: 850px; margin: 0 auto 16px auto; display: flex; justify-content: flex-end; }
-        .btn-print { background: #1a1a2e; color: #fff; border: none; padding: 10px 24px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600; }
-        .btn-print:hover { background: #2d2d4e; }
-        .document-container { max-width: 850px; margin: 0 auto; background-color: #ffffff; padding: 50px; border: 1px solid #e5e7eb; border-top: 5px solid #d32f2f; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #f3f4f6; padding-bottom: 25px; margin-bottom: 30px; }
-        .logo-text { font-size: 36px; font-weight: 900; letter-spacing: -1px; line-height: 1; }
-        .logo-text .vel { color: #111827; }
-        .logo-text .o { color: #f39c12; }
-        .logo-text .x { color: #111827; }
-        .logo-subtext { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6b7280; margin-top: 5px; }
-        .header-info { text-align: right; }
-        .header-title { font-size: 22px; font-weight: bold; color: #111827; margin-bottom: 10px; }
-        .header-meta { font-size: 13px; color: #4b5563; }
-        .header-meta strong { color: #111827; }
-        .section-title { font-size: 13px; text-transform: uppercase; font-weight: bold; color: #111827; border-bottom: 1px solid #e5e7eb; padding-bottom: 8px; margin-top: 35px; margin-bottom: 20px; letter-spacing: 0.5px; }
-        .data-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: 40px; row-gap: 15px; }
-        .data-row { display: flex; flex-direction: column; }
-        .data-row.full-width { grid-column: 1 / -1; }
-        .label { font-size: 11px; color: #6b7280; font-weight: bold; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.3px; }
-        .value { font-size: 14px; color: #111827; }
-        .highlight { font-weight: bold; }
-        .text-box { background-color: #f9fafb; border: 1px solid #e5e7eb; padding: 15px; border-radius: 4px; font-size: 13px; color: #374151; margin-top: 5px; }
-        .summary-line { margin-bottom: 6px; font-size: 13px; color: #374151; }
-        .timeline-container { border-left: 2px dotted #d1d5db; margin-left: 8px; padding-left: 16px; }
-        .timeline-item { font-size: 10pt; margin-bottom: 5px; color: #374151; font-family: 'Courier New', monospace; word-break: break-word; }
-        .report-footer { margin-top: 40px; padding-top: 15px; border-top: 1px solid #e5e7eb; font-size: 11px; color: #9ca3af; text-align: center; }
-        @media print {
-            body { background: #fff; padding: 0; }
-            .no-print { display: none !important; }
-            .document-container { box-shadow: none; border: none; border-top: 5px solid #d32f2f; padding: 20px; max-width: none; }
-            @page { size: A4 portrait; margin: 15mm 12mm; }
-            .section-title, .header { page-break-after: avoid; }
-            .timeline-item { page-break-inside: avoid; }
-        }
-        @media (max-width: 600px) {
-            .document-container { padding: 25px; }
-            .header { flex-direction: column; gap: 20px; }
-            .header-info { text-align: left; }
-            .data-grid { grid-template-columns: 1fr; }
-        }
-    </style>
-</head>
-<body>
-    <div class="no-print">
-        <button class="btn-print" onclick="window.print()">&#128438;&nbsp; Imprimir / Salvar PDF</button>
-    </div>
-
-    <div class="document-container">
-
-        <!-- CABEÇALHO -->
-        <div class="header">
-            <div class="logo-box">
-                <div class="logo-text">
-                    <span class="vel">VEL</span><span class="o">O</span><span class="x">X</span>
-                </div>
-                <div class="logo-subtext">Solu&ccedil;&otilde;es T&eacute;cnicas</div>
-            </div>
-            <div class="header-info">
-                <div class="header-title">Relat&oacute;rio de Atendimento</div>
-                <div class="header-meta">
-                    <div>Ficha N&ordm;: <strong>{{numero_ficha}}</strong></div>
-                    <div>Protocolo: <strong>{{codigo_solicitacao_atendimento}}</strong></div>
-                    <div style="margin-top:5px;color:#9ca3af;">Emitido em: {{data_emissao}}</div>
-                </div>
-            </div>
-        </div>
-
-        __CENTER_NOTICE__
-
-        <!-- DADOS GERAIS -->
-        <div class="data-grid">
-            <div class="data-row full-width">
-                <span class="label">Cliente</span>
-                <span class="value highlight">{{codigo_cliente}} &mdash; {{cliente}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Tipo de Ocorr&ecirc;ncia</span>
-                <span class="value highlight">{{tipo_ficha}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Servi&ccedil;o</span>
-                <span class="value">{{servico_ficha}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Contrato</span>
-                <span class="value">{{numero_contrato}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Data / Hora Lan&ccedil;amento</span>
-                <span class="value">{{data_lancamento}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Operador Velox</span>
-                <span class="value">{{usuario_lancamento}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Supervisor</span>
-                <span class="value">{{supervisor}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Finalizado por</span>
-                <span class="value">{{usuario_finalizacao}}</span>
-            </div>
-        </div>
-
-        <!-- VEÍCULO E PRESTADOR -->
-        <div class="section-title">Ve&iacute;culo e Prestador</div>
-        <div class="data-grid">
-            <div class="data-row">
-                <span class="label">Placa</span>
-                <span class="value highlight">{{placa_veiculo}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Modelo / Marca</span>
-                <span class="value">{{modelo_veiculo}}</span>
-            </div>
-            <div class="data-row full-width">
-                <span class="label">Prestador Designado</span>
-                <span class="value highlight">{{prestador}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Valor do Ve&iacute;culo</span>
-                <span class="value">R$ {{valor_veiculo}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Valor de Carga</span>
-                <span class="value">R$ {{valor_carga}}</span>
-            </div>
-        </div>
-
-        <!-- LOCALIZAÇÃO E CRONOGRAMA -->
-        <div class="section-title">Localiza&ccedil;&atilde;o e Cronograma</div>
-        <div class="data-grid">
-            <div class="data-row">
-                <span class="label">Cidade / UF</span>
-                <span class="value">{{cidade_ocorrencia}} &mdash; {{estado_uf}} ({{pais}})</span>
-            </div>
-            <div class="data-row full-width">
-                <span class="label">Endere&ccedil;o</span>
-                <span class="value">{{endereco_ocorrencia}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Coordenadas</span>
-                <span class="value">{{coordenadas_ocorrencia}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Acionamento</span>
-                <span class="value">{{data_acionamento}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Chegada ao Local</span>
-                <span class="value">{{data_chegada}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Encerramento</span>
-                <span class="value highlight">{{data_encerramento}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Tempo de Efici&ecirc;ncia</span>
-                <span class="value">{{tempo_eficiencia_minutos}} minutos</span>
-            </div>
-        </div>
-
-        <!-- RESULTADO DA OPERAÇÃO -->
-        <div class="section-title">Resultado da Opera&ccedil;&atilde;o</div>
-        <div class="data-grid">
-            <div class="data-row">
-                <span class="label">Ve&iacute;culo Localizado</span>
-                <span class="value">{{veiculo_localizado}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Ve&iacute;culo Recuperado</span>
-                <span class="value">{{veiculo_recuperado}}</span>
-            </div>
-            <div class="data-row">
-                <span class="label">Valor Total de Recupera&ccedil;&atilde;o</span>
-                <span class="value highlight">R$ {{valor_total_recuperacao}}</span>
-            </div>
-        </div>
-
-        <!-- ANÁLISE IA + TIMELINE (dinâmicos) -->
-        __AI_SUMMARY__
-        __TIMELINE__
-
-        <div class="report-footer">
-            Documento gerado automaticamente pelo sistema Velox &mdash; {{data_emissao}}
-        </div>
-    </div>
-    <script>window.onload = function() { window.print(); };</script>
-</body>
-</html>"""
+_TEMPLATE_PATH = os.path.join(os.path.dirname(__file__), "..", "templates", "report.html")
+_REPORT_TEMPLATE = open(_TEMPLATE_PATH, encoding="utf-8").read()
 
 
 
@@ -331,6 +134,7 @@ class StartSessionRequest(BaseModel):
     do_transcribe: bool = True
     do_upload_images: bool = True
     do_summary: bool = False
+    do_insert_center: bool = False
 
 
 class StartSessionResponse(BaseModel):
@@ -436,7 +240,7 @@ def start_processing(data: StartSessionRequest, current_user: CurrentUserDep, se
     except Exception:
         pass
 
-    task = process_session.delay(session_id, data.ficha, data.do_transcribe, data.do_upload_images, data.do_summary)
+    task = process_session.delay(session_id, data.ficha, data.do_transcribe, data.do_upload_images, data.do_summary, data.do_insert_center)
     session_rec.task_id = task.id
     session.commit()
 
@@ -448,7 +252,7 @@ def cancel_session(session_id: str, current_user: CurrentUserDep, session: DbSes
     session_rec = session.exec(select(SessionRecord).where(SessionRecord.session_id == session_id)).first()
     if not session_rec:
         raise HTTPException(status_code=404, detail="Sessão não encontrada")
-    if session_rec.status not in ("PENDING", "PROCESSING", "SUMMARIZING", "SYNCING"):
+    if session_rec.status not in ("PENDING", "PROCESSING", "SUMMARIZING", "SYNCING", "INSERTING"):
         raise HTTPException(status_code=400, detail="Sessão não está em processamento")
 
     task_id = session_rec.task_id
@@ -562,6 +366,8 @@ def get_session_status(session_id: str, current_user: CurrentUserDep, session: D
         "status": session_rec.status,
         "hasRawContent": has_raw_content,
         "contactName": session_rec.contact_name,
+        "centerInserted": session_rec.center_inserted,
+        "centerDuplicate": session_rec.center_duplicate,
         "summary": {
             "editedSummary": summary_rec.edited_summary if summary_rec else None,
             "originalSummary": summary_rec.original_summary if summary_rec else None,
@@ -715,8 +521,21 @@ def report_html(
                 f'<div class="text-box">{lines_html}</div>'
             )
 
+    # Pasta do Drive
+    drive_folder_html = ""
+    drive_url = session_rec.drive_folder_url
+    if drive_url and "mock" not in drive_url:
+        drive_folder_html = (
+            '<div class="data-row full-width">'
+            '<span class="label">Registros Fotogr&aacute;ficos (Drive)</span>'
+            f'<span class="value"><a href="{escape(drive_url)}" target="_blank" '
+            f'style="color:#3b82f6;text-decoration:underline;">{escape(drive_url)}</a></span>'
+            '</div>'
+        )
+
     # Inserir seções raw e preencher campos de dados
     html_content = _REPORT_TEMPLATE.replace("__CENTER_NOTICE__", center_notice_html)
+    html_content = html_content.replace("__DRIVE_FOLDER__", drive_folder_html)
     html_content = html_content.replace("__AI_SUMMARY__", ai_summary_html)
     html_content = html_content.replace("__TIMELINE__", "")
     html_content = _fill_template(html_content, center_data)

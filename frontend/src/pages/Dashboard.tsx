@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import {
   CheckCircle, Circle, Play, Send,
   Square, FileText, RefreshCw, Loader, Bug, Save, Printer, ArrowLeft,
@@ -12,10 +12,11 @@ const STEPS = [
   { id: 'PROCESSING', label: 'Processando Mídias' },
   { id: 'SYNCING', label: 'Sincronizando Imagens' },
   { id: 'SUMMARIZING', label: 'Gerando Resumo com IA' },
+  { id: 'INSERTING', label: 'Inserindo no Center' },
   { id: 'COMPLETED', label: 'Pronto para Revisão' },
 ];
 
-const ACTIVE_STATUSES = ['PROCESSING', 'SUMMARIZING', 'SYNCING'];
+const ACTIVE_STATUSES = ['PROCESSING', 'SUMMARIZING', 'SYNCING', 'INSERTING'];
 const TERMINAL_STATUSES = ['COMPLETED', 'ERROR', 'CANCELLED'];
 
 export const Dashboard = () => {
@@ -27,7 +28,9 @@ export const Dashboard = () => {
   const [hasRawContent, setHasRawContent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [logs, setLogs] = useState<string[]>([]);
-  const [options, setOptions] = useState({ do_transcribe: true, do_upload_images: true, do_summary: true });
+  const [options, setOptions] = useState({ do_transcribe: true, do_upload_images: true, do_summary: true, do_insert_center: false });
+  const [centerInserted, setCenterInserted] = useState(false);
+  const [centerDuplicate, setCenterDuplicate] = useState(false);
   const [fromHistory, setFromHistory] = useState(false);
 
   const navigate = useNavigate();
@@ -44,14 +47,15 @@ export const Dashboard = () => {
     if (!sid) return;
     let cancelled = false;
     setFromHistory(true);
-    const localApi = axios.create({ baseURL: 'http://localhost:3000', withCredentials: true });
-    localApi.get(`/sessions/${sid}/status`).then(res => {
+    api.get(`/sessions/${sid}/status`).then(res => {
       if (cancelled) return;
       const d = res.data;
       setSessionId(d.sessionId);
       setFicha(d.ficha || '');
       setStatus(d.status);
       setHasRawContent(d.hasRawContent ?? false);
+      setCenterInserted(d.centerInserted ?? false);
+      setCenterDuplicate(d.centerDuplicate ?? false);
       if (d.summary?.editedSummary) setSummary(d.summary.editedSummary);
       else if (d.summary?.originalSummary) setSummary(d.summary.originalSummary);
       if (ACTIVE_STATUSES.includes(d.status)) startPolling(d.sessionId);
@@ -63,26 +67,35 @@ export const Dashboard = () => {
   useEffect(() => { logEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [logs]);
   useEffect(() => () => { if (intervalRef.current) clearInterval(intervalRef.current); }, []);
 
-  const api = axios.create({
-    baseURL: 'http://localhost:3000',
-    withCredentials: true,
-  });
-
   const isActive = ACTIVE_STATUSES.includes(status);
 
   const startPolling = (sid: string) => {
     if (intervalRef.current) clearInterval(intervalRef.current);
+    let stableCount = 0;
+    let lastLogCount = -1;
     intervalRef.current = setInterval(async () => {
       try {
         const res = await api.get(`/sessions/${sid}/status`);
         const data = res.data;
-        setLogs(data.logs ?? []);
+        const logs: string[] = data.logs ?? [];
+        setLogs(logs);
         setStatus(data.status);
         setHasRawContent(data.hasRawContent ?? false);
+        setCenterInserted(data.centerInserted ?? false);
+        setCenterDuplicate(data.centerDuplicate ?? false);
         if (data.summary?.editedSummary) setSummary(data.summary.editedSummary);
         if (TERMINAL_STATUSES.includes(data.status)) {
-          clearInterval(intervalRef.current!);
-          intervalRef.current = null;
+          if (logs.length === lastLogCount) {
+            stableCount++;
+          } else {
+            stableCount = 0;
+          }
+          lastLogCount = logs.length;
+          // Para só quando o log ficar estável por 3 ciclos (6s) após status terminal
+          if (stableCount >= 3) {
+            clearInterval(intervalRef.current!);
+            intervalRef.current = null;
+          }
         }
       } catch {
         clearInterval(intervalRef.current!);
@@ -186,6 +199,7 @@ export const Dashboard = () => {
   };
 
   const handleInsertMGM = async () => {
+    if (!confirm('⚠️ ATENÇÃO\n\nAPAGUE AS OCORRÊNCIAS DA FICHA ANTES DE INSERI-LAS AUTOMATICAMENTE.\n\nDeseja continuar?')) return;
     try {
       await api.post('/center/mgm', { sessionId, summaryText: summary });
       alert('MGM inserido com sucesso!');
@@ -201,9 +215,11 @@ export const Dashboard = () => {
     setLogs([]);
     setSummary('');
     setHasRawContent(false);
+    setCenterInserted(false);
+    setCenterDuplicate(false);
     setUrl('');
     setFicha('');
-    setOptions({ do_transcribe: true, do_upload_images: true, do_summary: true });
+    setOptions({ do_transcribe: true, do_upload_images: true, do_summary: true, do_insert_center: false });
   };
 
   const toggleOption = (key: keyof typeof options) =>
@@ -269,6 +285,11 @@ export const Dashboard = () => {
                           onChange={() => toggleOption('do_summary')} disabled={isActive} />
                         Gerar resumo com IA
                       </label>
+                      <label className="option-item">
+                        <input type="checkbox" checked={options.do_insert_center}
+                          onChange={() => toggleOption('do_insert_center')} disabled={isActive} />
+                        Inserir no Center
+                      </label>
                     </div>
                   </div>
                 </>
@@ -282,6 +303,7 @@ export const Dashboard = () => {
                       {status === 'PROCESSING' && 'Processando...'}
                       {status === 'SUMMARIZING' && 'Resumindo...'}
                       {status === 'SYNCING' && 'Sincronizando...'}
+                      {status === 'INSERTING' && 'Inserindo no Center...'}
                     </button>
                     <button className="btn btn-danger" onClick={handleStop}>
                       <Square size={18} /> Parar
@@ -348,13 +370,25 @@ export const Dashboard = () => {
             {status === 'COMPLETED' && summary && (
               <div className="glass-panel card" style={{ marginTop: '24px' }}>
                 <h2 className="card-title">Quadro de Revisão</h2>
+
+                {centerDuplicate && !centerInserted && (
+                  <div style={{ background: 'rgba(234,179,8,0.12)', border: '1px solid rgba(234,179,8,0.35)', borderRadius: '8px', padding: '10px 14px', marginBottom: '16px', fontSize: '0.85rem', color: '#facc15' }}>
+                    Ocorrência duplicada encontrada no Center para esta ficha. Revise o relatório e clique em "Inserir MGM" para inserir mesmo assim.
+                  </div>
+                )}
+                {centerInserted && (
+                  <div style={{ background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.3)', borderRadius: '8px', padding: '10px 14px', marginBottom: '16px', fontSize: '0.85rem', color: '#4ade80' }}>
+                    Ocorrência inserida no Center com sucesso.
+                  </div>
+                )}
+
                 <ReportLineEditor value={summary} onChange={setSummary} />
                 <div className="actions-row" style={{ marginTop: '16px', flexWrap: 'wrap' }}>
                   <button className="btn btn-accent" onClick={handleSaveDraft}>
                     <Save size={18} /> Salvar Rascunho
                   </button>
                   <button className="btn btn-accent" onClick={handleInsertMGM}>
-                    <Send size={18} /> Inserir MGM (Center)
+                    <Send size={18} /> {centerDuplicate && !centerInserted ? 'Inserir MGM mesmo assim' : 'Inserir MGM (Center)'}
                   </button>
                 </div>
               </div>

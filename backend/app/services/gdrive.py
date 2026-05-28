@@ -105,7 +105,9 @@ def find_or_create_folder(folder_name: str) -> str:
     files = results.get("files", [])
 
     if files:
-        return files[0].get("id")
+        folder_id = files[0].get("id")
+        _make_public(drive_service, folder_id)
+        return folder_id
 
     file_metadata = {
         "name": folder_name,
@@ -117,7 +119,21 @@ def find_or_create_folder(folder_name: str) -> str:
         .create(body=file_metadata, fields="id", supportsAllDrives=True)
         .execute()
     )
-    return file.get("id")
+    folder_id = file.get("id")
+    _make_public(drive_service, folder_id)
+    return folder_id
+
+
+def _make_public(drive_service, file_id: str) -> None:
+    """Torna o arquivo/pasta acessível para qualquer pessoa com o link."""
+    try:
+        drive_service.permissions().create(
+            fileId=file_id,
+            body={"type": "anyone", "role": "reader"},
+            supportsAllDrives=True,
+        ).execute()
+    except Exception as e:
+        print(f"[GDrive] Aviso: não foi possível tornar público ({file_id}): {e}")
 
 
 def upload_file(folder_id: str, file_path: str, mime_type: str, original_name: str) -> str:

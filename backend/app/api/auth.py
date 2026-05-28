@@ -32,7 +32,7 @@ def login(data: LoginRequest, response: Response, session: DbSessionDep):
         max_age=86400,       # 1 dia
         path="/",
     )
-    return {"user": {"id": user.id, "name": user.name, "role": user.role}}
+    return {"access_token": token, "token_type": "bearer", "user": {"id": user.id, "name": user.name, "role": user.role}}
 
 
 @router.post("/logout")
