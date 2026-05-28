@@ -25,6 +25,8 @@ services:
       - ./backend:/app
     env_file:
       - .env
+    environment:
+      DATABASE_URL: "postgresql://velox:${POSTGRES_PASSWORD}@postgres:5432/velox"
     depends_on:
       redis:
         condition: service_healthy
@@ -40,6 +42,8 @@ services:
       - ./backend:/app
     env_file:
       - .env
+    environment:
+      DATABASE_URL: "postgresql://velox:${POSTGRES_PASSWORD}@postgres:5432/velox"
     depends_on:
       redis:
         condition: service_healthy
