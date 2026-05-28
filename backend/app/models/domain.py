@@ -29,6 +29,7 @@ class SessionRecord(SQLModel, table=True):
     raw_content: Optional[str] = Field(default=None, sa_type=Text)
     center_inserted: bool = Field(default=False)
     center_duplicate: bool = Field(default=False)
+    error_message: Optional[str] = None
     created_at: datetime = Field(default_factory=get_utc_now)
 
 class MediaFile(SQLModel, table=True):

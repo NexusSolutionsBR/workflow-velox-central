@@ -499,6 +499,7 @@ async def _async_process_session(session_id: str, ficha: str, do_transcribe: boo
             rec = s.exec(select(SessionRecord).where(SessionRecord.session_id == session_id)).first()
             if rec and rec.status != "CANCELLED":
                 rec.status = "ERROR"
+                rec.error_message = str(e)
                 s.commit()
 
 

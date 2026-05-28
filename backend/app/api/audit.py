@@ -8,7 +8,7 @@ from app.models.domain import AuditLog, User
 
 router = APIRouter()
 
-@router.get("/", response_model=Any)
+@router.get("", response_model=Any)
 def get_audit_logs(
     current_user: CurrentUserDep,
     session: DbSessionDep,

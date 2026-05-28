@@ -31,6 +31,7 @@ export const Dashboard = () => {
   const [options, setOptions] = useState({ do_transcribe: true, do_upload_images: true, do_summary: true, do_insert_center: false });
   const [centerInserted, setCenterInserted] = useState(false);
   const [centerDuplicate, setCenterDuplicate] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [fromHistory, setFromHistory] = useState(false);
 
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ export const Dashboard = () => {
       setHasRawContent(d.hasRawContent ?? false);
       setCenterInserted(d.centerInserted ?? false);
       setCenterDuplicate(d.centerDuplicate ?? false);
+      setErrorMessage(d.errorMessage ?? null);
       if (d.summary?.editedSummary) setSummary(d.summary.editedSummary);
       else if (d.summary?.originalSummary) setSummary(d.summary.originalSummary);
       if (ACTIVE_STATUSES.includes(d.status)) startPolling(d.sessionId);
@@ -83,6 +85,7 @@ export const Dashboard = () => {
         setHasRawContent(data.hasRawContent ?? false);
         setCenterInserted(data.centerInserted ?? false);
         setCenterDuplicate(data.centerDuplicate ?? false);
+        setErrorMessage(data.errorMessage ?? null);
         if (data.summary?.editedSummary) setSummary(data.summary.editedSummary);
         if (TERMINAL_STATUSES.includes(data.status)) {
           if (logs.length === lastLogCount) {
@@ -395,7 +398,10 @@ export const Dashboard = () => {
             {status === 'ERROR' && (
               <div className="glass-panel card" style={{ marginTop: '24px', borderColor: 'var(--danger)' }}>
                 <h2 className="card-title" style={{ color: 'var(--danger)' }}>Erro no processamento</h2>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Verifique os logs acima para detalhes.</p>
+                {errorMessage
+                  ? <p style={{ color: 'var(--danger)', fontSize: '0.9rem', marginTop: '8px', wordBreak: 'break-word' }}>{errorMessage}</p>
+                  : <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Verifique os logs acima para detalhes.</p>
+                }
               </div>
             )}
 

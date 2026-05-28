@@ -368,6 +368,7 @@ def get_session_status(session_id: str, current_user: CurrentUserDep, session: D
         "contactName": session_rec.contact_name,
         "centerInserted": session_rec.center_inserted,
         "centerDuplicate": session_rec.center_duplicate,
+        "errorMessage": session_rec.error_message,
         "summary": {
             "editedSummary": summary_rec.edited_summary if summary_rec else None,
             "originalSummary": summary_rec.original_summary if summary_rec else None,
