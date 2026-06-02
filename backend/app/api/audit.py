@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Query
 from sqlmodel import select, desc, col
-from typing import Any
+from typing import Annotated, Any
 import json
 
-from app.core.security import DbSessionDep, require_role
+from app.core.security import DbSessionDep, AdminUserDep
 from app.models.domain import AuditLog, User
 
 router = APIRouter()
@@ -11,10 +11,10 @@ router = APIRouter()
 # Logs de auditoria expõem IPs e ações de todos os usuários — restrito a ADMIN.
 @router.get("", response_model=Any)
 def get_audit_logs(
+    current_user: AdminUserDep,
     session: DbSessionDep,
-    current_user: User = Depends(require_role(["ADMIN"])),
-    limit: int = Query(default=100, le=1000),
-    offset: int = Query(default=0, ge=0),
+    limit: Annotated[int, Query(le=1000)] = 100,
+    offset: Annotated[int, Query(ge=0)] = 0,
 ):
     statement = select(AuditLog).order_by(desc(AuditLog.created_at)).offset(offset).limit(limit)
     logs = session.exec(statement).all()

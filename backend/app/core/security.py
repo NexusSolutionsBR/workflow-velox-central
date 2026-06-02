@@ -66,3 +66,6 @@ def require_role(roles: list[str]):
             raise HTTPException(status_code=403, detail="Acesso negado: permissão insuficiente")
         return current_user
     return role_checker
+
+# Dependência reutilizável para rotas restritas a administradores.
+AdminUserDep = Annotated[User, Depends(require_role(["ADMIN"]))]
