@@ -255,7 +255,16 @@ A URL base da API vem de `VITE_API_URL` (inclui o prefixo `/api`). Sem proxy Vit
 - **Estilo de dependências** do FastAPI: `Annotated` (`CurrentUserDep`, `DbSessionDep`).
 - **raw_content no Redis** — TTL de 7 dias (`_CONTENT_TTL`). Reconstruído a cada re-execução do pipeline. O agente consome esse conteúdo para gerar o relatório.
 - **ScheduledSync** — só é criado quando `do_upload_images=True`. Não criar se o usuário desativou upload.
-- **`/api/sessions/{id}/report-html`** usa `?token=` (não Bearer header) — manter essa dependência separada (`_get_user_from_token_param`), não misturar com `CurrentUserDep`.
+- **`/api/sessions/{id}/report-html`** usa `CurrentUserDep` (cookie httpOnly) — a página é aberta em nova aba via `window.open` e o browser envia o cookie automaticamente. Não voltar a passar o JWT em `?token=` (vetor de vazamento via URL/logs/referer).
+
+### Segurança (preservar)
+
+- **Auth via cookie httpOnly (browser) + token no corpo (uso externo)** — `/api/auth/login` define o cookie `httponly`/`samesite=lax`/`secure` (`COOKIE_SECURE`) E devolve `access_token` no corpo para clientes/integrações fora do browser. O frontend usa exclusivamente o cookie e **nunca** guarda o token no localStorage.
+- **`AuthGateMiddleware` (main.py)** — porta de entrada para `/api`: sem token JWT válido, devolve **`401` uniforme** independentemente de a rota existir ou do método HTTP. Impede que `405`/`404` vazem a existência de endpoints para quem não tem token. Rotas públicas: `/api/auth/login`, `/api/auth/logout` e preflight `OPTIONS`. Registrado "dentro" de CORS/Security para que o 401 carregue os headers necessários. Não remover — os `Depends` por rota continuam como defesa em profundidade (validação de usuário no banco + roles).
+- **Docs desligadas por padrão** — `/docs`, `/redoc` e `/openapi.json` só existem quando `ENABLE_DOCS=true`. Mantém a superfície da API oculta de quem não tem token. Habilitar apenas em dev.
+- **`/api/audit` é ADMIN-only** — usa `require_role(["ADMIN"])`. Não relaxar para OPERATOR (expõe IPs e ações de todos).
+- **Headers de segurança** — `SecurityHeadersMiddleware` em `main.py` aplica `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy` e `Cache-Control` a todas as respostas.
+- **Escaping no `report-html`** — todo valor dinâmico passa por `html.escape()` (`_fill_template`, summary, drive_url). Nunca interpolar input do usuário sem escapar.
 
 ---
 

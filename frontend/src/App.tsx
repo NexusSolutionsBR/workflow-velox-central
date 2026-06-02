@@ -7,6 +7,15 @@ import { History } from './pages/History';
 import { Layout } from './components/Layout';
 import './App.css';
 
+const isAdmin = (): boolean => {
+  try {
+    const raw = localStorage.getItem('user');
+    return raw ? JSON.parse(raw).role === 'ADMIN' : false;
+  } catch {
+    return false;
+  }
+};
+
 function App() {
   return (
     <Router>
@@ -15,7 +24,7 @@ function App() {
 
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/auditoria" element={<Audit />} />
+          <Route path="/auditoria" element={isAdmin() ? <Audit /> : <Navigate to="/dashboard" />} />
           <Route path="/tarefas-pendentes" element={<PendingTasks />} />
           <Route path="/fichas" element={<History />} />
         </Route>

@@ -25,11 +25,20 @@ async def lifespan(app: FastAPI):
 import os
 from fastapi.staticfiles import StaticFiles
 
+# Docs interativas (Swagger/ReDoc/OpenAPI) só são expostas quando ENABLE_DOCS=true.
+# Em produção ficam desligadas para não revelar a superfície da API a quem não tem token.
+_docs_kwargs = (
+    dict(docs_url="/docs", redoc_url="/redoc", openapi_url="/openapi.json")
+    if settings.ENABLE_DOCS
+    else dict(docs_url=None, redoc_url=None, openapi_url=None)
+)
+
 app = FastAPI(
     title="Velox API",
     description="API para automação de extração de ocorrências e resumos com ChatGPT e Google Drive",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
+    **_docs_kwargs,
 )
 
 # Servir arquivos estáticos da pasta backend/app/static
@@ -46,7 +55,64 @@ if os.path.exists(templates_logo):
 app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 
+import jwt
+from starlette.responses import JSONResponse
 from app.core.audit import AuditLogMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+
+
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    """Headers de segurança aplicados a todas as respostas."""
+    async def dispatch(self, request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "no-referrer"
+        response.headers["Cross-Origin-Opener-Policy"] = "same-origin"
+        response.headers.setdefault(
+            "Cache-Control", "no-store, no-cache, must-revalidate, private"
+        )
+        return response
+
+
+class AuthGateMiddleware(BaseHTTPMiddleware):
+    """Porta de entrada para /api: sem token válido, devolve 401 uniforme
+    independentemente de a rota existir ou do método HTTP. Assim a existência
+    de endpoints (e o 405 de método errado) não vaza para quem não tem token.
+
+    Rotas públicas: login/logout e o preflight CORS (OPTIONS)."""
+    _PUBLIC_PATHS = ("/api/auth/login", "/api/auth/logout")
+
+    async def dispatch(self, request, call_next):
+        path = request.url.path
+        if (
+            request.method == "OPTIONS"
+            or not path.startswith("/api")
+            or path in self._PUBLIC_PATHS
+        ):
+            return await call_next(request)
+
+        token = request.cookies.get("access_token")
+        if not token:
+            auth_header = request.headers.get("Authorization")
+            if auth_header and auth_header.startswith("Bearer "):
+                token = auth_header.split(" ", 1)[1]
+
+        if token:
+            try:
+                jwt.decode(token, settings.JWT_SECRET, algorithms=["HS256"])
+                return await call_next(request)
+            except jwt.PyJWTError:
+                pass
+
+        return JSONResponse(status_code=401, content={"detail": "Não autenticado"})
+
+
+# Ordem de registro: o último adicionado é o mais externo na requisição.
+# Queremos AuthGate "dentro" de CORS/Security para que a resposta 401 ainda
+# receba os headers de CORS (frontend precisa ler) e de segurança.
+app.add_middleware(AuthGateMiddleware)
+app.add_middleware(SecurityHeadersMiddleware)
 
 # CORS configuration — origens explícitas para suportar cookies httpOnly
 app.add_middleware(

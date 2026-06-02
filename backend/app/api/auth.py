@@ -29,6 +29,8 @@ def login(data: LoginRequest, response: Response, session: DbSessionDep):
         max_age=86400,
         path="/",
     )
+    # Token devolvido no corpo para uso externo (clientes/integrações fora do browser).
+    # No browser, o cookie httpOnly continua sendo a fonte usada pelo frontend.
     return {"access_token": token, "token_type": "bearer", "user": {"id": user.id, "name": user.name, "role": user.role}}
 
 

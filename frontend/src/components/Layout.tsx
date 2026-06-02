@@ -3,10 +3,20 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, ShieldAlert, LogOut, Menu, Clock, History } from 'lucide-react';
 import './Layout.css';
 
+const getUserRole = (): string | null => {
+  try {
+    const raw = localStorage.getItem('user');
+    return raw ? (JSON.parse(raw).role ?? null) : null;
+  } catch {
+    return null;
+  }
+};
+
 export const Layout: React.FC = () => {
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const [pendingCount, setPendingCount] = React.useState(0);
+  const isAdmin = getUserRole() === 'ADMIN';
 
   React.useEffect(() => {
     const fetchCount = async () => {
@@ -74,14 +84,16 @@ export const Layout: React.FC = () => {
             <span>Dashboard</span>
           </NavLink>
 
-          <NavLink
-            to="/auditoria"
-            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
-            onClick={() => setIsSidebarOpen(false)}
-          >
-            <ShieldAlert size={20} />
-            <span>Auditoria</span>
-          </NavLink>
+          {isAdmin && (
+            <NavLink
+              to="/auditoria"
+              className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              <ShieldAlert size={20} />
+              <span>Auditoria</span>
+            </NavLink>
+          )}
 
           <NavLink
             to="/fichas"
