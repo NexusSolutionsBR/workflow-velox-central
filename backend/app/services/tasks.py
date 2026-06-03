@@ -15,6 +15,7 @@ from collections import deque
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 from sqlmodel import Session, select
+from sqlalchemy.exc import IntegrityError
 from app.core.celery_app import celery_app
 from app.core.config import settings
 from app.core.database import engine
@@ -151,18 +152,23 @@ async def _upload_images_from_messages(session_id: str, ficha: str, messages: li
                 mime_type = file_info.get("mimeType", "image/jpeg")
                 _log(session_id, f"[Imagens] {image_idx}/{total_images}: subindo ao Drive ({drive_name})")
                 drive_id = upload_file(folder_id, dest_path, mime_type, drive_name)
-                db_session.add(MediaFile(
-                    session_id=session_id,
-                    file_id=file_id,
-                    type="IMAGE",
-                    url=drive_id,
-                    status="UPLOADED" if drive_id else "FAILED",
-                ))
-                db_session.commit()
-                if drive_id:
-                    upload_window.append(img_dt)
-                    uploaded += 1
-                _log(session_id, f"[Imagens] {image_idx}/{total_images}: OK (drive_id={drive_id})")
+                try:
+                    db_session.add(MediaFile(
+                        session_id=session_id,
+                        file_id=file_id,
+                        type="IMAGE",
+                        url=drive_id,
+                        status="UPLOADED" if drive_id else "FAILED",
+                    ))
+                    db_session.commit()
+                    if drive_id:
+                        upload_window.append(img_dt)
+                        uploaded += 1
+                    _log(session_id, f"[Imagens] {image_idx}/{total_images}: OK (drive_id={drive_id})")
+                except IntegrityError:
+                    # Outra execução já registrou esta imagem (corrida) — ignora sem quebrar
+                    db_session.rollback()
+                    _log(session_id, f"[Imagens] {image_idx}/{total_images}: já registrada por outra execução, pulando")
                 try:
                     os.remove(dest_path)
                 except OSError:
@@ -174,6 +180,29 @@ async def _upload_images_from_messages(session_id: str, ficha: str, messages: li
     if skipped_interval:
         resumo += f", {skipped_interval} fora do intervalo de {settings.GDRIVE_IMAGE_INTERVAL_MINUTES}min"
     _log(session_id, resumo)
+
+
+async def _locked_upload_images(session_id: str, ficha: str, messages: list) -> bool:
+    """Executa o upload de imagens com lock por sessão (Redis), impedindo que
+    duas execuções concorrentes (ex: sync automático + manual) subam as mesmas
+    imagens ao mesmo tempo — o que causava UniqueViolation em media_file e
+    arquivos duplicados no Drive. Retorna False se outro upload já está em curso."""
+    lock_key = f"upload_lock:{session_id}"
+    try:
+        got_lock = _redis.set(lock_key, "1", nx=True, ex=1800)  # TTL 30min protege contra lock órfão
+    except Exception:
+        got_lock = True  # Redis indisponível: não bloqueia o pipeline
+    if not got_lock:
+        _log(session_id, "[Imagens] Outro upload já está em andamento para esta sessão — pulando para evitar duplicidade.")
+        return False
+    try:
+        await _upload_images_from_messages(session_id, ficha, messages)
+        return True
+    finally:
+        try:
+            _redis.delete(lock_key)
+        except Exception:
+            pass
 
 
 # ══════════════════════════════════════════════════════════════
@@ -455,7 +484,7 @@ async def _async_process_session(session_id: str, ficha: str, do_transcribe: boo
         # Upload de imagens (roda após marcar COMPLETED para não bloquear o status)
         if do_upload_images:
             _log(session_id, "[Pipeline] Iniciando upload de imagens ao Drive...")
-            await _upload_images_from_messages(session_id, ficha, messages)
+            await _locked_upload_images(session_id, ficha, messages)
 
             # Cancelar syncs pendentes anteriores para esta sessão (evitar duplicatas)
             with Session(engine) as db_session:
@@ -580,7 +609,7 @@ async def _async_sync_images(session_id: str, ficha: str):
 
         total_images = sum(1 for m in messages if m.get("type") == "IMAGE")
         _log(session_id, f"[Sync] {len(messages)} mensagens — {total_images} imagens encontradas")
-        await _upload_images_from_messages(session_id, ficha, messages)
+        await _locked_upload_images(session_id, ficha, messages)
         sync_ok = True
 
     except Exception as e:
