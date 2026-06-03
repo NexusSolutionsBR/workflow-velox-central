@@ -40,6 +40,16 @@ export const Dashboard = () => {
   const logEndRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  // Botão Debug JSON visível apenas para administradores
+  const isAdmin = (() => {
+    try {
+      const raw = localStorage.getItem('user');
+      return raw ? JSON.parse(raw).role === 'ADMIN' : false;
+    } catch {
+      return false;
+    }
+  })();
+
   useEffect(() => {
     if (!localStorage.getItem('user')) navigate('/login');
   }, [navigate]);
@@ -165,6 +175,23 @@ export const Dashboard = () => {
       startPolling(sessionId);
     } catch (e: any) {
       alert(e.response?.data?.detail || 'Erro ao sincronizar imagens');
+    }
+  };
+
+  const handleDebugMessages = async () => {
+    try {
+      const res = await api.get(`/sessions/${sessionId}/debug-messages`);
+      const blob = new Blob([JSON.stringify(res.data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `debug_${sessionId}.json`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (e: any) {
+      alert(e.response?.data?.detail || 'Erro ao buscar mensagens de debug');
     }
   };
 
@@ -358,6 +385,11 @@ export const Dashboard = () => {
                   <button className="btn" style={{ background: 'rgba(255,255,255,0.1)' }} onClick={handleSyncImages}>
                     <RefreshCw size={18} /> Enviar Novas Imagens
                   </button>
+                  {isAdmin && (
+                    <button className="btn" style={{ background: 'rgba(255,255,255,0.05)', border: '1px dashed var(--border)' }} onClick={handleDebugMessages}>
+                      <Bug size={18} /> Debug JSON
+                    </button>
+                  )}
                 </div>
               </div>
             )}

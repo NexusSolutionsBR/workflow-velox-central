@@ -12,7 +12,7 @@ from sqlmodel import select, Session, col
 import redis as redis_lib
 from app.core.config import settings
 from app.core.database import get_session
-from app.core.security import DbSessionDep, CurrentUserDep
+from app.core.security import DbSessionDep, CurrentUserDep, AdminUserDep
 from app.models.domain import SessionRecord, Summary, ScheduledSync, User
 from app.services.tasks import process_session, summarize_session, sync_session_images
 from app.services.velox import fetch_session_messages
@@ -547,7 +547,7 @@ def report_html(
 
 
 @router.get("/{session_id}/debug-messages")
-async def debug_messages(session_id: str, current_user: CurrentUserDep):
+async def debug_messages(session_id: str, current_user: AdminUserDep):
     messages = await fetch_session_messages(session_id)
     if not messages:
         raise HTTPException(status_code=404, detail="Nenhuma mensagem encontrada")

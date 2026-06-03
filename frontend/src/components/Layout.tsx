@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, ShieldAlert, LogOut, Menu, Clock, History } from 'lucide-react';
+import logoVelox from '../assets/logo-velox.png';
 import './Layout.css';
 
 const getUserRole = (): string | null => {
@@ -70,7 +71,7 @@ export const Layout: React.FC = () => {
       <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <div className="logo-container">
-            <h2>VELOX</h2>
+            <img src={logoVelox} alt="Velox" className="logo-img" />
           </div>
         </div>
 
