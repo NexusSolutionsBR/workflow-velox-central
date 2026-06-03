@@ -214,6 +214,33 @@ def start_processing(data: StartSessionRequest, current_user: CurrentUserDep, se
     if not session_id or len(session_id) < 5:
         raise HTTPException(status_code=400, detail="Não foi possível extrair o sessionId da URL")
 
+    # Impede processar a mesma ficha em duplicidade. Reprocessar a MESMA sessão é
+    # permitido (o pipeline cancela o sync antigo); o bloqueio é só para outra sessão.
+    _active = ("PENDING", "PROCESSING", "SUMMARIZING", "SYNCING", "INSERTING")
+    dup_active = session.exec(
+        select(SessionRecord)
+        .where(SessionRecord.ficha == data.ficha)
+        .where(SessionRecord.session_id != session_id)
+        .where(col(SessionRecord.status).in_(_active))
+    ).first()
+    if dup_active:
+        raise HTTPException(
+            status_code=409,
+            detail=f"A ficha {data.ficha} já está em processamento em outra sessão. Aguarde a conclusão antes de iniciar novamente.",
+        )
+
+    dup_sync = session.exec(
+        select(ScheduledSync)
+        .where(ScheduledSync.ficha == data.ficha)
+        .where(ScheduledSync.session_id != session_id)
+        .where(ScheduledSync.status == "PENDING")
+    ).first()
+    if dup_sync:
+        raise HTTPException(
+            status_code=409,
+            detail=f"A ficha {data.ficha} já foi processada e possui uma sincronização de imagens agendada. Cancele a tarefa pendente em 'Tarefas Pendentes' antes de reprocessar.",
+        )
+
     session_rec = session.exec(select(SessionRecord).where(SessionRecord.session_id == session_id)).first()
     if session_rec:
         session_rec.ficha = data.ficha
