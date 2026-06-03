@@ -11,6 +11,7 @@ interface ScheduledSync {
   contactName: string | null;
   runAt: string;
   status: string;
+  errorMessage: string | null;
   createdAt: string;
 }
 
@@ -182,7 +183,18 @@ export const PendingTasks = () => {
                           ? <Countdown targetDate={task.runAt} />
                           : <span className="text-muted">—</span>}
                       </td>
-                      <td><StatusBadge status={task.status} /></td>
+                      <td>
+                        <StatusBadge status={task.status} />
+                        {task.status === 'FAILED' && task.errorMessage && (
+                          <div
+                            className="sync-error-text"
+                            title={task.errorMessage}
+                            style={{ marginTop: 4, fontSize: '0.72rem', color: 'var(--danger, #ef4444)', maxWidth: 280, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+                          >
+                            {task.errorMessage}
+                          </div>
+                        )}
+                      </td>
                       <td>
                         {task.status === 'PENDING' ? (
                           <div className="action-buttons">

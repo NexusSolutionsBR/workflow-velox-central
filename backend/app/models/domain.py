@@ -60,6 +60,7 @@ class ScheduledSync(SQLModel, table=True):
     task_id: str = Field(unique=True, index=True)
     run_at: datetime = Field(index=True)
     status: str = Field(default="PENDING")
+    error_message: Optional[str] = None
     created_at: datetime = Field(default_factory=get_utc_now)
 
 

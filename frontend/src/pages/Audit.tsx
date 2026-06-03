@@ -31,7 +31,7 @@ export const Audit = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await api.get('/audit');
+      const res = await api.get('/audit', { params: { limit: 1000 } });
       setLogs(res.data.data || []);
     } catch (e: any) {
       setError(e.response?.data?.detail || 'Erro ao carregar logs de auditoria');

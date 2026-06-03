@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import api from '../api';
 import {
   CheckCircle, Circle, Play, Send,
-  Square, FileText, RefreshCw, Loader, Bug, Save, Printer, ArrowLeft,
+  Square, FileText, RefreshCw, Loader, Bug, Save, Printer, ArrowLeft, FolderOpen,
 } from 'lucide-react';
 import { ReportLineEditor } from '../components/ReportLineEditor';
 
@@ -32,6 +32,7 @@ export const Dashboard = () => {
   const [centerInserted, setCenterInserted] = useState(false);
   const [centerDuplicate, setCenterDuplicate] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [driveFolderUrl, setDriveFolderUrl] = useState<string | null>(null);
   const [fromHistory, setFromHistory] = useState(false);
 
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ export const Dashboard = () => {
       setCenterInserted(d.centerInserted ?? false);
       setCenterDuplicate(d.centerDuplicate ?? false);
       setErrorMessage(d.errorMessage ?? null);
+      setDriveFolderUrl(d.driveFolderUrl ?? null);
       if (d.summary?.editedSummary) setSummary(d.summary.editedSummary);
       else if (d.summary?.originalSummary) setSummary(d.summary.originalSummary);
       if (ACTIVE_STATUSES.includes(d.status)) startPolling(d.sessionId);
@@ -86,6 +88,7 @@ export const Dashboard = () => {
         setCenterInserted(data.centerInserted ?? false);
         setCenterDuplicate(data.centerDuplicate ?? false);
         setErrorMessage(data.errorMessage ?? null);
+        setDriveFolderUrl(data.driveFolderUrl ?? null);
         if (data.summary?.editedSummary) setSummary(data.summary.editedSummary);
         if (TERMINAL_STATUSES.includes(data.status)) {
           if (logs.length === lastLogCount) {
@@ -251,6 +254,18 @@ export const Dashboard = () => {
                 </button>
               )}
               <h2 className="card-title">{fromHistory ? `Atendimento — Ficha ${ficha || sessionId}` : 'Nova Ocorrência'}</h2>
+
+              {fromHistory && driveFolderUrl && !driveFolderUrl.includes('mock') && (
+                <a
+                  href={driveFolderUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'var(--primary, #3b82f6)', textDecoration: 'none', fontSize: '0.9rem', marginTop: '-4px', marginBottom: '12px', wordBreak: 'break-all' }}
+                >
+                  <FolderOpen size={15} />
+                  Pasta de imagens no Google Drive
+                </a>
+              )}
 
               {!fromHistory && (
                 <>

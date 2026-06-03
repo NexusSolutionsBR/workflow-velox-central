@@ -570,6 +570,7 @@ def sync_session_images(session_id: str, ficha: str):
 async def _async_sync_images(session_id: str, ficha: str):
     _log(session_id, "[Sync] Buscando mensagens atualizadas da sessão...")
     sync_ok = False
+    error_text = None
     try:
         messages = await fetch_session_messages(session_id)
         if not messages:
@@ -583,6 +584,7 @@ async def _async_sync_images(session_id: str, ficha: str):
         sync_ok = True
 
     except Exception as e:
+        error_text = str(e)
         _log(session_id, f"[Sync] ERRO: {e}")
     finally:
         # Sessão volta para COMPLETED independente do resultado do sync
@@ -597,6 +599,8 @@ async def _async_sync_images(session_id: str, ficha: str):
             ).all()
             for s in pending:
                 s.status = scheduled_status
+                # Persiste o motivo da falha — logs do Redis expiram em 24h
+                s.error_message = error_text if not sync_ok else None
             db_session.commit()
         if not sync_ok:
             _log(session_id, "[Sync] Sincronização falhou — verifique os logs acima. A sessão foi mantida como COMPLETED.")

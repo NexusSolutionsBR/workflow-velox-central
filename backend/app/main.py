@@ -15,6 +15,7 @@ async def lifespan(app: FastAPI):
     # Migrações incrementais — colunas adicionadas após criação inicial das tabelas
     with engine.connect() as conn:
         conn.execute(text("ALTER TABLE scheduled_sync ADD COLUMN IF NOT EXISTS contact_name VARCHAR"))
+        conn.execute(text("ALTER TABLE scheduled_sync ADD COLUMN IF NOT EXISTS error_message VARCHAR"))
         conn.execute(text("ALTER TABLE session ADD COLUMN IF NOT EXISTS drive_folder_url VARCHAR"))
         conn.execute(text("ALTER TABLE session ADD COLUMN IF NOT EXISTS center_inserted BOOLEAN DEFAULT FALSE"))
         conn.execute(text("ALTER TABLE session ADD COLUMN IF NOT EXISTS center_duplicate BOOLEAN DEFAULT FALSE"))

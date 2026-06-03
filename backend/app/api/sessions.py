@@ -366,6 +366,7 @@ def get_session_status(session_id: str, current_user: CurrentUserDep, session: D
         "status": session_rec.status,
         "hasRawContent": has_raw_content,
         "contactName": session_rec.contact_name,
+        "driveFolderUrl": session_rec.drive_folder_url,
         "centerInserted": session_rec.center_inserted,
         "centerDuplicate": session_rec.center_duplicate,
         "errorMessage": session_rec.error_message,
@@ -400,6 +401,7 @@ def list_scheduled_syncs(
             "contactName": s.contact_name,
             "runAt": _fmt(s.run_at),
             "status": s.status,
+            "errorMessage": s.error_message,
             "createdAt": _fmt(s.created_at),
         }
         for s in syncs
