@@ -484,7 +484,14 @@ async def _async_process_session(session_id: str, ficha: str, do_transcribe: boo
         # Upload de imagens (roda após marcar COMPLETED para não bloquear o status)
         if do_upload_images:
             _log(session_id, "[Pipeline] Iniciando upload de imagens ao Drive...")
-            await _locked_upload_images(session_id, ficha, messages)
+            try:
+                await _locked_upload_images(session_id, ficha, messages)
+            except Exception as e:
+                # Falha no Drive (ex: timeout de rede) NÃO invalida o atendimento —
+                # os dados já estão íntegros e COMPLETED. A sincronização automática
+                # agendada logo abaixo tentará reenviar as imagens mais tarde.
+                _log(session_id, f"[Pipeline] Aviso: upload de imagens falhou ({e}). "
+                                 f"Atendimento mantido como COMPLETED; será retentado na sincronização agendada.")
 
             # Cancelar syncs pendentes anteriores para esta sessão (evitar duplicatas)
             with Session(engine) as db_session:

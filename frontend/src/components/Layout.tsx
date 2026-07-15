@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, ShieldAlert, LogOut, Menu, Clock, History } from 'lucide-react';
+import { LayoutDashboard, ShieldAlert, LogOut, Menu, Clock, History, FileText } from 'lucide-react';
 import logoVelox from '../assets/logo-velox.png';
 import './Layout.css';
 
@@ -32,7 +32,11 @@ export const Layout: React.FC = () => {
         }
         if (res.ok) {
           const data = await res.json();
-          setPendingCount(Array.isArray(data) ? data.length : 0);
+          setPendingCount(
+            typeof data?.total === 'number'
+              ? data.total
+              : Array.isArray(data) ? data.length : 0
+          );
         }
       } catch {
         // silencioso
@@ -103,6 +107,15 @@ export const Layout: React.FC = () => {
           >
             <History size={20} />
             <span>Fichas</span>
+          </NavLink>
+
+          <NavLink
+            to="/relatorio-ficha"
+            className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            <FileText size={20} />
+            <span>Relatório por Ficha</span>
           </NavLink>
 
           <NavLink

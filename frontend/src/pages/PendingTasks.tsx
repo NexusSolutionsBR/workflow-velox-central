@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../api';
-import { Clock, RefreshCw, Trash2, AlertCircle, Play, CheckCircle, XCircle } from 'lucide-react';
+import { Clock, RefreshCw, Trash2, AlertCircle, Play, CheckCircle, XCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 import './PendingTasks.css';
 
 interface ScheduledSync {
@@ -14,6 +14,16 @@ interface ScheduledSync {
   errorMessage: string | null;
   createdAt: string;
 }
+
+interface Pagination {
+  total: number;
+  page: number;
+  perPage: number;
+  pages: number;
+  items: ScheduledSync[];
+}
+
+const PER_PAGE = 20;
 
 const Countdown = ({ targetDate }: { targetDate: string }) => {
   const [timeLeft, setTimeLeft] = useState('');
@@ -66,10 +76,11 @@ const formatDate = (iso: string) => {
 };
 
 export const PendingTasks = () => {
-  const [tasks, setTasks] = useState<ScheduledSync[]>([]);
+  const [data, setData] = useState<Pagination | null>(null);
   const [loading, setLoading] = useState(false);
   const [acting, setActing] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState('');
+  const [page, setPage] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -79,24 +90,31 @@ export const PendingTasks = () => {
   const fetchTasks = useCallback(async () => {
     setLoading(true);
     try {
-      const params = statusFilter ? `?status=${statusFilter}` : '';
-      const res = await api.get(`/sessions/scheduled-syncs${params}`);
-      setTasks(res.data);
+      const params: Record<string, string | number> = { page, per_page: PER_PAGE };
+      if (statusFilter) params.status = statusFilter;
+      const res = await api.get('/sessions/scheduled-syncs', { params });
+      setData(res.data);
     } catch {
       // silencioso
     } finally {
       setLoading(false);
     }
-  }, [statusFilter]);
+  }, [statusFilter, page]);
 
   useEffect(() => { fetchTasks(); }, [fetchTasks]);
+
+  const updateTaskStatus = (id: string, status: string) => {
+    setData(prev => prev
+      ? { ...prev, items: prev.items.map(t => t.id === id ? { ...t, status } : t) }
+      : prev);
+  };
 
   const handleCancel = async (id: string) => {
     if (!confirm('Cancelar esta sincronização agendada?')) return;
     setActing(id);
     try {
       await api.delete(`/sessions/scheduled-syncs/${id}`);
-      setTasks(prev => prev.map(t => t.id === id ? { ...t, status: 'CANCELLED' } : t));
+      updateTaskStatus(id, 'CANCELLED');
     } catch (e: any) {
       alert(e.response?.data?.detail || 'Erro ao cancelar tarefa');
     } finally {
@@ -109,7 +127,7 @@ export const PendingTasks = () => {
     setActing(id);
     try {
       await api.post(`/sessions/scheduled-syncs/${id}/run-now`);
-      setTasks(prev => prev.map(t => t.id === id ? { ...t, status: 'COMPLETED' } : t));
+      updateTaskStatus(id, 'COMPLETED');
     } catch (e: any) {
       alert(e.response?.data?.detail || 'Erro ao iniciar coleta');
     } finally {
@@ -117,7 +135,8 @@ export const PendingTasks = () => {
     }
   };
 
-  const pendingCount = tasks.filter(t => t.status === 'PENDING').length;
+  const tasks = data?.items ?? [];
+  const total = data?.total ?? 0;
 
   return (
     <div className="app-container">
@@ -130,16 +149,16 @@ export const PendingTasks = () => {
                 Tarefas
               </h1>
               <p className="pending-tasks-subtitle">
-                {pendingCount > 0
-                  ? `${pendingCount} pendente${pendingCount !== 1 ? 's' : ''} — ${tasks.length} no total`
-                  : `${tasks.length} registro${tasks.length !== 1 ? 's' : ''} no histórico`}
+                {statusFilter === 'PENDING'
+                  ? `${total} tarefa${total !== 1 ? 's' : ''} pendente${total !== 1 ? 's' : ''}`
+                  : `${total} registro${total !== 1 ? 's' : ''}${statusFilter ? '' : ' no histórico'}`}
               </p>
             </div>
             <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
               <select
                 className="filter-select-sync"
                 value={statusFilter}
-                onChange={e => setStatusFilter(e.target.value)}
+                onChange={e => { setStatusFilter(e.target.value); setPage(1); }}
               >
                 <option value="">Todos</option>
                 <option value="PENDING">Pendentes</option>
@@ -224,6 +243,28 @@ export const PendingTasks = () => {
                   ))}
                 </tbody>
               </table>
+            </div>
+          )}
+
+          {data && data.pages > 1 && (
+            <div className="pagination">
+              <button
+                className="page-btn"
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page === 1 || loading}
+              >
+                <ChevronLeft size={16} />
+              </button>
+              <span className="page-info">
+                Página {data.page} de {data.pages}
+              </span>
+              <button
+                className="page-btn"
+                onClick={() => setPage(p => Math.min(data.pages, p + 1))}
+                disabled={page === data.pages || loading}
+              >
+                <ChevronRight size={16} />
+              </button>
             </div>
           )}
         </div>

@@ -4,6 +4,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Audit } from './pages/Audit';
 import { PendingTasks } from './pages/PendingTasks';
 import { History } from './pages/History';
+import { FichaReport } from './pages/FichaReport';
 import { Layout } from './components/Layout';
 import './App.css';
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/auditoria" element={isAdmin() ? <Audit /> : <Navigate to="/dashboard" />} />
           <Route path="/tarefas-pendentes" element={<PendingTasks />} />
           <Route path="/fichas" element={<History />} />
+          <Route path="/relatorio-ficha" element={<FichaReport />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/login" />} />

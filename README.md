@@ -2,6 +2,20 @@
 
 Pipeline fullstack para processamento de atendimentos de socorro em pista. O operador informa a URL de uma sessão da Helena CRM e o número da ficha; o sistema busca as mensagens, transcreve áudios, envia imagens ao Google Drive, gera um relatório técnico via IA e insere as ocorrências no Center.
 
+O projeto é em **pt-BR** — prompts, logs, mensagens de erro e textos da UI estão em português.
+
+---
+
+## Funcionalidades
+
+- **Pipeline de atendimento** — busca de mensagens, transcrição de áudios (Whisper), upload de imagens ao Drive e geração de relatório técnico via IA.
+- **Logs em tempo real** — o operador acompanha o pipeline pelo painel de terminal (polling a cada 2s).
+- **Quadro de Revisão** — editor do relatório com salvar rascunho, visualizar PDF e inserir a ocorrência no Center (MGM).
+- **Re-checagem automática de imagens** — após concluir, agenda um novo sync para reenviar imagens que chegarem depois (padrão: 3h).
+- **Tarefas Pendentes** (`/tarefas-pendentes`) — lista os syncs agendados com contagem regressiva, permitindo cancelar ou executar agora.
+- **Histórico de Fichas** (`/fichas`) — busca paginada por todas as sessões já processadas.
+- **Auditoria** (`/auditoria`, ADMIN) — registro de todas as requests às rotas sensíveis.
+
 ---
 
 ## Requisitos
@@ -40,20 +54,36 @@ cp .env.example .env
 | `PORT_POSTGRES` | `5432` | Porta exposta do PostgreSQL |
 | `PORT_REDIS` | `6379` | Porta exposta do Redis |
 
+### Variáveis opcionais
+
+| Variável | Padrão | Descrição |
+|---|---|---|
+| `COOKIE_SECURE` | `false` | Flag `Secure` no cookie de auth — `true` em produção/HTTPS |
+| `ENABLE_DOCS` | `false` | Expõe `/docs`, `/redoc` e `/openapi.json` — manter `false` em produção |
+| `AI_PROVIDER` | `openai` | Provider de IA: `openai`, `google` ou `anthropic` |
+| `AI_CHAT_MODEL` | `gpt-4o` | Modelo de chat usado na geração do relatório |
+| `AI_TRANSCRIPTION_MODEL` | `whisper-1` | Modelo de transcrição (STT é sempre OpenAI Whisper) |
+| `AUTO_SYNC_DELAY_SECONDS` | `10800` | Atraso da re-checagem automática de imagens (3h) |
+| `GDRIVE_IMAGE_INTERVAL_MINUTES` | `5` | Duração da janela do filtro de imagens |
+| `GDRIVE_IMAGE_MAX_PER_INTERVAL` | `1` | Máx. de imagens por janela |
+
 ### Google Drive
 
-Dois métodos de autenticação (use um):
+Dois métodos de autenticação (use um). A ordem de prioridade no código é: OAuth user → Service Account → mock.
 
-**Service Account (recomendado):**
+**OAuth user (recomendado):** funciona com qualquer conta Google, inclusive pessoal.
+1. Configure `GOOGLE_DRIVE_CLIENT_ID`, `GOOGLE_DRIVE_CLIENT_SECRET` e `GOOGLE_DRIVE_REFRESH_TOKEN`
+2. Gere o `refresh_token` rodando: `docker compose exec backend python -m app.scripts.oauth_setup`
+3. Configure `GOOGLE_DRIVE_ROOT_FOLDER_ID` com o ID da pasta raiz
+
+**Service Account (legado):** só funciona se a pasta raiz estiver num Drive Compartilhado (Google Workspace). Em conta pessoal o upload falha com `storageQuotaExceeded`.
 1. Gere um arquivo JSON de conta de serviço no Google Cloud Console
 2. Coloque o arquivo em `backend/service-account.json`
 3. Configure `GOOGLE_SERVICE_ACCOUNT_FILE=/app/app/service-account.json`
-4. Configure `GOOGLE_DRIVE_ROOT_FOLDER_ID` com o ID da pasta raiz
-
-**OAuth:**
-Configure `GOOGLE_DRIVE_CLIENT_ID`, `GOOGLE_DRIVE_CLIENT_SECRET` e `GOOGLE_DRIVE_REFRESH_TOKEN`.
 
 Se nenhum estiver configurado, o sistema opera em modo mock (IDs falsos, nada é enviado).
+
+A frequência de upload é controlada por uma janela deslizante: `GDRIVE_IMAGE_INTERVAL_MINUTES` (padrão: 5) e `GDRIVE_IMAGE_MAX_PER_INTERVAL` (padrão: 1).
 
 ### Center API
 
@@ -88,7 +118,8 @@ docker compose exec backend python -m app.scripts.debug_gdrive
 
 Acesse:
 - Frontend: http://localhost:5173
-- API (Swagger): http://localhost:3000/docs
+- API: http://localhost:3000
+- Swagger: http://localhost:3000/docs — **só disponível com `ENABLE_DOCS=true`** (desligado por padrão)
 
 ---
 

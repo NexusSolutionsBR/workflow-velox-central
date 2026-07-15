@@ -15,6 +15,7 @@ Se nenhum dos dois estiver configurado, opera em modo mock.
 import os
 import time
 import random
+import socket
 from google.oauth2.credentials import Credentials as UserCredentials
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
@@ -159,7 +160,7 @@ def upload_file(folder_id: str, file_path: str, mime_type: str, original_name: s
                     fields="id",
                     supportsAllDrives=True,
                 )
-                .execute()
+                .execute(num_retries=3)
             )
             return file.get("id")
         except HttpError as e:
@@ -169,4 +170,14 @@ def upload_file(folder_id: str, file_path: str, mime_type: str, original_name: s
                 time.sleep(wait)
             else:
                 print(f"[GDrive] Falha definitiva em '{original_name}': {e}")
+                raise
+        except (socket.timeout, TimeoutError, ConnectionError, OSError) as e:
+            # Erros de rede transitórios (ex: "The read operation timed out") NÃO são
+            # HttpError — antes escapavam do retry e quebravam o pipeline. Agora retentam.
+            if attempt < max_retries - 1:
+                wait = (2 ** attempt) + random.uniform(0, 1)
+                print(f"[GDrive] Erro de rede em '{original_name}' ({e}), tentativa {attempt + 1}/{max_retries} — aguardando {wait:.1f}s")
+                time.sleep(wait)
+            else:
+                print(f"[GDrive] Falha de rede definitiva em '{original_name}': {e}")
                 raise

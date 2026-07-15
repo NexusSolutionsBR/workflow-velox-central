@@ -41,7 +41,7 @@ A imagem do backend é única mas sobe como **dois serviços**:
 - **`backend`** — servidor FastAPI. Endpoints em `app/api/{auth,sessions,center,audit}.py` são finos: validam input, persistem `SessionRecord` no SQLite e despacham tasks via `.delay(...)`.
 - **`celery_worker`** — consome a fila Redis (`main-queue`) e executa as tasks pesadas em `app/services/tasks.py`.
 
-Ambos acessam o mesmo `backend/dev.db` via SQLModel (`app/core/database.py`). O schema é criado automaticamente no startup do FastAPI (`lifespan` em `app/main.py`).
+Ambos acessam o mesmo **PostgreSQL** via SQLModel (`app/core/database.py`), configurado por `DATABASE_URL` (o `docker-compose.yml` injeta `postgresql://velox:...@postgres:5432/velox` em ambos os serviços). O default `sqlite:///./dev.db` em `config.py` só é usado se `DATABASE_URL` não estiver definida. O schema é criado automaticamente no startup do FastAPI (`lifespan` em `app/main.py`), seguido de **migrações incrementais** via `ALTER TABLE ... ADD COLUMN IF NOT EXISTS` (colunas adicionadas após a criação inicial das tabelas).
 
 O Redis serve dois propósitos: broker/backend do Celery **e** armazenamento temporário de logs de pipeline e do `raw_content`.
 
@@ -58,7 +58,7 @@ Loop de mensagens:
           → [DD/MM/YYYY HH:MM:SS] [operador|prestador] ÁUDIO (Transcrito): ...
   IMAGE → referência na timeline + upload ao Drive (se do_upload_images=True)
   ↓
-raw_content salvo no Redis (TTL 7 dias)
+raw_content salvo no Redis (TTL 7 dias) E na coluna session.raw_content (permanente)
 Status → COMPLETED
   ↓
 [opcional] Relatório com IA (se do_summary=True)
@@ -138,13 +138,17 @@ Suporta dois métodos de autenticação (nessa ordem):
 
 Se nenhum estiver configurado: modo mock (retorna IDs falsos, nada é enviado).
 
-**Filtro de intervalo de imagens**: janela deslizante controlada por duas variáveis:
+`gdrive.py` só faz as chamadas brutas à API do Drive (`find_or_create_folder`, `_make_public`, `upload_file`). A **orquestração e o filtro de imagens ficam em `app/services/tasks.py`** (`_upload_images_from_messages`), não em `gdrive.py`.
+
+**Filtro de intervalo de imagens** (em `tasks.py`): janela deslizante controlada por duas variáveis:
 - `GDRIVE_IMAGE_INTERVAL_MINUTES` (padrão: 5) — duração da janela em minutos
 - `GDRIVE_IMAGE_MAX_PER_INTERVAL` (padrão: 1) — máximo de imagens por janela
 
 Implementado com `deque(maxlen=max_per_interval)` em `_upload_images_from_messages`. A janela fica cheia quando `len(upload_window) >= max_per_interval`; a próxima imagem só é aceita se `img_dt - upload_window[0] >= interval`. Delta negativo (imagens fora de ordem) é ignorado.
 
-**Retry com backoff**: `upload_file` retenta automaticamente em erros 429/500/503 com espera exponencial (2^attempt + jitter, até 5 tentativas). Falha definitiva somente se esgotar as tentativas.
+**Retry com backoff** (em `upload_file`): retenta automaticamente em erros HTTP 429/500/503 **e em erros de rede transitórios** (`socket.timeout`, `TimeoutError`, `ConnectionError`, `OSError`) com espera exponencial (2^attempt + jitter, até 5 tentativas). Os erros de rede não são `HttpError` e antes escapavam do retry quebrando o pipeline. Falha definitiva somente se esgotar as tentativas.
+
+**Tolerância a falha de upload no pipeline** (em `tasks.py`): o upload de imagens em `process_session` roda dentro de `try/except` — se o Drive falhar (ex: timeout), o atendimento **permanece `COMPLETED`** (os dados já estão íntegros) e o sync automático agendado tentará reenviar as imagens depois.
 
 ### Re-checagem Automática de Imagens (ScheduledSync)
 
@@ -165,22 +169,24 @@ Para cancelar antes da execução: `DELETE /api/sessions/scheduled-syncs/{id}` �
 
 | Método | Endpoint | Descrição |
 |---|---|---|
+| GET | `/api/sessions` | Lista paginada de sessões (filtros `ficha`, `status`, `page`, `per_page`) — alimenta a página `/fichas` |
 | POST | `/api/sessions/start` | Inicia pipeline |
 | GET | `/api/sessions/{id}/status` | Status + logs + resumo |
 | POST | `/api/sessions/{id}/cancel` | Cancela |
 | POST | `/api/sessions/{id}/summarize` | Gera relatório com IA |
 | DELETE | `/api/sessions/{id}/summary` | Apaga resumo do banco |
 | PUT | `/api/sessions/{id}/summary` | Salva rascunho editado (`summaryText`) |
-| GET | `/api/sessions/{id}/report-html?token=...` | Página HTML otimizada para impressão/PDF |
+| GET | `/api/sessions/{id}/report-html` | Página HTML otimizada para impressão/PDF (auth via cookie httpOnly; `?public_only=true` reenumera só linhas não-vazias) |
 | POST | `/api/sessions/{id}/sync-images` | Sincroniza imagens novas |
 | GET | `/api/sessions/{id}/export` | Download .txt (resumo + timeline) |
 | GET | `/api/sessions/{id}/debug-messages` | JSON com mensagens texto brutas para debug |
 | GET | `/api/sessions/scheduled-syncs` | Lista sincronizações automáticas pendentes |
+| POST | `/api/sessions/scheduled-syncs/{id}/run-now` | Executa um sync agendado imediatamente |
 | DELETE | `/api/sessions/scheduled-syncs/{id}` | Cancela sincronização agendada |
 
 > **Roteamento:** `/scheduled-syncs` (rota estática) é processado corretamente por FastAPI mesmo declarado após `/{session_id}/...`, pois todos os demais endpoints têm sufixos literais (`/status`, `/cancel`, etc.) e não há ambiguidade.
 
-> **`/report-html`:** aceita JWT como `?token=` (query param) porque a página é aberta diretamente pelo browser em nova aba. Dependência `_get_user_from_token_param` valida o token manualmente.
+> **`/report-html`:** usa `CurrentUserDep` (cookie httpOnly). A página é aberta em nova aba via `window.open` e o browser envia o cookie automaticamente — **não** passar o JWT em `?token=` (vetor de vazamento via URL/logs/referer).
 
 ### Logs em tempo real
 
@@ -219,6 +225,23 @@ Nova página em `/tarefas-pendentes`:
 - Botão **Cancelar** chama `DELETE /api/sessions/scheduled-syncs/{id}`
 - Menu lateral exibe badge vermelho com a contagem em tempo real (polling a cada 30s)
 
+### Frontend — Página de Histórico de Fichas (`frontend/src/pages/History.tsx`)
+
+Página em `/fichas`:
+- Lista paginada de todas as `SessionRecord` (consome `GET /api/sessions`)
+- Filtros por `ficha` e `status`; mostra operador, contato, se há resumo (`hasSummary`) e raw_content (`hasRawContent`)
+- Ponto de entrada para reabrir/revisar atendimentos anteriores
+
+### Rotas do frontend (`App.tsx`)
+
+| Rota | Página | Acesso |
+|---|---|---|
+| `/login` | `Login` | Público |
+| `/dashboard` | `Dashboard` | Autenticado |
+| `/tarefas-pendentes` | `PendingTasks` | Autenticado |
+| `/fichas` | `History` | Autenticado |
+| `/auditoria` | `Audit` | ADMIN (redireciona para `/dashboard` se não-admin) |
+
 A URL base da API vem de `VITE_API_URL` (inclui o prefixo `/api`). Sem proxy Vite; CORS configurado via `ALLOWED_ORIGINS` no backend.
 
 ---
@@ -235,6 +258,17 @@ A URL base da API vem de `VITE_API_URL` (inclui o prefixo `/api`). Sem proxy Vit
 | `summary` | `Summary` | Resumo original e editado por sessão |
 | `scheduled_sync` | `ScheduledSync` | Tarefas de re-checagem automática agendadas |
 | `audit_log` | `AuditLog` | Log de todas as requests auditáveis |
+
+### `SessionRecord` — campos relevantes
+- `session_id` (unique): ID da sessão Helena (extraído da URL)
+- `raw_content` (Text): timeline completa persistida (fallback quando o Redis expira)
+- `session_url`: URL original da sessão Helena
+- `drive_folder_url`: link público da pasta da ficha no Drive
+- `contact_name`: nome do prestador/contato
+- `center_inserted` / `center_duplicate`: estado da inserção no Center
+- `error_message`: motivo da falha em syncs/pipeline
+
+> Colunas adicionadas após a criação inicial das tabelas (`drive_folder_url`, `center_inserted`, `center_duplicate`, `error_message`, e `contact_name`/`error_message` em `scheduled_sync`) são aplicadas via migrações incrementais no `lifespan` de `main.py`.
 
 ### `ScheduledSync` — campos relevantes
 - `task_id` (unique): ID Celery usado para `revoke()` no cancelamento
@@ -253,14 +287,14 @@ A URL base da API vem de `VITE_API_URL` (inclui o prefixo `/api`). Sem proxy Vit
 - **Imports lazy** em `llm_factory.py` — não importar todos os providers no topo; só o provider ativo é carregado.
 - **Todos os logs e strings de UI em português.**
 - **Estilo de dependências** do FastAPI: `Annotated` (`CurrentUserDep`, `DbSessionDep`).
-- **raw_content no Redis** — TTL de 7 dias (`_CONTENT_TTL`). Reconstruído a cada re-execução do pipeline. O agente consome esse conteúdo para gerar o relatório.
+- **raw_content** — armazenado em **dois lugares**: Redis com TTL de 7 dias (`_CONTENT_TTL`, acesso rápido) **e** na coluna `session.raw_content` (permanente). Reconstruído a cada re-execução do pipeline. O agente consome esse conteúdo para gerar o relatório; `summarize_session` usa o Redis e cai para a coluna do banco quando o TTL expira.
 - **ScheduledSync** — só é criado quando `do_upload_images=True`. Não criar se o usuário desativou upload.
 - **`/api/sessions/{id}/report-html`** usa `CurrentUserDep` (cookie httpOnly) — a página é aberta em nova aba via `window.open` e o browser envia o cookie automaticamente. Não voltar a passar o JWT em `?token=` (vetor de vazamento via URL/logs/referer).
 
 ### Segurança (preservar)
 
 - **Auth via cookie httpOnly (browser) + token no corpo (uso externo)** — `/api/auth/login` define o cookie `httponly`/`samesite=lax`/`secure` (`COOKIE_SECURE`) E devolve `access_token` no corpo para clientes/integrações fora do browser. O frontend usa exclusivamente o cookie e **nunca** guarda o token no localStorage.
-- **`AuthGateMiddleware` (main.py)** — porta de entrada para `/api`: sem token JWT válido, devolve **`401` uniforme** independentemente de a rota existir ou do método HTTP. Impede que `405`/`404` vazem a existência de endpoints para quem não tem token. Rotas públicas: `/api/auth/login`, `/api/auth/logout` e preflight `OPTIONS`. Registrado "dentro" de CORS/Security para que o 401 carregue os headers necessários. Não remover — os `Depends` por rota continuam como defesa em profundidade (validação de usuário no banco + roles).
+- **`AuthGateMiddleware` (main.py)** — porta de entrada para `/api`: sem token JWT válido, devolve **`401` uniforme** independentemente de a rota existir ou do método HTTP. Impede que `405`/`404` vazem a existência de endpoints para quem não tem token. O token é lido do cookie `access_token` **ou** do header `Authorization: Bearer` (uso externo). Rotas públicas: `/api/auth/login`, `/api/auth/logout` e preflight `OPTIONS`. Registrado "dentro" de CORS/Security para que o 401 carregue os headers necessários. Não remover — os `Depends` por rota continuam como defesa em profundidade (validação de usuário no banco + roles).
 - **Docs desligadas por padrão** — `/docs`, `/redoc` e `/openapi.json` só existem quando `ENABLE_DOCS=true`. Mantém a superfície da API oculta de quem não tem token. Habilitar apenas em dev.
 - **`/api/audit` é ADMIN-only** — usa `require_role(["ADMIN"])`. Não relaxar para OPERATOR (expõe IPs e ações de todos).
 - **Headers de segurança** — `SecurityHeadersMiddleware` em `main.py` aplica `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy` e `Cache-Control` a todas as respostas.

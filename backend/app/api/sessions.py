@@ -16,6 +16,7 @@ from app.core.security import DbSessionDep, CurrentUserDep, AdminUserDep
 from app.models.domain import SessionRecord, Summary, ScheduledSync, User
 from app.services.tasks import process_session, summarize_session, sync_session_images
 from app.services.velox import fetch_session_messages
+from app.services.center_service import get_existing_occurrences
 
 router = APIRouter()
 
@@ -409,30 +410,40 @@ def get_session_status(session_id: str, current_user: CurrentUserDep, session: D
 def list_scheduled_syncs(
     current_user: CurrentUserDep,
     session: DbSessionDep,
+    page: int = Query(default=1, ge=1),
+    per_page: int = Query(default=20, ge=1, le=100),
     status: Optional[str] = Query(default=None),
 ):
     query = select(ScheduledSync)
     if status:
         query = query.where(ScheduledSync.status == status)
     query = query.order_by(col(ScheduledSync.created_at).desc())
-    syncs = session.exec(query).all()
+
+    total = len(session.exec(query).all())
+    syncs = session.exec(query.offset((page - 1) * per_page).limit(per_page)).all()
 
     def _fmt(dt):
         return dt.isoformat() + "Z" if dt.tzinfo is None else dt.isoformat()
 
-    return [
-        {
-            "id": s.id,
-            "sessionId": s.session_id,
-            "ficha": s.ficha or "",
-            "contactName": s.contact_name,
-            "runAt": _fmt(s.run_at),
-            "status": s.status,
-            "errorMessage": s.error_message,
-            "createdAt": _fmt(s.created_at),
-        }
-        for s in syncs
-    ]
+    return {
+        "total": total,
+        "page": page,
+        "perPage": per_page,
+        "pages": max(1, (total + per_page - 1) // per_page),
+        "items": [
+            {
+                "id": s.id,
+                "sessionId": s.session_id,
+                "ficha": s.ficha or "",
+                "contactName": s.contact_name,
+                "runAt": _fmt(s.run_at),
+                "status": s.status,
+                "errorMessage": s.error_message,
+                "createdAt": _fmt(s.created_at),
+            }
+            for s in syncs
+        ],
+    }
 
 
 @router.delete("/scheduled-syncs/{sync_id}")
@@ -567,6 +578,96 @@ def report_html(
     html_content = _REPORT_TEMPLATE.replace("__CENTER_NOTICE__", center_notice_html)
     html_content = html_content.replace("__DRIVE_FOLDER__", drive_folder_html)
     html_content = html_content.replace("__AI_SUMMARY__", ai_summary_html)
+    html_content = html_content.replace("__TIMELINE__", "")
+    html_content = _fill_template(html_content, center_data)
+
+    return HTMLResponse(content=html_content)
+
+
+
+@router.get("/report-by-ficha", response_class=HTMLResponse)
+async def report_by_ficha(
+    current_user: CurrentUserDep,
+    ficha: str = Query(..., description="Número da ficha"),
+    drive_folder_url: Optional[str] = Query(default=None, description="URL da pasta no Google Drive"),
+):
+    """Gera relatório HTML a partir apenas do número da ficha (sem sessão Helena)."""
+    now_str = datetime.now(ZoneInfo("America/Cuiaba")).strftime("%d/%m/%Y %H:%M")
+
+    # 1. Dados cadastrais do Center
+    raw_center, center_error = _fetch_center_data(ficha)
+    center_data = _format_center_data(raw_center)
+    center_data.setdefault("numero_ficha", ficha)
+    center_data.setdefault("data_emissao", now_str)
+
+    center_notice_html = ""
+    if center_error:
+        center_notice_html = (
+            '<div style="background:#fff3cd;border:1px solid #ffc107;border-radius:4px;'
+            'padding:10px 16px;margin-bottom:24px;font-size:13px;color:#856404;">'
+            f'&#9888; Dados do Center n&atilde;o carregados &mdash; {escape(center_error)}'
+            '</div>'
+        )
+
+    # 2. Ocorrências do Center
+    occurrences_html = ""
+    try:
+        occurrences = await get_existing_occurrences(ficha)
+        if occurrences:
+            rows_html = ""
+            for occ in occurrences:
+                datahora = occ.get("datahora") or occ.get("data_hora") or occ.get("data") or "—"
+                tipo = occ.get("tipo") or "—"
+                descricao = occ.get("descricao") or occ.get("ocorrencia") or "—"
+                usuario = occ.get("usuario") or occ.get("nome_usuario") or ""
+
+                # Formatar data se vier em ISO
+                try:
+                    dt = datetime.fromisoformat(str(datahora).split(".")[0])
+                    datahora = dt.strftime("%d/%m/%Y %H:%M")
+                except Exception:
+                    pass
+
+                badge_color = "#3b82f6" if tipo.upper() == "PÚBLICA" else "#8b5cf6"
+                usuario_html = f' <span style="color:#9ca3af;font-size:11px;">({escape(str(usuario))})</span>' if usuario else ""
+
+                rows_html += (
+                    '<div style="display:flex;gap:12px;margin-bottom:10px;padding:8px 0;'
+                    'border-bottom:1px solid #f3f4f6;">'
+                    f'<div style="min-width:120px;font-size:12px;color:#6b7280;font-weight:600;">{escape(str(datahora))}'
+                    f'{usuario_html}</div>'
+                    f'<div style="flex:1;">'
+                    f'<span style="display:inline-block;font-size:10px;padding:2px 8px;border-radius:9999px;'
+                    f'background:{badge_color}20;color:{badge_color};font-weight:600;margin-right:8px;">{escape(str(tipo))}</span>'
+                    f'<span style="font-size:13px;color:#374151;">{escape(str(descricao))}</span>'
+                    f'</div></div>'
+                )
+
+            occurrences_html = (
+                '<div class="section-title">Ocorr&ecirc;ncias Registradas no Center</div>'
+                f'<div class="text-box">{rows_html}</div>'
+            )
+    except Exception as exc:
+        occurrences_html = (
+            '<div class="section-title">Ocorr&ecirc;ncias Registradas no Center</div>'
+            f'<div class="text-box" style="color:#856404;">&#9888; Erro ao buscar ocorr&ecirc;ncias: {escape(str(exc))}</div>'
+        )
+
+    # 3. Link do Google Drive
+    drive_folder_html = ""
+    if drive_folder_url:
+        drive_folder_html = (
+            '<div class="data-row full-width">'
+            '<span class="label">Registros Fotogr&aacute;ficos (Drive)</span>'
+            f'<span class="value"><a href="{escape(drive_folder_url)}" target="_blank" '
+            f'style="color:#3b82f6;text-decoration:underline;">{escape(drive_folder_url)}</a></span>'
+            '</div>'
+        )
+
+    # 4. Montar HTML usando o template existente
+    html_content = _REPORT_TEMPLATE.replace("__CENTER_NOTICE__", center_notice_html)
+    html_content = html_content.replace("__DRIVE_FOLDER__", drive_folder_html)
+    html_content = html_content.replace("__AI_SUMMARY__", occurrences_html)
     html_content = html_content.replace("__TIMELINE__", "")
     html_content = _fill_template(html_content, center_data)
 

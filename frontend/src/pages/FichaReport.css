@@ -1,0 +1,117 @@
+.ficha-report-container {
+  padding: 2rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.ficha-report-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.ficha-report-header .header-icon {
+  color: var(--primary);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.ficha-report-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.header-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.ficha-report-card {
+  padding: 32px;
+}
+
+.card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ficha-report-card .input-group {
+  margin-bottom: 0;
+}
+
+.ficha-report-card .input-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.optional-tag {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.ficha-report-card .input-control {
+  font-size: 1.05rem;
+  padding: 14px 16px;
+}
+
+.error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  color: #fca5a5;
+}
+
+.generate-btn {
+  width: 100%;
+  padding: 14px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.info-box {
+  background: rgba(245, 158, 11, 0.06);
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.info-box p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.info-box strong {
+  color: var(--primary);
+}
+
+@media (max-width: 600px) {
+  .ficha-report-container {
+    padding: 1rem;
+  }
+
+  .ficha-report-card {
+    padding: 20px;
+  }
+}
